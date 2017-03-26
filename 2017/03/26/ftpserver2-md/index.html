@@ -1,28 +1,99 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-  <title>DongWei&#39;s Blog</title>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
   
-  <link href="/atom.xml" rel="self"/>
+  <title>FtpServer(Ⅱ) | DongWei&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="有了之前的总体小窥后，现在开始细细把玩其中的深邃之处了。其中可以看到有不少的factory，比如FtpServerFactory、ListenerFactory等。通过名字可以看得出来，这些都是用来产生实例的工厂。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FtpServer(Ⅱ)">
+<meta property="og:url" content="http://www.mr-dongw.site/2017/03/26/ftpserver2-md/index.html">
+<meta property="og:site_name" content="DongWei's Blog">
+<meta property="og:description" content="有了之前的总体小窥后，现在开始细细把玩其中的深邃之处了。其中可以看到有不少的factory，比如FtpServerFactory、ListenerFactory等。通过名字可以看得出来，这些都是用来产生实例的工厂。">
+<meta property="og:updated_time" content="2017-03-26T08:36:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FtpServer(Ⅱ)">
+<meta name="twitter:description" content="有了之前的总体小窥后，现在开始细细把玩其中的深邃之处了。其中可以看到有不少的factory，比如FtpServerFactory、ListenerFactory等。通过名字可以看得出来，这些都是用来产生实例的工厂。">
   
-  <link href="http://www.mr-dongw.site/"/>
-  <updated>2017-03-26T08:36:33.000Z</updated>
-  <id>http://www.mr-dongw.site/</id>
+    <link rel="alternative" href="/atom.xml" title="DongWei&#39;s Blog" type="application/atom+xml">
   
-  <author>
-    <name>Mr-Vincent</name>
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">DongWei&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="www.mr-dongw.site">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-ftpserver2-md" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/26/ftpserver2-md/" class="article-date">
+  <time datetime="2017-03-26T08:27:41.000Z" itemprop="datePublished">2017-03-26</time>
+</a>
     
-  </author>
-  
-  <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>FtpServer(Ⅱ)</title>
-    <link href="http://www.mr-dongw.site/2017/03/26/ftpserver2-md/"/>
-    <id>http://www.mr-dongw.site/2017/03/26/ftpserver2-md/</id>
-    <published>2017-03-26T08:27:41.000Z</published>
-    <updated>2017-03-26T08:36:33.000Z</updated>
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Apache-Open-Project/">Apache Open Project</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
     
-    <content type="html"><![CDATA[<p>有了之前的总体小窥后，现在开始细细把玩其中的深邃之处了。<br>其中可以看到有不少的factory，比如FtpServerFactory、ListenerFactory等。通过名字可以看得出来，这些都是用来产生实例的工厂。<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public Listener createListener() &#123;</div><div class="line">        try &#123;</div><div class="line">            InetAddress.getByName(serverAddress);</div><div class="line">        &#125; catch (UnknownHostException e) &#123;</div><div class="line">            throw new FtpServerConfigurationException(&quot;Unknown host&quot;, e);</div><div class="line">        &#125;</div><div class="line">        // Deal with the old style black list and new session Filter here.</div><div class="line">        if (sessionFilter != null) &#123;</div><div class="line">            if (blockedAddresses != null || blockedSubnets != null) &#123;</div><div class="line">                throw new IllegalStateException(</div><div class="line">                        &quot;Usage of SessionFilter in combination with blockedAddesses/subnets is not supported. &quot;);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if (blockedAddresses != null || blockedSubnets != null) &#123;</div><div class="line">            return new NioListener(serverAddress, port, implicitSsl, ssl,</div><div class="line">                    dataConnectionConfig, idleTimeout, blockedAddresses,</div><div class="line">                    blockedSubnets);</div><div class="line">        &#125; else &#123;</div><div class="line">            return new NioListener(serverAddress, port, implicitSsl, ssl,</div><div class="line">                    dataConnectionConfig, idleTimeout, sessionFilter);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      FtpServer(Ⅱ)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>有了之前的总体小窥后，现在开始细细把玩其中的深邃之处了。<br>其中可以看到有不少的factory，比如FtpServerFactory、ListenerFactory等。通过名字可以看得出来，这些都是用来产生实例的工厂。<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public Listener createListener() &#123;</div><div class="line">        try &#123;</div><div class="line">            InetAddress.getByName(serverAddress);</div><div class="line">        &#125; catch (UnknownHostException e) &#123;</div><div class="line">            throw new FtpServerConfigurationException(&quot;Unknown host&quot;, e);</div><div class="line">        &#125;</div><div class="line">        // Deal with the old style black list and new session Filter here.</div><div class="line">        if (sessionFilter != null) &#123;</div><div class="line">            if (blockedAddresses != null || blockedSubnets != null) &#123;</div><div class="line">                throw new IllegalStateException(</div><div class="line">                        &quot;Usage of SessionFilter in combination with blockedAddesses/subnets is not supported. &quot;);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if (blockedAddresses != null || blockedSubnets != null) &#123;</div><div class="line">            return new NioListener(serverAddress, port, implicitSsl, ssl,</div><div class="line">                    dataConnectionConfig, idleTimeout, blockedAddresses,</div><div class="line">                    blockedSubnets);</div><div class="line">        &#125; else &#123;</div><div class="line">            return new NioListener(serverAddress, port, implicitSsl, ssl,</div><div class="line">                    dataConnectionConfig, idleTimeout, sessionFilter);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
 <p>这个listenerfactory通过createListener创建listener。同理serverFactory也是一样。<br>先看看listener工场有哪些成员变量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">private String serverAddress;</div><div class="line">    //端口默认是21，本地部署会有权限冲突</div><div class="line">    private int port = 21;</div><div class="line">    //加密配置，暂时不管</div><div class="line">    private SslConfiguration ssl;</div><div class="line"></div><div class="line">    private boolean implicitSsl = false;</div><div class="line"></div><div class="line">    private DataConnectionConfiguration dataConnectionConfig = new DataConnectionConfigurationFactory()</div><div class="line">            .createDataConnectionConfiguration();</div><div class="line"></div><div class="line">    private int idleTimeout = 300;</div><div class="line">    //黑名单</div><div class="line">    private List&lt;InetAddress&gt; blockedAddresses;</div><div class="line">    private List&lt;Subnet&gt; blockedSubnets;</div><div class="line">    </div><div class="line">    /**</div><div class="line">     * The Session filter</div><div class="line">     * 过滤器</div><div class="line">     */</div><div class="line">    private SessionFilter sessionFilter = null;</div></pre></td></tr></table></figure></p>
 <p>最重要的还是哪个createListener方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">return new NioListener(serverAddress, port, implicitSsl, ssl,</div><div class="line">                    dataConnectionConfig, idleTimeout, sessionFilter);</div></pre></td></tr></table></figure></p>
 <p>最后返回的是一个NioListener。这个工厂只创建Niolistener。<br>具体到NioListener就涉及到MINA了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">public class NioListener extends AbstractListener</div></pre></td></tr></table></figure></p>
@@ -44,48 +115,203 @@
 <p>将每一个session作为一个锁，保证每个连接的同步操作。具体的execute做了一些什么操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">void execute(FtpIoSession session, FtpServerContext context,</div><div class="line">            FtpRequest request) throws IOException, FtpException;</div></pre></td></tr></table></figure></p>
 <p>这是一个接口，具体的操作是由这个command是什么决定的。我们挑一个最简单的实现PWD：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public class PWD extends AbstractCommand &#123;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * Execute command</div><div class="line">     */</div><div class="line">    public void execute(final FtpIoSession session,</div><div class="line">            final FtpServerContext context, final FtpRequest request)</div><div class="line">            throws IOException, FtpException &#123;</div><div class="line">        session.resetState();</div><div class="line">        FileSystemView fsview = session.getFileSystemView();</div><div class="line">        String currDir = fsview.getWorkingDirectory().getAbsolutePath();</div><div class="line">        session.write(LocalizedFtpReply.translate(session, request, context,</div><div class="line">                FtpReply.REPLY_257_PATHNAME_CREATED, &quot;PWD&quot;, currDir));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>这个命令用来显示当前目录。很容易理解。<br>至此，整个ftp的启动流程都全部梳理完毕，从服务器启动到接受客户端命令，其中的逻辑实际上一点都不复杂。整个服务启动到与客户端交互IoSession都穿插其中，对mina的依赖也不是很明显，当然这是作者刻意将耦合降到最低，这种设计思想值得学习借鉴。<br>接下来就具体探讨各个模块的实现细节。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;有了之前的总体小窥后，现在开始细细把玩其中的深邃之处了。&lt;br&gt;其中可以看到有不少的factory，比如FtpServerFactory、ListenerFactory等。通过名字可以看得出来，这些都是用来产生实例的工厂。&lt;br&gt;
-    
-    </summary>
-    
-      <category term="Apache Open Project" scheme="http://www.mr-dongw.site/categories/Apache-Open-Project/"/>
-    
-    
-      <category term="源码解读" scheme="http://www.mr-dongw.site/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
-    
-      <category term="Apache" scheme="http://www.mr-dongw.site/tags/Apache/"/>
-    
-  </entry>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://www.mr-dongw.site/2017/03/26/ftpserver2-md/" data-id="cj0qfe22n0001m71zjpi5utac" class="article-share-link" data-share="baidu" data-title="FtpServer(Ⅱ)">Share</a>
+      
+
+      
+        <a href="http://www.mr-dongw.site/2017/03/26/ftpserver2-md/#ds-thread" class="article-comment-link">Comments</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Apache/">Apache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/源码解读/">源码解读</a></li></ul>
+
+    </footer>
+  </div>
   
-  <entry>
-    <title>Hello World</title>
-    <link href="http://www.mr-dongw.site/2017/01/08/hello-world/"/>
-    <id>http://www.mr-dongw.site/2017/01/08/hello-world/</id>
-    <published>2017-01-08T13:53:01.000Z</published>
-    <updated>2017-01-08T13:53:01.000Z</updated>
     
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
-    
-    </summary>
-    
-    
-  </entry>
+<nav id="article-nav">
   
-</feed>
+  
+    <a href="/2017/01/08/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2017/03/26/ftpserver2-md/" data-title="FtpServer(Ⅱ)" data-url="http://www.mr-dongw.site/2017/03/26/ftpserver2-md/"></div>
+  </section>
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Apache-Open-Project/">Apache Open Project</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Apache/">Apache</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/源码解读/">源码解读</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Apache/" style="font-size: 10px;">Apache</a> <a href="/tags/源码解读/" style="font-size: 10px;">源码解读</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/26/ftpserver2-md/">FtpServer(Ⅱ)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/01/08/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://arvinxiang.com" target="_blank">主题作者</a>
+          </li>
+        
+          <li>
+            <a href="http://reqianduan.com" target="_blank">热前端</a>
+          </li>
+        
+          <li>
+            <a href="http://yuancheng.work" target="_blank">远程.work</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Mr-Vincent<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+<!-- 多说公共js代码 start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"reqianduan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共js代码 end -->
+
+
+<!-- 百度分享 start -->
+
+<div id="article-share-box" class="article-share-box">
+  <div id="bdshare" class="bdsharebuttonbox article-share-links">
+    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
+    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
+    <a class="article-share-more" data-cmd="more" title="更多"></a>
+  </div>
+</div>
+<script>
+  function SetShareData(cmd, config) {
+    if (shareDataTitle && shareDataUrl) {
+      config.bdText = shareDataTitle;
+      config.bdUrl = shareDataUrl;
+    }
+    return config;
+  }
+  window._bd_share_config={
+    "common":{onBeforeClick: SetShareData},
+    "share":{"bdCustomStyle":"/css/bdshare.css"}
+  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
