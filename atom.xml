@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.mr-dongw.site/"/>
-  <updated>2017-03-26T08:36:33.000Z</updated>
+  <updated>2017-04-04T03:10:54.000Z</updated>
   <id>http://www.mr-dongw.site/</id>
   
   <author>
@@ -14,6 +14,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ftpserver(Ⅲ)</title>
+    <link href="http://www.mr-dongw.site/2017/04/04/ftpserver3/"/>
+    <id>http://www.mr-dongw.site/2017/04/04/ftpserver3/</id>
+    <published>2017-04-04T03:09:41.000Z</published>
+    <updated>2017-04-04T03:10:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>此篇文章来解读ftpserver中的核心组件–FtpServerContext<br>在很多类中都有看到这个东西，顾名思义就是上下文。根据以往的在java web中的servlet context的理解，字面意思就是上下文。<a id="more"></a>我觉得这个翻译不是很好，通过字面意思真的很难去理解这个“上下文”是什么。反而久而久之懂其中的含义了，却难以用语言描述出来。所以说翻译不准确很害人啊。最简单粗暴的方法就是去看文档注释，拒绝二手解释。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/**</div><div class="line"> * </div><div class="line"> * This is basically &lt;code&gt;org.apache.ftpserver.ftplet.FtpletContext&lt;/code&gt; with</div><div class="line"> * added connection manager, message resource functionalities.</div><div class="line"> *</div><div class="line"> */</div><div class="line">public interface FtpServerContext extends FtpletContext &#123;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * </div><div class="line"> * FTP server configuration implementation. It holds all the components used.</div><div class="line"> */</div><div class="line">public class DefaultFtpServerContext implements FtpServerContext &#123;</div></pre></td></tr></table></figure>
+<p>看了文档的注释就很容易去读懂这个”context”是什么玩意儿了。无非就是一些配置而已。“上下文”也可以解释为“运行环境”吧。我个人理解是这个程序在跑的过程中的所需要的材料。类比servlet中，通过上下文可以拿到request、response对象。那也就可以说req、resp是属于servlet运行的材料。<br>FtpServerContext是一个接口，默认实现类是DefaultFtpServerContext：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">public class DefaultFtpServerContext implements FtpServerContext &#123;</div><div class="line"></div><div class="line">    private final Logger LOG = LoggerFactory</div><div class="line">            .getLogger(DefaultFtpServerContext.class);</div><div class="line"></div><div class="line">    private MessageResource messageResource = new MessageResourceFactory().createMessageResource();</div><div class="line"></div><div class="line">    private UserManager userManager = new PropertiesUserManagerFactory().createUserManager();</div><div class="line"></div><div class="line">    private FileSystemFactory fileSystemManager = new NativeFileSystemFactory();</div><div class="line"></div><div class="line">    private FtpletContainer ftpletContainer = new DefaultFtpletContainer();</div><div class="line"></div><div class="line">    private FtpStatistics statistics = new DefaultFtpStatistics();</div><div class="line"></div><div class="line">    private CommandFactory commandFactory = new CommandFactoryFactory().createCommandFactory();</div><div class="line"></div><div class="line">    private ConnectionConfig connectionConfig = new ConnectionConfigFactory().createConnectionConfig();</div><div class="line"></div><div class="line">    private Map&lt;String, Listener&gt; listeners = new HashMap&lt;String, Listener&gt;();</div><div class="line"></div><div class="line">    private static final List&lt;Authority&gt; ADMIN_AUTHORITIES = new ArrayList&lt;Authority&gt;();</div><div class="line">    private static final List&lt;Authority&gt; ANON_AUTHORITIES = new ArrayList&lt;Authority&gt;();</div><div class="line">    </div><div class="line">    /**</div><div class="line">     * The thread pool executor to be used by the server using this context</div><div class="line">     */</div><div class="line">    private ThreadPoolExecutor threadPoolExecutor = null;</div><div class="line">    </div><div class="line">    static &#123;</div><div class="line">        ADMIN_AUTHORITIES.add(new WritePermission());</div><div class="line">        </div><div class="line">        ANON_AUTHORITIES.add(new ConcurrentLoginPermission(20, 2));</div><div class="line">        ANON_AUTHORITIES.add(new TransferRatePermission(4800, 4800));</div><div class="line">    &#125;</div><div class="line">    //...省略...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个类中包含了有很多成员变量，有消息资源的MessageResource，这个主要是用于读取ftpserver中配置的资源，类似于ftp响应502对应的文字描述这样的。并没有将这些东西硬编码，而是抽象成资源，通过文本文件去配置。UserManager用于对用户的管理，比方说哪些用户有访问的权限等。FileSystemFactory是管理文件的，不同用户的权限可能是不同的，看到的目录也有可能是不同的。FtpletContainer这个说不清楚，暂时别去管这个，后面再说。FtpStatistics这个类主要是记录各种数据，比如当前连接数，登录用户数等。CommandFactory这个很容易说了，命令工厂，上篇文章中说到根据客户端指令不同创建各种命令实例来分别处理。ConnectionConfig用于对socket的连接管理。<br>除了这些还有一个map和2个list：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">private Map&lt;String, Listener&gt; listeners = new HashMap&lt;String, Listener&gt;();</div><div class="line">private static final List&lt;Authority&gt; ADMIN_AUTHORITIES = new ArrayList&lt;Authority&gt;();</div><div class="line">private static final List&lt;Authority&gt; ANON_AUTHORITIES = new ArrayList&lt;Authority&gt;();</div></pre></td></tr></table></figure></p>
+<p>listeners在context初始化的时候放进去一个default的listener，也就是NioListener的实例。只是通过工厂方式去创建的。而其他2个list则是用来装admin的权限和anon的权限：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">static &#123;</div><div class="line">        ADMIN_AUTHORITIES.add(new WritePermission());</div><div class="line">        </div><div class="line">        ANON_AUTHORITIES.add(new ConcurrentLoginPermission(20, 2));</div><div class="line">        ANON_AUTHORITIES.add(new TransferRatePermission(4800, 4800));</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>在类装载的时候就将权限加进去了，admin有写权限，anon有并发登录权限，其中还对anon进行了一个传输速率的配置。<br>至此，这个“神秘”的context就基本上梳理完了。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;此篇文章来解读ftpserver中的核心组件–FtpServerContext&lt;br&gt;在很多类中都有看到这个东西，顾名思义就是上下文。根据以往的在java web中的servlet context的理解，字面意思就是上下文。
+    
+    </summary>
+    
+      <category term="Apache Open Project" scheme="http://www.mr-dongw.site/categories/Apache-Open-Project/"/>
+    
+    
+      <category term="源码解读" scheme="http://www.mr-dongw.site/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
+    
+      <category term="Apache" scheme="http://www.mr-dongw.site/tags/Apache/"/>
+    
+  </entry>
   
   <entry>
     <title>FtpServer(Ⅱ)</title>
