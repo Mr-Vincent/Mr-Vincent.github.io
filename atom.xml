@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.mr-dongw.site/"/>
-  <updated>2017-04-10T14:31:22.000Z</updated>
+  <updated>2017-05-20T10:43:17.000Z</updated>
   <id>http://www.mr-dongw.site/</id>
   
   <author>
@@ -14,6 +14,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>XMPP Server Vysper （Ⅰ）</title>
+    <link href="http://www.mr-dongw.site/2017/05/20/xmpp-vysper-1-md/"/>
+    <id>http://www.mr-dongw.site/2017/05/20/xmpp-vysper-1-md/</id>
+    <published>2017-05-20T10:40:04.000Z</published>
+    <updated>2017-05-20T10:43:17.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>在嘀嗒清单里列出了许多计划。有阅读计划，有学习计划，还有其他的计划。其中阅读计划里就包括应用层协议，类似HTTP协议，MQTT，XMPP等。阅读协议最重要的目的就是理解设计者设计的初衷和思想。个人认为这些思想远远比实现的手段有趣。很崇拜那些定制协议的人，以及定制标准的那些巨头，例如Google等。<a id="more"></a>去看那些草案，RFC文档是一件很枯燥的事情，拿一个标准实现对着文档来分析可以让这个过程变得有趣的多。之前读过FTP的协议，看着看着就看不下去了。虽然没多少内容，但是要去读下去实在是索然无味。于是拿了一个标准实现去分析，FtpServer就是一个很简单的入门。现在开始去了解XMPP，于是拿了一个开源server Vysper来学习。 </p>
+<h1 id="XMPP"><a href="#XMPP" class="headerlink" title="XMPP"></a>XMPP</h1><p>第一个x代表的是Extensible，m代表的是Messageing，第一个p是Presence。这个协议的前生是Jabber，具体的没有去研究。这个协议是基于XML的，也就是通过XML格式去传输数据。其实我觉得，应用层的协议无非两种传输方式，基于文本和基于二进制。本质上来说都是基于二进制：对于计算机而言所有的数据全是0101，没什么毛病。HTTP就是基于文本，普通人都能去阅读HTTP里的数据。而XMPP是基于XML，也就是基于文本。</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>对于一个陌生的协议，又没耐心去看RFC文档（主要是看不懂英文），怎么去了解这个协议是怎么工作的呢？我的理解就是自己去抓包看内容。类比HTTP可以通过浏览器去查看请求头以及各种属性，同样的XMPP一样也可以通过抓包分析其指令及数据格式。首先去APACHE将Vysper下载下来（dist和src）然后自己本地将服务器跑起来。找几个XMPP客户端相互通信通过抓包工具来将XMPP协议的过滤出来，对每条请求和响应具体分析。ok，整个思路就是这样了。抓包工具使用wireshark很方便。客户端有很多，pc上使用spark（win），aduim（mac）；手机上使用bruno。openfire也是一个很不错的服务器，提供web管理页面，使用起来很方便。</p>
+<h1 id="Vysper"><a href="#Vysper" class="headerlink" title="Vysper"></a>Vysper</h1><p>Vysper的发音和Whisper是一样的，是悄悄话的意思。在apache的vysper官方文档中它实现的标准是 RFC3920（现在的标准是RFC6120，具体可见<a href="http://wiki.jabbercn.org/RFC6120" target="_blank" rel="external">RFC6120</a>）和 RFC3921（只实现了80%）。其他的都是些拓展协议了。根据文档介绍，vysper的结构分为三部分：<a href="http://mina.apache.org/vysper-project/xml_processing.html" target="_blank" rel="external">XML Processing</a>、<a href="http://mina.apache.org/vysper-project/stanza_processing_layer.html" target="_blank" rel="external">Stanza Processing</a>和<a href="http://mina.apache.org/vysper-project/user_mgmt.html" target="_blank" rel="external">User Management</a>.<br>目前最新的版本是0.7，打开下载的源码，其对应的模块有这几个部分：dist、examples、nbxml、server和speccompliance。其中server下又有好几个模块。</p>
+<h2 id="dist"><a href="#dist" class="headerlink" title="dist"></a>dist</h2><p>通过名字可以看出来是用来打包发布的。因为vysper是用maven管理的，这个模块将其他的模块引入进来，通过配置生成启动脚本。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">&lt;plugin&gt;</div><div class="line">        &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;</div><div class="line">        &lt;artifactId&gt;appassembler-maven-plugin&lt;/artifactId&gt;</div><div class="line">        &lt;version&gt;1.0&lt;/version&gt;</div><div class="line">        &lt;configuration&gt;</div><div class="line">          &lt;includeConfigurationDirectoryInClasspath&gt;true&lt;/includeConfigurationDirectoryInClasspath&gt;</div><div class="line">          &lt;configurationDirectory&gt;config&lt;/configurationDirectory&gt;</div><div class="line">          &lt;target&gt;$&#123;project.build.directory&#125;/appassembler&lt;/target&gt;</div><div class="line">          &lt;repositoryLayout&gt;flat&lt;/repositoryLayout&gt;</div><div class="line">		  &lt;repositoryName&gt;lib&lt;/repositoryName&gt;</div><div class="line">          &lt;environmentSetupFileName&gt;setenv&lt;/environmentSetupFileName&gt;</div><div class="line">          &lt;!-- Generate bin scripts for windows and unix per default --&gt;</div><div class="line">          &lt;platforms&gt;</div><div class="line">            &lt;platform&gt;windows&lt;/platform&gt;</div><div class="line">            &lt;platform&gt;unix&lt;/platform&gt;</div><div class="line">          &lt;/platforms&gt;</div><div class="line">          &lt;programs&gt;</div><div class="line">            &lt;program&gt;</div><div class="line">              &lt;mainClass&gt;org.apache.vysper.spring.ServerMain&lt;/mainClass&gt;</div><div class="line">              &lt;!-- call it only run because appassemble will add .bat by default on windows --&gt;              </div><div class="line">              &lt;name&gt;run&lt;/name&gt;</div><div class="line">              &lt;!-- Only generate windows bat script for this application --&gt;</div><div class="line">              &lt;platforms&gt;</div><div class="line">                &lt;platform&gt;windows&lt;/platform&gt;</div><div class="line">              &lt;/platforms&gt;</div><div class="line">            &lt;/program&gt;</div><div class="line">            &lt;program&gt;</div><div class="line">              &lt;mainClass&gt;org.apache.vysper.spring.ServerMain&lt;/mainClass&gt;</div><div class="line">              &lt;name&gt;run.sh&lt;/name&gt;</div><div class="line">              &lt;!-- Only generate unix shell script for this application --&gt;</div><div class="line">              &lt;platforms&gt;</div><div class="line">             &lt;platform&gt;unix&lt;/platform&gt;</div><div class="line">              &lt;/platforms&gt;</div><div class="line">            &lt;/program&gt;</div><div class="line">          &lt;/programs&gt;</div><div class="line">        &lt;/configuration&gt;</div><div class="line">        &lt;executions&gt;</div><div class="line">          &lt;execution&gt;</div><div class="line">          &lt;id&gt;make-appassemble&lt;/id&gt;</div><div class="line">            &lt;phase&gt;package&lt;/phase&gt;</div><div class="line">            &lt;goals&gt;</div><div class="line">              &lt;goal&gt;assemble&lt;/goal&gt;</div><div class="line">            &lt;/goals&gt;</div><div class="line">          &lt;/execution&gt;</div><div class="line">        &lt;/executions&gt;</div><div class="line">&lt;/plugin&gt;</div></pre></td></tr></table></figure></p>
+<h2 id="examples"><a href="#examples" class="headerlink" title="examples"></a>examples</h2><p>这个模块下有两个子模块：embedded-war和pubsub-client.分别是用作嵌入到web容器里和gui客户端的栗子。简言之就是将编译好的server-core拿来调用了一把而已。可以通过jetty或者tomcat启动它都是没问题的。而pubsub-client这个模块则是一个gui的程序，通过pom的配置看到了有smack的引用，具体的后续会慢慢研究。</p>
+<h2 id="nbxml"><a href="#nbxml" class="headerlink" title="nbxml"></a>nbxml</h2><p>这个模块很奇怪，名字叫做nbxml。我想这个项目不是外国人写的吗，为何叫牛逼xml。真的是这样吗？并不是的。全名叫做Non-blocking XML，非阻塞的xml解析器。无非就是实现了org.xml.sax 的一些接口而已。自定义了一套解析规则。</p>
+<h2 id="server"><a href="#server" class="headerlink" title="server"></a>server</h2><p>这个模块下有很多子模块。这也是vysper的核心模块了。</p>
+<h3 id="admin-config"><a href="#admin-config" class="headerlink" title="admin-config"></a>admin-config</h3><p>这个模块是一个web应用，和openfire的web管理是一样的。其中使用到了velocity和springmvc</p>
+<h3 id="core"><a href="#core" class="headerlink" title="core"></a>core</h3><p>这个模块最重要的就是对xmpp协议的实现了。当然最重要的还是离不开mina，毕竟是mina的子项目。</p>
+<h3 id="extensions"><a href="#extensions" class="headerlink" title="extensions"></a>extensions</h3><p>这个模块也包含很多子模块，每个模块都是对xmpp拓展协议的实现，比如bosh，mcu等。我发现使用maven分模块来管理这种方式真的很聪明。</p>
+<h3 id="storage"><a href="#storage" class="headerlink" title="storage"></a>storage</h3><p>顾名思义，这个模块是用来存储的。其中有个jcr和hbase。不禁让我想到了hadoop。没错其中真的还引入了hadoop的包。我理解的是这个模块用于文档存储的。具体是存储什么我觉得大概是用户信息，联系人等。openfire使用的是mysql数据库来管理的。具体怎么实现的后续会继续分析。</p>
+<h2 id="speccompliance"><a href="#speccompliance" class="headerlink" title="speccompliance"></a>speccompliance</h2><p>这个模块很神秘，我看pom文件中只配置了一个jdk的jar包，这个jar包在1.8中是没有的。当初编译源码的时候还遇到了一点坑，将jdk换为1.7才编译通过。说什么使用了apt的api。具体的是干嘛的可见<a href="http://www.javacui.com/Theory/367.html" target="_blank" rel="external">JDK工具 APT</a>。简单理解就是可以帮我们少写代码。</p>
+<h1 id="结尾语"><a href="#结尾语" class="headerlink" title="结尾语"></a>结尾语</h1><p>本文简要介绍了XMPP协议以及如何去学习和分析一个协议如何实现的。通过开源项目Vysper来学习XMPP是一个不错的途径。同时也简单地将Vysper的结构概述了一遍。接下来将会通过分析和调试源代码以及结合阅读RFC文档的方式来学习XMPP协议。<img src="http://7xsfwn.com1.z0.glb.clouddn.com/%E5%87%A4%E5%87%B0%E8%8A%B1.jpg" alt="凤凰花"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h1&gt;&lt;p&gt;在嘀嗒清单里列出了许多计划。有阅读计划，有学习计划，还有其他的计划。其中阅读计划里就包括应用层协议，类似HTTP协议，MQTT，XMPP等。阅读协议最重要的目的就是理解设计者设计的初衷和思想。个人认为这些思想远远比实现的手段有趣。很崇拜那些定制协议的人，以及定制标准的那些巨头，例如Google等。
+    
+    </summary>
+    
+      <category term="Apache Open Project" scheme="http://www.mr-dongw.site/categories/Apache-Open-Project/"/>
+    
+    
+      <category term="源码解读" scheme="http://www.mr-dongw.site/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
+    
+      <category term="Apache" scheme="http://www.mr-dongw.site/tags/Apache/"/>
+    
+  </entry>
   
   <entry>
     <title>ftpserver（Ⅳ）</title>

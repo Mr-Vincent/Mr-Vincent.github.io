@@ -1,0 +1,323 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>XMPP Server Vysper （Ⅰ） | DongWei&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="起因在嘀嗒清单里列出了许多计划。有阅读计划，有学习计划，还有其他的计划。其中阅读计划里就包括应用层协议，类似HTTP协议，MQTT，XMPP等。阅读协议最重要的目的就是理解设计者设计的初衷和思想。个人认为这些思想远远比实现的手段有趣。很崇拜那些定制协议的人，以及定制标准的那些巨头，例如Google等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XMPP Server Vysper （Ⅰ）">
+<meta property="og:url" content="http://www.mr-dongw.site/2017/05/20/xmpp-vysper-1-md/index.html">
+<meta property="og:site_name" content="DongWei's Blog">
+<meta property="og:description" content="起因在嘀嗒清单里列出了许多计划。有阅读计划，有学习计划，还有其他的计划。其中阅读计划里就包括应用层协议，类似HTTP协议，MQTT，XMPP等。阅读协议最重要的目的就是理解设计者设计的初衷和思想。个人认为这些思想远远比实现的手段有趣。很崇拜那些定制协议的人，以及定制标准的那些巨头，例如Google等。">
+<meta property="og:image" content="http://7xsfwn.com1.z0.glb.clouddn.com/%E5%87%A4%E5%87%B0%E8%8A%B1.jpg">
+<meta property="og:updated_time" content="2017-05-20T10:43:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="XMPP Server Vysper （Ⅰ）">
+<meta name="twitter:description" content="起因在嘀嗒清单里列出了许多计划。有阅读计划，有学习计划，还有其他的计划。其中阅读计划里就包括应用层协议，类似HTTP协议，MQTT，XMPP等。阅读协议最重要的目的就是理解设计者设计的初衷和思想。个人认为这些思想远远比实现的手段有趣。很崇拜那些定制协议的人，以及定制标准的那些巨头，例如Google等。">
+<meta name="twitter:image" content="http://7xsfwn.com1.z0.glb.clouddn.com/%E5%87%A4%E5%87%B0%E8%8A%B1.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="DongWei&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">DongWei&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="www.mr-dongw.site">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-xmpp-vysper-1-md" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/20/xmpp-vysper-1-md/" class="article-date">
+  <time datetime="2017-05-20T10:40:04.000Z" itemprop="datePublished">2017-05-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Apache-Open-Project/">Apache Open Project</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      XMPP Server Vysper （Ⅰ）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>在嘀嗒清单里列出了许多计划。有阅读计划，有学习计划，还有其他的计划。其中阅读计划里就包括应用层协议，类似HTTP协议，MQTT，XMPP等。阅读协议最重要的目的就是理解设计者设计的初衷和思想。个人认为这些思想远远比实现的手段有趣。很崇拜那些定制协议的人，以及定制标准的那些巨头，例如Google等。<a id="more"></a>去看那些草案，RFC文档是一件很枯燥的事情，拿一个标准实现对着文档来分析可以让这个过程变得有趣的多。之前读过FTP的协议，看着看着就看不下去了。虽然没多少内容，但是要去读下去实在是索然无味。于是拿了一个标准实现去分析，FtpServer就是一个很简单的入门。现在开始去了解XMPP，于是拿了一个开源server Vysper来学习。 </p>
+<h1 id="XMPP"><a href="#XMPP" class="headerlink" title="XMPP"></a>XMPP</h1><p>第一个x代表的是Extensible，m代表的是Messageing，第一个p是Presence。这个协议的前生是Jabber，具体的没有去研究。这个协议是基于XML的，也就是通过XML格式去传输数据。其实我觉得，应用层的协议无非两种传输方式，基于文本和基于二进制。本质上来说都是基于二进制：对于计算机而言所有的数据全是0101，没什么毛病。HTTP就是基于文本，普通人都能去阅读HTTP里的数据。而XMPP是基于XML，也就是基于文本。</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>对于一个陌生的协议，又没耐心去看RFC文档（主要是看不懂英文），怎么去了解这个协议是怎么工作的呢？我的理解就是自己去抓包看内容。类比HTTP可以通过浏览器去查看请求头以及各种属性，同样的XMPP一样也可以通过抓包分析其指令及数据格式。首先去APACHE将Vysper下载下来（dist和src）然后自己本地将服务器跑起来。找几个XMPP客户端相互通信通过抓包工具来将XMPP协议的过滤出来，对每条请求和响应具体分析。ok，整个思路就是这样了。抓包工具使用wireshark很方便。客户端有很多，pc上使用spark（win），aduim（mac）；手机上使用bruno。openfire也是一个很不错的服务器，提供web管理页面，使用起来很方便。</p>
+<h1 id="Vysper"><a href="#Vysper" class="headerlink" title="Vysper"></a>Vysper</h1><p>Vysper的发音和Whisper是一样的，是悄悄话的意思。在apache的vysper官方文档中它实现的标准是 RFC3920（现在的标准是RFC6120，具体可见<a href="http://wiki.jabbercn.org/RFC6120" target="_blank" rel="external">RFC6120</a>）和 RFC3921（只实现了80%）。其他的都是些拓展协议了。根据文档介绍，vysper的结构分为三部分：<a href="http://mina.apache.org/vysper-project/xml_processing.html" target="_blank" rel="external">XML Processing</a>、<a href="http://mina.apache.org/vysper-project/stanza_processing_layer.html" target="_blank" rel="external">Stanza Processing</a>和<a href="http://mina.apache.org/vysper-project/user_mgmt.html" target="_blank" rel="external">User Management</a>.<br>目前最新的版本是0.7，打开下载的源码，其对应的模块有这几个部分：dist、examples、nbxml、server和speccompliance。其中server下又有好几个模块。</p>
+<h2 id="dist"><a href="#dist" class="headerlink" title="dist"></a>dist</h2><p>通过名字可以看出来是用来打包发布的。因为vysper是用maven管理的，这个模块将其他的模块引入进来，通过配置生成启动脚本。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">&lt;plugin&gt;</div><div class="line">        &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;</div><div class="line">        &lt;artifactId&gt;appassembler-maven-plugin&lt;/artifactId&gt;</div><div class="line">        &lt;version&gt;1.0&lt;/version&gt;</div><div class="line">        &lt;configuration&gt;</div><div class="line">          &lt;includeConfigurationDirectoryInClasspath&gt;true&lt;/includeConfigurationDirectoryInClasspath&gt;</div><div class="line">          &lt;configurationDirectory&gt;config&lt;/configurationDirectory&gt;</div><div class="line">          &lt;target&gt;$&#123;project.build.directory&#125;/appassembler&lt;/target&gt;</div><div class="line">          &lt;repositoryLayout&gt;flat&lt;/repositoryLayout&gt;</div><div class="line">		  &lt;repositoryName&gt;lib&lt;/repositoryName&gt;</div><div class="line">          &lt;environmentSetupFileName&gt;setenv&lt;/environmentSetupFileName&gt;</div><div class="line">          &lt;!-- Generate bin scripts for windows and unix per default --&gt;</div><div class="line">          &lt;platforms&gt;</div><div class="line">            &lt;platform&gt;windows&lt;/platform&gt;</div><div class="line">            &lt;platform&gt;unix&lt;/platform&gt;</div><div class="line">          &lt;/platforms&gt;</div><div class="line">          &lt;programs&gt;</div><div class="line">            &lt;program&gt;</div><div class="line">              &lt;mainClass&gt;org.apache.vysper.spring.ServerMain&lt;/mainClass&gt;</div><div class="line">              &lt;!-- call it only run because appassemble will add .bat by default on windows --&gt;              </div><div class="line">              &lt;name&gt;run&lt;/name&gt;</div><div class="line">              &lt;!-- Only generate windows bat script for this application --&gt;</div><div class="line">              &lt;platforms&gt;</div><div class="line">                &lt;platform&gt;windows&lt;/platform&gt;</div><div class="line">              &lt;/platforms&gt;</div><div class="line">            &lt;/program&gt;</div><div class="line">            &lt;program&gt;</div><div class="line">              &lt;mainClass&gt;org.apache.vysper.spring.ServerMain&lt;/mainClass&gt;</div><div class="line">              &lt;name&gt;run.sh&lt;/name&gt;</div><div class="line">              &lt;!-- Only generate unix shell script for this application --&gt;</div><div class="line">              &lt;platforms&gt;</div><div class="line">             &lt;platform&gt;unix&lt;/platform&gt;</div><div class="line">              &lt;/platforms&gt;</div><div class="line">            &lt;/program&gt;</div><div class="line">          &lt;/programs&gt;</div><div class="line">        &lt;/configuration&gt;</div><div class="line">        &lt;executions&gt;</div><div class="line">          &lt;execution&gt;</div><div class="line">          &lt;id&gt;make-appassemble&lt;/id&gt;</div><div class="line">            &lt;phase&gt;package&lt;/phase&gt;</div><div class="line">            &lt;goals&gt;</div><div class="line">              &lt;goal&gt;assemble&lt;/goal&gt;</div><div class="line">            &lt;/goals&gt;</div><div class="line">          &lt;/execution&gt;</div><div class="line">        &lt;/executions&gt;</div><div class="line">&lt;/plugin&gt;</div></pre></td></tr></table></figure></p>
+<h2 id="examples"><a href="#examples" class="headerlink" title="examples"></a>examples</h2><p>这个模块下有两个子模块：embedded-war和pubsub-client.分别是用作嵌入到web容器里和gui客户端的栗子。简言之就是将编译好的server-core拿来调用了一把而已。可以通过jetty或者tomcat启动它都是没问题的。而pubsub-client这个模块则是一个gui的程序，通过pom的配置看到了有smack的引用，具体的后续会慢慢研究。</p>
+<h2 id="nbxml"><a href="#nbxml" class="headerlink" title="nbxml"></a>nbxml</h2><p>这个模块很奇怪，名字叫做nbxml。我想这个项目不是外国人写的吗，为何叫牛逼xml。真的是这样吗？并不是的。全名叫做Non-blocking XML，非阻塞的xml解析器。无非就是实现了org.xml.sax 的一些接口而已。自定义了一套解析规则。</p>
+<h2 id="server"><a href="#server" class="headerlink" title="server"></a>server</h2><p>这个模块下有很多子模块。这也是vysper的核心模块了。</p>
+<h3 id="admin-config"><a href="#admin-config" class="headerlink" title="admin-config"></a>admin-config</h3><p>这个模块是一个web应用，和openfire的web管理是一样的。其中使用到了velocity和springmvc</p>
+<h3 id="core"><a href="#core" class="headerlink" title="core"></a>core</h3><p>这个模块最重要的就是对xmpp协议的实现了。当然最重要的还是离不开mina，毕竟是mina的子项目。</p>
+<h3 id="extensions"><a href="#extensions" class="headerlink" title="extensions"></a>extensions</h3><p>这个模块也包含很多子模块，每个模块都是对xmpp拓展协议的实现，比如bosh，mcu等。我发现使用maven分模块来管理这种方式真的很聪明。</p>
+<h3 id="storage"><a href="#storage" class="headerlink" title="storage"></a>storage</h3><p>顾名思义，这个模块是用来存储的。其中有个jcr和hbase。不禁让我想到了hadoop。没错其中真的还引入了hadoop的包。我理解的是这个模块用于文档存储的。具体是存储什么我觉得大概是用户信息，联系人等。openfire使用的是mysql数据库来管理的。具体怎么实现的后续会继续分析。</p>
+<h2 id="speccompliance"><a href="#speccompliance" class="headerlink" title="speccompliance"></a>speccompliance</h2><p>这个模块很神秘，我看pom文件中只配置了一个jdk的jar包，这个jar包在1.8中是没有的。当初编译源码的时候还遇到了一点坑，将jdk换为1.7才编译通过。说什么使用了apt的api。具体的是干嘛的可见<a href="http://www.javacui.com/Theory/367.html" target="_blank" rel="external">JDK工具 APT</a>。简单理解就是可以帮我们少写代码。</p>
+<h1 id="结尾语"><a href="#结尾语" class="headerlink" title="结尾语"></a>结尾语</h1><p>本文简要介绍了XMPP协议以及如何去学习和分析一个协议如何实现的。通过开源项目Vysper来学习XMPP是一个不错的途径。同时也简单地将Vysper的结构概述了一遍。接下来将会通过分析和调试源代码以及结合阅读RFC文档的方式来学习XMPP协议。<img src="http://7xsfwn.com1.z0.glb.clouddn.com/%E5%87%A4%E5%87%B0%E8%8A%B1.jpg" alt="凤凰花"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://www.mr-dongw.site/2017/05/20/xmpp-vysper-1-md/" data-id="cj2x5bom90000hk4ostw6cj34" class="article-share-link" data-share="baidu" data-title="XMPP Server Vysper （Ⅰ）">分享到</a>
+      
+
+      
+        <a href="http://www.mr-dongw.site/2017/05/20/xmpp-vysper-1-md/#ds-thread" class="article-comment-link">评论</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Apache/">Apache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/源码解读/">源码解读</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/04/10/ftpserver4/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">ftpserver（Ⅳ）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2017/05/20/xmpp-vysper-1-md/" data-title="XMPP Server Vysper （Ⅰ）" data-url="http://www.mr-dongw.site/2017/05/20/xmpp-vysper-1-md/"></div>
+  </section>
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Apache-Open-Project/">Apache Open Project</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/想法/">想法</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Apache/">Apache</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/源码解读/">源码解读</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活，扯淡/">生活，扯淡</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Apache/" style="font-size: 20px;">Apache</a> <a href="/tags/源码解读/" style="font-size: 20px;">源码解读</a> <a href="/tags/生活，扯淡/" style="font-size: 10px;">生活，扯淡</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/05/20/xmpp-vysper-1-md/">XMPP Server Vysper （Ⅰ）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/10/ftpserver4/">ftpserver（Ⅳ）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/09/牢骚一篇/">牢骚一篇</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/04/ftpserver3/">ftpserver(Ⅲ)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/26/ftpserver2-md/">FtpServer(Ⅱ)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://arvinxiang.com" target="_blank">主题作者</a>
+          </li>
+        
+          <li>
+            <a href="http://reqianduan.com" target="_blank">热前端</a>
+          </li>
+        
+          <li>
+            <a href="http://yuancheng.work" target="_blank">远程.work</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Mr-Vincent<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+<!-- 多说公共js代码 start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"reqianduan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共js代码 end -->
+
+
+<!-- 百度分享 start -->
+
+<div id="article-share-box" class="article-share-box">
+  <div id="bdshare" class="bdsharebuttonbox article-share-links">
+    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
+    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
+    <a class="article-share-more" data-cmd="more" title="更多"></a>
+  </div>
+</div>
+<script>
+  function SetShareData(cmd, config) {
+    if (shareDataTitle && shareDataUrl) {
+      config.bdText = shareDataTitle;
+      config.bdUrl = shareDataUrl;
+    }
+    return config;
+  }
+  window._bd_share_config={
+    "common":{onBeforeClick: SetShareData},
+    "share":{"bdCustomStyle":"/css/bdshare.css"}
+  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
