@@ -4,6 +4,72 @@
 
     
   <url>
+    <loc>http://www.mr-dongw.site/2017/07/01/spring%20schema/</loc>
+    <lastmod>2017-07-01T14:28:27.000Z</lastmod>
+    <data>
+        <display>
+        <title>自定义Spring Schema</title>
+        <pubTime>2017-07-01T14:18:23.000Z</pubTime>
+        
+        <tag>Spring</tag>
+         
+        <tag>XML</tag>
+         
+         
+           
+             
+              <breadCrumb title="Spring Framework" url="http://www.mr-dongw.site/categories/Spring-Framework/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.mr-dongw.site/2017/07/01/juc_CyclicBarrier/</loc>
+    <lastmod>2017-07-01T14:28:20.000Z</lastmod>
+    <data>
+        <display>
+        <title>JUC之CyclicBarrier</title>
+        <pubTime>2017-07-01T14:14:41.000Z</pubTime>
+        
+        <tag>源码解读</tag>
+         
+        <tag>JDK</tag>
+         
+         
+           
+             
+              <breadCrumb title="JDK SOURCE" url="http://www.mr-dongw.site/categories/JDK-SOURCE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.mr-dongw.site/2017/07/01/juc_LinkedBlockingQueue/</loc>
+    <lastmod>2017-07-01T14:28:11.000Z</lastmod>
+    <data>
+        <display>
+        <title>JUC系列之BlockingQueue</title>
+        <pubTime>2017-07-01T14:16:23.000Z</pubTime>
+        
+        <tag>源码解读</tag>
+         
+        <tag>JDK</tag>
+         
+         
+           
+             
+              <breadCrumb title="JDK SOURCE" url="http://www.mr-dongw.site/categories/JDK-SOURCE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.mr-dongw.site/2017/05/20/xmpp-vysper-1-md/</loc>
     <lastmod>2017-05-20T10:43:17.000Z</lastmod>
     <data>

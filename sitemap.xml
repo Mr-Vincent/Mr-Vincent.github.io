@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.mr-dongw.site/2017/07/01/spring%20schema/</loc>
+    
+    <lastmod>2017-07-01T14:28:27.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.mr-dongw.site/2017/07/01/juc_CyclicBarrier/</loc>
+    
+    <lastmod>2017-07-01T14:28:20.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.mr-dongw.site/2017/07/01/juc_LinkedBlockingQueue/</loc>
+    
+    <lastmod>2017-07-01T14:28:11.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.mr-dongw.site/2017/05/20/xmpp-vysper-1-md/</loc>
     
     <lastmod>2017-05-20T10:43:17.000Z</lastmod>

@@ -1,0 +1,341 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JUC系列之BlockingQueue | DongWei&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="JUC是jdk1.5之后一强大的工具包。其中对JAVA的并发做了很好的支持。仔细阅读源码你会发现很多代码的作者是Doug Lea。所以现在开始细细琢磨这位大神的鬼斧神工。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JUC系列之BlockingQueue">
+<meta property="og:url" content="http://www.mr-dongw.site/2017/07/01/juc_LinkedBlockingQueue/index.html">
+<meta property="og:site_name" content="DongWei's Blog">
+<meta property="og:description" content="JUC是jdk1.5之后一强大的工具包。其中对JAVA的并发做了很好的支持。仔细阅读源码你会发现很多代码的作者是Doug Lea。所以现在开始细细琢磨这位大神的鬼斧神工。">
+<meta property="og:updated_time" content="2017-07-01T14:28:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JUC系列之BlockingQueue">
+<meta name="twitter:description" content="JUC是jdk1.5之后一强大的工具包。其中对JAVA的并发做了很好的支持。仔细阅读源码你会发现很多代码的作者是Doug Lea。所以现在开始细细琢磨这位大神的鬼斧神工。">
+  
+    <link rel="alternative" href="/atom.xml" title="DongWei&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+</head>
+<body>
+<div id="container">
+  <div id="wrap">
+    <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">DongWei&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="www.mr-dongw.site">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="outer">
+      <section id="main"><article id="post-juc_LinkedBlockingQueue" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/01/juc_LinkedBlockingQueue/" class="article-date">
+  <time datetime="2017-07-01T14:16:23.000Z" itemprop="datePublished">2017-07-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JDK-SOURCE/">JDK SOURCE</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JUC系列之BlockingQueue
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>JUC是jdk1.5之后一强大的工具包。其中对JAVA的并发做了很好的支持。仔细阅读源码你会发现很多代码的作者是<a href="https://en.wikipedia.org/wiki/Doug_Lea" target="_blank" rel="external">Doug Lea</a>。所以现在开始细细琢磨这位大神的鬼斧神工。<br><a id="more"></a> </p>
+<h4 id="继承结构"><a href="#继承结构" class="headerlink" title="继承结构"></a>继承结构</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BlockingQueue</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">Queue</span>&lt;<span class="title">E</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这个类继承了接口Queue，Queue继承了Collection接口，他们都是亲戚。亲戚关系很庞大，后台很硬。直接实现这个接口的类没多少个：</p>
+<ul>
+<li>ArrayBlockingQueue </li>
+<li>DelayQueue</li>
+<li>LinkedBlockingDeque</li>
+<li>LinkedBlockingQueue</li>
+<li>LinkedTransferQueue</li>
+<li>PriorityBlockingQueue</li>
+<li>SynchronousQueue<h4 id="LinkedBlockingQueue"><a href="#LinkedBlockingQueue" class="headerlink" title="LinkedBlockingQueue"></a>LinkedBlockingQueue</h4>那就拿最简单的实现开刀。顾名思义，这个Queue是基于链表的。看看源码文档是怎么去描述的：<blockquote>
+<p>An optionally-bounded blocking queue based on linked nodes. This queue orders elements FIFO (first-in-first-out). The head of the queue is that element that has been on the queue the longest time. The tail of the queue is that element that has been on the queue the shortest time. New elements are inserted at the tail of the queue, and the queue retrieval operations obtain elements at the head of the queue. Linked queues typically have higher throughput than array-based queues but less predictable performance in most concurrent applications.<br>这是一个边界可选的基于链表的阻塞队列。这个队列按照先进先出的规则阻止元素。头节点在队列中的时间最长，尾节点在队列时间最短。新添加的元素会被放到尾部，取元素将在队列的头部取。基于链表的队列的吞吐量通常要比基于数组的高，但是在高并发场景下性能没有那么可观。<br>The optional capacity bound constructor argument serves as a way to prevent excessive queue expansion. The capacity, if unspecified, is equal to Integer.MAX_VALUE. Linked nodes are dynamically created upon each insertion unless this would bring the queue above capacity.<br>可选的容量参数是为了防止队列数量膨胀，假设没有去指定这个参数那么将指定为int的最大值。在不超过容量的前提下节点也会在每次插入的时候动态的创建。 </p>
+</blockquote>
+</li>
+</ul>
+<p>先看看这个类的内部类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">        E item;</div><div class="line"></div><div class="line">        <span class="comment">/**</span></div><div class="line">         * One of:</div><div class="line">         * - the real successor Node</div><div class="line">         * - this Node, meaning the successor is head.next</div><div class="line">         * - null, meaning there is no successor (this is the last node)</div><div class="line">         */</div><div class="line">        Node&lt;E&gt; next;</div><div class="line"></div><div class="line">        Node(E x) &#123; item = x; &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Itr</span> <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">	<span class="comment">//省略实现</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>一个node内部类以及一个itr的实现，非常简单。在JAVA集合中经常看到内部实现Itr的，见怪不怪了。<br>接下来就开始正餐了，对几个核心方法进行梳理。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> E <span class="title">take</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">        E x;</div><div class="line">        <span class="keyword">int</span> c = -<span class="number">1</span>;</div><div class="line">        <span class="comment">//count记录当前队列的元素数量</span></div><div class="line">        <span class="keyword">final</span> AtomicInteger count = <span class="keyword">this</span>.count;</div><div class="line">        <span class="keyword">final</span> ReentrantLock takeLock = <span class="keyword">this</span>.takeLock;</div><div class="line">        takeLock.lockInterruptibly();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">	        <span class="comment">//当当前元素的数量为0的时候线程阻塞 直到接到通知队列有元素了才继续执行</span></div><div class="line">            <span class="keyword">while</span> (count.get() == <span class="number">0</span>) &#123;</div><div class="line">                notEmpty.await();</div><div class="line">            &#125;</div><div class="line">            x = dequeue();</div><div class="line">            <span class="comment">//头节点出队了 元素数量减去1 返回值为减1前的值 如果队列元素为1出队后队列没元素了c依旧为1</span></div><div class="line">            c = count.getAndDecrement();</div><div class="line">            <span class="keyword">if</span> (c &gt; <span class="number">1</span>)</div><div class="line">	            <span class="comment">//如果队列中还有元素 那么通知阻塞的线程可以取了</span></div><div class="line">                notEmpty.signal();</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            takeLock.unlock();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (c == capacity)</div><div class="line">	        <span class="comment">//这个判断很有意思，想了好久。</span></div><div class="line">	        <span class="comment">//这种情况什么时候发生呢？当向队列中添加元素 队列容量有限比如说10个 我添加了20个 那么线程会阻塞掉，线程被阻塞了必须由别的线程来唤醒不能自己唤醒自己。当某个线程执行take的时候，第一次进来这个方法出队了一个元素 这时候c的值依旧是10（返回的是旧值）那么就执行这个操作了：将入队的阻塞线程唤醒 这时候剩下的10个元素可以继续往队列中送了（只能再送一个，因为满了依旧会阻塞）。原则只有一个：满了就通知。这个画面就容易想到了：我出一个你才能进一个，不存在我先出2个你再补2个进来的，必须是轮换的来，一人一下。</span></div><div class="line">            signalNotFull();</div><div class="line">        <span class="keyword">return</span> x;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>自己写了个小示例程序来控制出队和入队，写出来方便理解：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QueueCase</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">        BlockingQueue&lt;String&gt; queue = <span class="keyword">new</span> LinkedBlockingQueue&lt;String&gt;(<span class="number">3</span>);</div><div class="line"></div><div class="line">        Thread put = <span class="keyword">new</span> Thread(<span class="keyword">new</span> F(queue));</div><div class="line">        put.start();</div><div class="line"></div><div class="line">        Thread take = <span class="keyword">new</span> Thread(<span class="keyword">new</span> T(queue));</div><div class="line">        take.start();</div><div class="line"></div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">F</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</div><div class="line">        BlockingQueue&lt;String&gt; queue;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">F</span><span class="params">(BlockingQueue&lt;String&gt; queue)</span></span>&#123;</div><div class="line">            <span class="keyword">this</span>.queue = queue;</div><div class="line">        &#125;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    queue.put(<span class="string">""</span>+i);</div><div class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">T</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</div><div class="line">        BlockingQueue&lt;String&gt; queue;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">T</span><span class="params">(BlockingQueue&lt;String&gt; queue)</span></span>&#123;</div><div class="line">            <span class="keyword">this</span>.queue = queue;</div><div class="line">        &#125;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</div><div class="line">            <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</div><div class="line">                System.out.println(<span class="string">"请输入要取出的数量："</span>);</div><div class="line">                <span class="keyword">int</span> t = scanner.nextInt();</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; t; i++) &#123;</div><div class="line">                    <span class="keyword">try</span> &#123;</div><div class="line">                        String take = queue.take();</div><div class="line">                        System.out.println(Thread.currentThread().getName()+<span class="string">"取出了元素："</span>+take);</div><div class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                        e.printStackTrace();</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个小DEMO中有2个线程，分别去对阻塞队列存元素和取元素。阻塞队列容量我只给了3个，在存元素的线程中给了10个元素让它去入队，那么在存到第四个的时候这个线程就阻塞了，直到其他线程被唤醒。而出队线程呢会接受一个数，这个数代表着从队列中要出的元素数量。当输入为10 ，则队列中元素全部被打印出来了。这个过程这样描述：线程的执行是没有先后的（一般情况），因为出队线程中有接受控制台输入，会被阻塞。入队线程一定会执行到将10个元素中的3个放入队列（塞满了，容量只有3），这时候两个线程都被阻塞掉了。当控制台接受输入了，出队线程执行到<code>take</code>方法，进行出队操作，执行到<code>if (c == capacity)</code>的时候唤醒入队线程可以继续执行。也就是说每次去调用<code>take</code>方法出队的时候都会去检查队列有没有满，满了就通知被阻塞的线程可以往队列中添加元素了（也只有队列满了才会被阻塞掉）。<br>在看看入队的方法<code>put</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(E e)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">        <span class="keyword">if</span> (e == <span class="keyword">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</div><div class="line">        <span class="comment">// Note: convention in all put/take/etc is to preset local var</span></div><div class="line">        <span class="comment">// holding count negative to indicate failure unless set.</span></div><div class="line">        <span class="keyword">int</span> c = -<span class="number">1</span>;</div><div class="line">        Node&lt;E&gt; node = <span class="keyword">new</span> Node(e);</div><div class="line">        <span class="keyword">final</span> ReentrantLock putLock = <span class="keyword">this</span>.putLock;</div><div class="line">        <span class="keyword">final</span> AtomicInteger count = <span class="keyword">this</span>.count;</div><div class="line">        putLock.lockInterruptibly();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="comment">/*</span></div><div class="line">             * Note that count is used in wait guard even though it is</div><div class="line">             * not protected by lock. This works because count can</div><div class="line">             * only decrease at this point (all other puts are shut</div><div class="line">             * out by lock), and we (or some other waiting put) are</div><div class="line">             * signalled if it ever changes from capacity. Similarly</div><div class="line">             * for all other uses of count in other wait guards.</div><div class="line">             */</div><div class="line">            <span class="keyword">while</span> (count.get() == capacity) &#123;</div><div class="line">                notFull.await();</div><div class="line">            &#125;</div><div class="line">            enqueue(node);</div><div class="line">            c = count.getAndIncrement();</div><div class="line">            <span class="comment">//如果入队一个元素队列还有位置的话唤醒被阻塞的线程可以往队列中添加元素了</span></div><div class="line">            <span class="keyword">if</span> (c + <span class="number">1</span> &lt; capacity)</div><div class="line">                notFull.signal();</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            putLock.unlock();</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//只有第一次put的时候才会执行这段代码 队列初始化的时候没有元素 count为0 第一次执行put虽然加1了但是返回的是旧值0 这时候队列中有一个元素 通知因为队列为空的出队线程可以取元素了</span></div><div class="line">        <span class="keyword">if</span> (c == <span class="number">0</span>)</div><div class="line">            signalNotEmpty();</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>其中还有很多其他的出队入队方法类似<code>offer</code> <code>peek</code>等就不一一说明了，其中的原理都是一样的。只不过有些方法不是阻塞的，出队的时候队空了就返回false或者null或者抛异常，入队同理。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>至此，关于JUC中的<code>BlockingQueue</code>的一个实现 <code>LinkedBlockingQueue</code>主要内容就到此为止，其中很多JUC的东西还是很值得去深入琢磨的。比方说<code>ReentrantLock</code>。对于并发编程这一块，还有很多东西需要去学习的。我想说这里面水太深了，这个行业真的是要求无时无刻去学习！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <a data-url="http://www.mr-dongw.site/2017/07/01/juc_LinkedBlockingQueue/" data-id="cj4ldr3dz000h7x4olfkb4sx3" class="article-share-link" data-share="baidu" data-title="JUC系列之BlockingQueue">Share</a>
+      
+
+      
+        <a href="http://www.mr-dongw.site/2017/07/01/juc_LinkedBlockingQueue/#ds-thread" class="article-comment-link">Comments</a>
+      
+
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/源码解读/">源码解读</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/01/spring schema/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          自定义Spring Schema
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/07/01/juc_CyclicBarrier/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">JUC之CyclicBarrier</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+  <section id="comments">
+    <!-- UY BEGIN -->
+    <div id="uyan_frame"></div>
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2137815"></script>
+    <!-- UY END -->
+  </section>
+</section>
+      
+      <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Apache-Open-Project/">Apache Open Project</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JDK-SOURCE/">JDK SOURCE</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Spring-Framework/">Spring Framework</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/想法/">想法</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Apache/">Apache</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JDK/">JDK</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/XML/">XML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/源码解读/">源码解读</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活，扯淡/">生活，扯淡</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Apache/" style="font-size: 16.67px;">Apache</a> <a href="/tags/JDK/" style="font-size: 13.33px;">JDK</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/XML/" style="font-size: 10px;">XML</a> <a href="/tags/源码解读/" style="font-size: 20px;">源码解读</a> <a href="/tags/生活，扯淡/" style="font-size: 10px;">生活，扯淡</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/07/01/spring schema/">自定义Spring Schema</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/01/juc_LinkedBlockingQueue/">JUC系列之BlockingQueue</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/01/juc_CyclicBarrier/">JUC之CyclicBarrier</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/20/xmpp-vysper-1-md/">XMPP Server Vysper （Ⅰ）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/04/10/ftpserver4/">ftpserver（Ⅳ）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://arvinxiang.com" target="_blank">主题作者</a>
+          </li>
+        
+          <li>
+            <a href="http://reqianduan.com" target="_blank">热前端</a>
+          </li>
+        
+          <li>
+            <a href="http://yuancheng.work" target="_blank">远程.work</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+      
+    </div>
+    <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Mr-Vincent<br>
+      Powered by <a href="//hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape-plus</a>
+    </div>
+  </div>
+</footer>
+  </div>
+  <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+  <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+
+<!-- totop end -->
+
+<!-- 多说公共js代码 start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"reqianduan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共js代码 end -->
+
+
+<!-- 百度分享 start -->
+
+<div id="article-share-box" class="article-share-box">
+  <div id="bdshare" class="bdsharebuttonbox article-share-links">
+    <a class="article-share-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a class="article-share-weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a class="article-share-qq" data-cmd="sqq" title="分享到QQ"></a>
+    <a class="article-share-renren" data-cmd="renren" title="分享到人人网"></a>
+    <a class="article-share-more" data-cmd="more" title="更多"></a>
+  </div>
+</div>
+<script>
+  function SetShareData(cmd, config) {
+    if (shareDataTitle && shareDataUrl) {
+      config.bdText = shareDataTitle;
+      config.bdUrl = shareDataUrl;
+    }
+    return config;
+  }
+  window._bd_share_config={
+    "common":{onBeforeClick: SetShareData},
+    "share":{"bdCustomStyle":"/css/bdshare.css"}
+  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+<!-- 百度分享 end -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+</div>
+</body>
+</html>
