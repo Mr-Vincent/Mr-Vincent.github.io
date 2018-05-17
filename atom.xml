@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wei-dong.top/"/>
-  <updated>2018-05-17T04:36:14.024Z</updated>
+  <updated>2018-05-17T06:30:16.624Z</updated>
   <id>http://www.wei-dong.top/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.wei-dong.top/2018/04/21/Timer/"/>
     <id>http://www.wei-dong.top/2018/04/21/Timer/</id>
     <published>2018-04-21T08:17:23.000Z</published>
-    <updated>2018-05-17T04:36:14.024Z</updated>
+    <updated>2018-05-17T06:30:16.624Z</updated>
     
     <content type="html"><![CDATA[<p>在jdk中处理定时任务工具类中有2种：Timer和ScheduledExecutorService。前者是在java.util包中，从1.3版本开始，属于比较老的工具类了。而ScheduledExecutorService属于java.util.concurrent包，作者是老爷子Doug Lea，1.5版本开始才有。虽然现在大多使用ScheduledExecutorService，但是我觉得很有必要对其“同宗”Timer的实现进行解读。</p>
 <h4 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h4><p>官方文档中的解释是这样的：</p>
