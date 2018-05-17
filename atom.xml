@@ -4,9 +4,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://www.mr-dongw.site/"/>
+  <link href="http://www.wei-dong.top/"/>
   <updated>2018-05-17T04:36:14.024Z</updated>
-  <id>http://www.mr-dongw.site/</id>
+  <id>http://www.wei-dong.top/</id>
   
   <author>
     <name>Mr-Vincent</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>浅析JDK中的定时器Timer实现</title>
-    <link href="http://www.mr-dongw.site/2018/04/21/Timer/"/>
-    <id>http://www.mr-dongw.site/2018/04/21/Timer/</id>
+    <link href="http://www.wei-dong.top/2018/04/21/Timer/"/>
+    <id>http://www.wei-dong.top/2018/04/21/Timer/</id>
     <published>2018-04-21T08:17:23.000Z</published>
     <updated>2018-05-17T04:36:14.024Z</updated>
     
@@ -76,19 +76,19 @@
     
     </summary>
     
-      <category term="JDK SOURCE" scheme="http://www.mr-dongw.site/categories/JDK-SOURCE/"/>
+      <category term="JDK SOURCE" scheme="http://www.wei-dong.top/categories/JDK-SOURCE/"/>
     
     
-      <category term="源码解读" scheme="http://www.mr-dongw.site/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
+      <category term="源码解读" scheme="http://www.wei-dong.top/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
     
-      <category term="JDK" scheme="http://www.mr-dongw.site/tags/JDK/"/>
+      <category term="JDK" scheme="http://www.wei-dong.top/tags/JDK/"/>
     
   </entry>
   
   <entry>
     <title>写给2017</title>
-    <link href="http://www.mr-dongw.site/2017/12/31/my%202017/"/>
-    <id>http://www.mr-dongw.site/2017/12/31/my 2017/</id>
+    <link href="http://www.wei-dong.top/2017/12/31/my%202017/"/>
+    <id>http://www.wei-dong.top/2017/12/31/my 2017/</id>
     <published>2017-12-31T09:42:35.000Z</published>
     <updated>2018-01-01T10:44:55.854Z</updated>
     
@@ -110,17 +110,17 @@
     
     </summary>
     
-      <category term="beyound coding" scheme="http://www.mr-dongw.site/categories/beyound-coding/"/>
+      <category term="beyound coding" scheme="http://www.wei-dong.top/categories/beyound-coding/"/>
     
     
-      <category term="所想" scheme="http://www.mr-dongw.site/tags/%E6%89%80%E6%83%B3/"/>
+      <category term="所想" scheme="http://www.wei-dong.top/tags/%E6%89%80%E6%83%B3/"/>
     
   </entry>
   
   <entry>
     <title>《How Tomcat Works》读书笔记</title>
-    <link href="http://www.mr-dongw.site/2017/12/06/%E3%80%8AHow%20Tomcat%20Works%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
-    <id>http://www.mr-dongw.site/2017/12/06/《How Tomcat Works》读书笔记/</id>
+    <link href="http://www.wei-dong.top/2017/12/06/%E3%80%8AHow%20Tomcat%20Works%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    <id>http://www.wei-dong.top/2017/12/06/《How Tomcat Works》读书笔记/</id>
     <published>2017-12-06T04:37:23.000Z</published>
     <updated>2017-12-06T04:39:19.177Z</updated>
     
@@ -156,19 +156,19 @@
     
     </summary>
     
-      <category term="Tomcat 笔记" scheme="http://www.mr-dongw.site/categories/Tomcat-%E7%AC%94%E8%AE%B0/"/>
+      <category term="Tomcat 笔记" scheme="http://www.wei-dong.top/categories/Tomcat-%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="Tomcat" scheme="http://www.mr-dongw.site/tags/Tomcat/"/>
+      <category term="Tomcat" scheme="http://www.wei-dong.top/tags/Tomcat/"/>
     
-      <category term="读书笔记" scheme="http://www.mr-dongw.site/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+      <category term="读书笔记" scheme="http://www.wei-dong.top/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>Securing Web Applications with Apache Shiro[译]</title>
-    <link href="http://www.mr-dongw.site/2017/10/26/Securing%20Web%20Applications%20with%20Apache%20Shiro%5B%E8%AF%91%5D/"/>
-    <id>http://www.mr-dongw.site/2017/10/26/Securing Web Applications with Apache Shiro[译]/</id>
+    <link href="http://www.wei-dong.top/2017/10/26/Securing%20Web%20Applications%20with%20Apache%20Shiro%5B%E8%AF%91%5D/"/>
+    <id>http://www.wei-dong.top/2017/10/26/Securing Web Applications with Apache Shiro[译]/</id>
     <published>2017-10-26T12:41:23.000Z</published>
     <updated>2017-10-26T12:49:08.000Z</updated>
     
@@ -400,19 +400,19 @@
     
     </summary>
     
-      <category term="Apache" scheme="http://www.mr-dongw.site/categories/Apache/"/>
+      <category term="Apache" scheme="http://www.wei-dong.top/categories/Apache/"/>
     
     
-      <category term="Apache Shiro" scheme="http://www.mr-dongw.site/tags/Apache-Shiro/"/>
+      <category term="Apache Shiro" scheme="http://www.wei-dong.top/tags/Apache-Shiro/"/>
     
-      <category term="翻译" scheme="http://www.mr-dongw.site/tags/%E7%BF%BB%E8%AF%91/"/>
+      <category term="翻译" scheme="http://www.wei-dong.top/tags/%E7%BF%BB%E8%AF%91/"/>
     
   </entry>
   
   <entry>
     <title>Java Authorization Guide with Apache Shiro[译]</title>
-    <link href="http://www.mr-dongw.site/2017/09/25/Java%20Authorization%20Guide%20with%20Apache%20Shiro%5B%E8%AF%91%5D/"/>
-    <id>http://www.mr-dongw.site/2017/09/25/Java Authorization Guide with Apache Shiro[译]/</id>
+    <link href="http://www.wei-dong.top/2017/09/25/Java%20Authorization%20Guide%20with%20Apache%20Shiro%5B%E8%AF%91%5D/"/>
+    <id>http://www.wei-dong.top/2017/09/25/Java Authorization Guide with Apache Shiro[译]/</id>
     <published>2017-09-25T12:05:23.000Z</published>
     <updated>2017-09-25T12:09:26.000Z</updated>
     
@@ -476,19 +476,19 @@
     
     </summary>
     
-      <category term="Apache" scheme="http://www.mr-dongw.site/categories/Apache/"/>
+      <category term="Apache" scheme="http://www.wei-dong.top/categories/Apache/"/>
     
     
-      <category term="Apache Shiro" scheme="http://www.mr-dongw.site/tags/Apache-Shiro/"/>
+      <category term="Apache Shiro" scheme="http://www.wei-dong.top/tags/Apache-Shiro/"/>
     
-      <category term="翻译" scheme="http://www.mr-dongw.site/tags/%E7%BF%BB%E8%AF%91/"/>
+      <category term="翻译" scheme="http://www.wei-dong.top/tags/%E7%BF%BB%E8%AF%91/"/>
     
   </entry>
   
   <entry>
     <title>Application Security With Apache Shiro[译]</title>
-    <link href="http://www.mr-dongw.site/2017/09/21/Application%20Security%20With%20Apache%20Shiro%5B%E8%AF%91%5D/"/>
-    <id>http://www.mr-dongw.site/2017/09/21/Application Security With Apache Shiro[译]/</id>
+    <link href="http://www.wei-dong.top/2017/09/21/Application%20Security%20With%20Apache%20Shiro%5B%E8%AF%91%5D/"/>
+    <id>http://www.wei-dong.top/2017/09/21/Application Security With Apache Shiro[译]/</id>
     <published>2017-09-21T04:41:23.000Z</published>
     <updated>2017-09-21T04:46:02.000Z</updated>
     
@@ -641,19 +641,19 @@
     
     </summary>
     
-      <category term="Apache" scheme="http://www.mr-dongw.site/categories/Apache/"/>
+      <category term="Apache" scheme="http://www.wei-dong.top/categories/Apache/"/>
     
     
-      <category term="Apache Shiro" scheme="http://www.mr-dongw.site/tags/Apache-Shiro/"/>
+      <category term="Apache Shiro" scheme="http://www.wei-dong.top/tags/Apache-Shiro/"/>
     
-      <category term="翻译" scheme="http://www.mr-dongw.site/tags/%E7%BF%BB%E8%AF%91/"/>
+      <category term="翻译" scheme="http://www.wei-dong.top/tags/%E7%BF%BB%E8%AF%91/"/>
     
   </entry>
   
   <entry>
     <title>Spring Boot Features（Part Ⅱ）</title>
-    <link href="http://www.mr-dongw.site/2017/08/10/spring-boot-fatures-2/"/>
-    <id>http://www.mr-dongw.site/2017/08/10/spring-boot-fatures-2/</id>
+    <link href="http://www.wei-dong.top/2017/08/10/spring-boot-fatures-2/"/>
+    <id>http://www.wei-dong.top/2017/08/10/spring-boot-fatures-2/</id>
     <published>2017-08-10T13:58:23.000Z</published>
     <updated>2017-08-10T13:59:11.000Z</updated>
     
@@ -728,19 +728,19 @@
     
     </summary>
     
-      <category term="Spring Framework" scheme="http://www.mr-dongw.site/categories/Spring-Framework/"/>
+      <category term="Spring Framework" scheme="http://www.wei-dong.top/categories/Spring-Framework/"/>
     
     
-      <category term="Spring Boot" scheme="http://www.mr-dongw.site/tags/Spring-Boot/"/>
+      <category term="Spring Boot" scheme="http://www.wei-dong.top/tags/Spring-Boot/"/>
     
-      <category term="翻译&amp;整理" scheme="http://www.mr-dongw.site/tags/%E7%BF%BB%E8%AF%91-%E6%95%B4%E7%90%86/"/>
+      <category term="翻译&amp;整理" scheme="http://www.wei-dong.top/tags/%E7%BF%BB%E8%AF%91-%E6%95%B4%E7%90%86/"/>
     
   </entry>
   
   <entry>
     <title>Spring Boot Features（Part I）</title>
-    <link href="http://www.mr-dongw.site/2017/08/05/spring-boot-fatures/"/>
-    <id>http://www.mr-dongw.site/2017/08/05/spring-boot-fatures/</id>
+    <link href="http://www.wei-dong.top/2017/08/05/spring-boot-fatures/"/>
+    <id>http://www.wei-dong.top/2017/08/05/spring-boot-fatures/</id>
     <published>2017-08-05T08:59:23.000Z</published>
     <updated>2017-08-05T09:07:18.000Z</updated>
     
@@ -814,19 +814,19 @@
     
     </summary>
     
-      <category term="Spring Framework" scheme="http://www.mr-dongw.site/categories/Spring-Framework/"/>
+      <category term="Spring Framework" scheme="http://www.wei-dong.top/categories/Spring-Framework/"/>
     
     
-      <category term="Spring Boot" scheme="http://www.mr-dongw.site/tags/Spring-Boot/"/>
+      <category term="Spring Boot" scheme="http://www.wei-dong.top/tags/Spring-Boot/"/>
     
-      <category term="翻译&amp;整理" scheme="http://www.mr-dongw.site/tags/%E7%BF%BB%E8%AF%91-%E6%95%B4%E7%90%86/"/>
+      <category term="翻译&amp;整理" scheme="http://www.wei-dong.top/tags/%E7%BF%BB%E8%AF%91-%E6%95%B4%E7%90%86/"/>
     
   </entry>
   
   <entry>
     <title>动态代理番外篇</title>
-    <link href="http://www.mr-dongw.site/2017/07/16/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E7%95%AA%E5%A4%96%E7%AF%87/"/>
-    <id>http://www.mr-dongw.site/2017/07/16/动态代理番外篇/</id>
+    <link href="http://www.wei-dong.top/2017/07/16/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E7%95%AA%E5%A4%96%E7%AF%87/"/>
+    <id>http://www.wei-dong.top/2017/07/16/动态代理番外篇/</id>
     <published>2017-07-16T06:55:23.000Z</published>
     <updated>2017-07-16T06:59:10.000Z</updated>
     
@@ -857,17 +857,17 @@
     
     </summary>
     
-      <category term="OPEN SOURCE" scheme="http://www.mr-dongw.site/categories/OPEN-SOURCE/"/>
+      <category term="OPEN SOURCE" scheme="http://www.wei-dong.top/categories/OPEN-SOURCE/"/>
     
     
-      <category term="字节码工具" scheme="http://www.mr-dongw.site/tags/%E5%AD%97%E8%8A%82%E7%A0%81%E5%B7%A5%E5%85%B7/"/>
+      <category term="字节码工具" scheme="http://www.wei-dong.top/tags/%E5%AD%97%E8%8A%82%E7%A0%81%E5%B7%A5%E5%85%B7/"/>
     
   </entry>
   
   <entry>
     <title>动态代理之JDK实现</title>
-    <link href="http://www.mr-dongw.site/2017/07/09/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E4%B9%8BJDK%E5%AE%9E%E7%8E%B0/"/>
-    <id>http://www.mr-dongw.site/2017/07/09/动态代理之JDK实现/</id>
+    <link href="http://www.wei-dong.top/2017/07/09/%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E4%B9%8BJDK%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://www.wei-dong.top/2017/07/09/动态代理之JDK实现/</id>
     <published>2017-07-09T02:29:23.000Z</published>
     <updated>2017-07-09T02:32:52.000Z</updated>
     
@@ -910,19 +910,19 @@
     
     </summary>
     
-      <category term="JDK SOURCE" scheme="http://www.mr-dongw.site/categories/JDK-SOURCE/"/>
+      <category term="JDK SOURCE" scheme="http://www.wei-dong.top/categories/JDK-SOURCE/"/>
     
     
-      <category term="源码解读" scheme="http://www.mr-dongw.site/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
+      <category term="源码解读" scheme="http://www.wei-dong.top/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
     
-      <category term="JDK" scheme="http://www.mr-dongw.site/tags/JDK/"/>
+      <category term="JDK" scheme="http://www.wei-dong.top/tags/JDK/"/>
     
   </entry>
   
   <entry>
     <title>自定义Spring Schema</title>
-    <link href="http://www.mr-dongw.site/2017/07/01/spring%20schema/"/>
-    <id>http://www.mr-dongw.site/2017/07/01/spring schema/</id>
+    <link href="http://www.wei-dong.top/2017/07/01/spring%20schema/"/>
+    <id>http://www.wei-dong.top/2017/07/01/spring schema/</id>
     <published>2017-07-01T14:18:23.000Z</published>
     <updated>2017-07-01T14:28:27.000Z</updated>
     
@@ -947,19 +947,19 @@
     
     </summary>
     
-      <category term="Spring Framework" scheme="http://www.mr-dongw.site/categories/Spring-Framework/"/>
+      <category term="Spring Framework" scheme="http://www.wei-dong.top/categories/Spring-Framework/"/>
     
     
-      <category term="Spring" scheme="http://www.mr-dongw.site/tags/Spring/"/>
+      <category term="Spring" scheme="http://www.wei-dong.top/tags/Spring/"/>
     
-      <category term="XML" scheme="http://www.mr-dongw.site/tags/XML/"/>
+      <category term="XML" scheme="http://www.wei-dong.top/tags/XML/"/>
     
   </entry>
   
   <entry>
     <title>JUC系列之BlockingQueue</title>
-    <link href="http://www.mr-dongw.site/2017/07/01/juc_LinkedBlockingQueue/"/>
-    <id>http://www.mr-dongw.site/2017/07/01/juc_LinkedBlockingQueue/</id>
+    <link href="http://www.wei-dong.top/2017/07/01/juc_LinkedBlockingQueue/"/>
+    <id>http://www.wei-dong.top/2017/07/01/juc_LinkedBlockingQueue/</id>
     <published>2017-07-01T14:16:23.000Z</published>
     <updated>2017-07-01T14:28:11.000Z</updated>
     
@@ -993,19 +993,19 @@
     
     </summary>
     
-      <category term="JDK SOURCE" scheme="http://www.mr-dongw.site/categories/JDK-SOURCE/"/>
+      <category term="JDK SOURCE" scheme="http://www.wei-dong.top/categories/JDK-SOURCE/"/>
     
     
-      <category term="源码解读" scheme="http://www.mr-dongw.site/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
+      <category term="源码解读" scheme="http://www.wei-dong.top/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
     
-      <category term="JDK" scheme="http://www.mr-dongw.site/tags/JDK/"/>
+      <category term="JDK" scheme="http://www.wei-dong.top/tags/JDK/"/>
     
   </entry>
   
   <entry>
     <title>JUC之CyclicBarrier</title>
-    <link href="http://www.mr-dongw.site/2017/07/01/juc_CyclicBarrier/"/>
-    <id>http://www.mr-dongw.site/2017/07/01/juc_CyclicBarrier/</id>
+    <link href="http://www.wei-dong.top/2017/07/01/juc_CyclicBarrier/"/>
+    <id>http://www.wei-dong.top/2017/07/01/juc_CyclicBarrier/</id>
     <published>2017-07-01T14:14:41.000Z</published>
     <updated>2017-07-01T14:28:20.000Z</updated>
     
@@ -1033,19 +1033,19 @@ Thread-1 continued.</code></p>
     
     </summary>
     
-      <category term="JDK SOURCE" scheme="http://www.mr-dongw.site/categories/JDK-SOURCE/"/>
+      <category term="JDK SOURCE" scheme="http://www.wei-dong.top/categories/JDK-SOURCE/"/>
     
     
-      <category term="源码解读" scheme="http://www.mr-dongw.site/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
+      <category term="源码解读" scheme="http://www.wei-dong.top/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
     
-      <category term="JDK" scheme="http://www.mr-dongw.site/tags/JDK/"/>
+      <category term="JDK" scheme="http://www.wei-dong.top/tags/JDK/"/>
     
   </entry>
   
   <entry>
     <title>XMPP Server Vysper （Ⅰ）</title>
-    <link href="http://www.mr-dongw.site/2017/05/20/xmpp-vysper-1-md/"/>
-    <id>http://www.mr-dongw.site/2017/05/20/xmpp-vysper-1-md/</id>
+    <link href="http://www.wei-dong.top/2017/05/20/xmpp-vysper-1-md/"/>
+    <id>http://www.wei-dong.top/2017/05/20/xmpp-vysper-1-md/</id>
     <published>2017-05-20T10:40:04.000Z</published>
     <updated>2017-05-20T10:43:17.000Z</updated>
     
@@ -1071,19 +1071,19 @@ Thread-1 continued.</code></p>
     
     </summary>
     
-      <category term="Apache Open Project" scheme="http://www.mr-dongw.site/categories/Apache-Open-Project/"/>
+      <category term="Apache Open Project" scheme="http://www.wei-dong.top/categories/Apache-Open-Project/"/>
     
     
-      <category term="源码解读" scheme="http://www.mr-dongw.site/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
+      <category term="源码解读" scheme="http://www.wei-dong.top/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
     
-      <category term="Apache" scheme="http://www.mr-dongw.site/tags/Apache/"/>
+      <category term="Apache" scheme="http://www.wei-dong.top/tags/Apache/"/>
     
   </entry>
   
   <entry>
     <title>ftpserver（Ⅳ）</title>
-    <link href="http://www.mr-dongw.site/2017/04/10/ftpserver4/"/>
-    <id>http://www.mr-dongw.site/2017/04/10/ftpserver4/</id>
+    <link href="http://www.wei-dong.top/2017/04/10/ftpserver4/"/>
+    <id>http://www.wei-dong.top/2017/04/10/ftpserver4/</id>
     <published>2017-04-10T14:29:59.000Z</published>
     <updated>2017-04-10T14:31:22.000Z</updated>
     
@@ -1111,19 +1111,19 @@ Thread-1 continued.</code></p>
     
     </summary>
     
-      <category term="Apache Open Project" scheme="http://www.mr-dongw.site/categories/Apache-Open-Project/"/>
+      <category term="Apache Open Project" scheme="http://www.wei-dong.top/categories/Apache-Open-Project/"/>
     
     
-      <category term="源码解读" scheme="http://www.mr-dongw.site/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
+      <category term="源码解读" scheme="http://www.wei-dong.top/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
     
-      <category term="Apache" scheme="http://www.mr-dongw.site/tags/Apache/"/>
+      <category term="Apache" scheme="http://www.wei-dong.top/tags/Apache/"/>
     
   </entry>
   
   <entry>
     <title>牢骚一篇</title>
-    <link href="http://www.mr-dongw.site/2017/04/09/%E7%89%A2%E9%AA%9A%E4%B8%80%E7%AF%87/"/>
-    <id>http://www.mr-dongw.site/2017/04/09/牢骚一篇/</id>
+    <link href="http://www.wei-dong.top/2017/04/09/%E7%89%A2%E9%AA%9A%E4%B8%80%E7%AF%87/"/>
+    <id>http://www.wei-dong.top/2017/04/09/牢骚一篇/</id>
     <published>2017-04-09T03:56:18.000Z</published>
     <updated>2017-04-09T03:57:30.000Z</updated>
     
@@ -1142,17 +1142,17 @@ Thread-1 continued.</code></p>
     
     </summary>
     
-      <category term="想法" scheme="http://www.mr-dongw.site/categories/%E6%83%B3%E6%B3%95/"/>
+      <category term="想法" scheme="http://www.wei-dong.top/categories/%E6%83%B3%E6%B3%95/"/>
     
     
-      <category term="生活，扯淡" scheme="http://www.mr-dongw.site/tags/%E7%94%9F%E6%B4%BB%EF%BC%8C%E6%89%AF%E6%B7%A1/"/>
+      <category term="生活，扯淡" scheme="http://www.wei-dong.top/tags/%E7%94%9F%E6%B4%BB%EF%BC%8C%E6%89%AF%E6%B7%A1/"/>
     
   </entry>
   
   <entry>
     <title>ftpserver(Ⅲ)</title>
-    <link href="http://www.mr-dongw.site/2017/04/04/ftpserver3/"/>
-    <id>http://www.mr-dongw.site/2017/04/04/ftpserver3/</id>
+    <link href="http://www.wei-dong.top/2017/04/04/ftpserver3/"/>
+    <id>http://www.wei-dong.top/2017/04/04/ftpserver3/</id>
     <published>2017-04-04T03:09:41.000Z</published>
     <updated>2017-04-04T03:10:54.000Z</updated>
     
@@ -1170,19 +1170,19 @@ Thread-1 continued.</code></p>
     
     </summary>
     
-      <category term="Apache Open Project" scheme="http://www.mr-dongw.site/categories/Apache-Open-Project/"/>
+      <category term="Apache Open Project" scheme="http://www.wei-dong.top/categories/Apache-Open-Project/"/>
     
     
-      <category term="源码解读" scheme="http://www.mr-dongw.site/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
+      <category term="源码解读" scheme="http://www.wei-dong.top/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
     
-      <category term="Apache" scheme="http://www.mr-dongw.site/tags/Apache/"/>
+      <category term="Apache" scheme="http://www.wei-dong.top/tags/Apache/"/>
     
   </entry>
   
   <entry>
     <title>FtpServer(Ⅱ)</title>
-    <link href="http://www.mr-dongw.site/2017/03/26/ftpserver2-md/"/>
-    <id>http://www.mr-dongw.site/2017/03/26/ftpserver2-md/</id>
+    <link href="http://www.wei-dong.top/2017/03/26/ftpserver2-md/"/>
+    <id>http://www.wei-dong.top/2017/03/26/ftpserver2-md/</id>
     <published>2017-03-26T08:27:41.000Z</published>
     <updated>2017-03-26T08:36:33.000Z</updated>
     
@@ -1216,19 +1216,19 @@ Thread-1 continued.</code></p>
     
     </summary>
     
-      <category term="Apache Open Project" scheme="http://www.mr-dongw.site/categories/Apache-Open-Project/"/>
+      <category term="Apache Open Project" scheme="http://www.wei-dong.top/categories/Apache-Open-Project/"/>
     
     
-      <category term="源码解读" scheme="http://www.mr-dongw.site/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
+      <category term="源码解读" scheme="http://www.wei-dong.top/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
     
-      <category term="Apache" scheme="http://www.mr-dongw.site/tags/Apache/"/>
+      <category term="Apache" scheme="http://www.wei-dong.top/tags/Apache/"/>
     
   </entry>
   
   <entry>
     <title>Hello World</title>
-    <link href="http://www.mr-dongw.site/2017/01/08/hello-world/"/>
-    <id>http://www.mr-dongw.site/2017/01/08/hello-world/</id>
+    <link href="http://www.wei-dong.top/2017/01/08/hello-world/"/>
+    <id>http://www.wei-dong.top/2017/01/08/hello-world/</id>
     <published>2017-01-08T13:53:01.000Z</published>
     <updated>2017-01-08T13:53:01.000Z</updated>
     
