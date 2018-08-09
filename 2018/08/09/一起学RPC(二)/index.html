@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="以梦为马 不负韶华">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Mr-Vincent">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="一起学RPC(二)"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="以梦为马 不负韶华" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="DongWei&#39;s Blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>一起学RPC(二) - DongWei&#39;s Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">DongWei's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/Mr-Vincent">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('https://images.unsplash.com/photo-1508830524289-0adcbe822b40?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=377e356cce015c363d123504857f8137&auto=format&fit=crop&w=1422&q=80')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>一起学RPC(二)</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2018-08-09
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/源码解读/">#源码解读</a> <a href="/tags/Jupiter/">#Jupiter</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/一起读源码/">一起读源码</a>
+
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>在上一篇中介绍到关于jupiter的底层通信模块transport的部分实现。仅仅只是讨论了整个server的初始化以及启动流程。很多细枝末节其实还没有涉及到，例如tcp参数设置，超时机制，编解码器等等实现细节。这些东西将会逐步被消化分解。而本文的主题是jupiter的业务编解码器的实现。</p>
+<p>在jupiter中有一张图，这张图清晰地描述了整个server的数据流向：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">* *********************************************************************</div><div class="line"> *            I/O Request                       I/O Response</div><div class="line"> *                 │                                 △</div><div class="line"> *                                                   │</div><div class="line"> *                 │</div><div class="line"> * ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┼ ─ ─ ─ ─ ─ ─ ─ ─</div><div class="line"> * │               │                                                  │</div><div class="line"> *                                                   │</div><div class="line"> * │  ┌ ─ ─ ─ ─ ─ ─▽─ ─ ─ ─ ─ ─ ┐       ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐   │</div><div class="line"> *     IdleStateChecker#inBound          IdleStateChecker#outBound</div><div class="line"> * │  └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘       └ ─ ─ ─ ─ ─ ─△─ ─ ─ ─ ─ ─ ┘   │</div><div class="line"> *                 │                                 │</div><div class="line"> * │                                                                  │</div><div class="line"> *                 │                                 │</div><div class="line"> * │  ┌ ─ ─ ─ ─ ─ ─▽─ ─ ─ ─ ─ ─ ┐                                     │</div><div class="line"> *     AcceptorIdleStateTrigger                      │</div><div class="line"> * │  └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘                                     │</div><div class="line"> *                 │                                 │</div><div class="line"> * │                                                                  │</div><div class="line"> *                 │                                 │</div><div class="line"> * │  ┌ ─ ─ ─ ─ ─ ─▽─ ─ ─ ─ ─ ─ ┐       ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐   │</div><div class="line"> *          ProtocolDecoder                   ProtocolEncoder</div><div class="line"> * │  └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘       └ ─ ─ ─ ─ ─ ─△─ ─ ─ ─ ─ ─ ┘   │</div><div class="line"> *                 │                                 │</div><div class="line"> * │                                                                  │</div><div class="line"> *                 │                                 │</div><div class="line"> * │  ┌ ─ ─ ─ ─ ─ ─▽─ ─ ─ ─ ─ ─ ┐                                     │</div><div class="line"> *          AcceptorHandler                          │</div><div class="line"> * │  └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘                                     │</div><div class="line"> *                 │                                 │</div><div class="line"> * │                    ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐                     │</div><div class="line"> *                 ▽                                 │</div><div class="line"> * │               ─ ─ ▷│       Processor       ├ ─ ─▷                │</div><div class="line"> *</div><div class="line"> * │                    └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘                     │</div><div class="line"> * ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─</div><div class="line"> *</div></pre></td></tr></table></figure>
+<p>实际上这个图仅仅是针对Netty api的描述，和rpc没有太多直接的关系。如果换做别的通信框架这个图就没有什么意义了。鉴于Netty依旧是目前Java网络开发中最流行的框架，拿出来讨论也是很有意义的。</p>
+<p>这个图中有几个核心的概念：decode、encode、IdleStateChecker和handler。在编写一个网络应用的时候首先必须定义的是通信协议。比如上传下载文件使用ftp，即时聊天使用xmpp，浏览网页使用http…当然自己写一个rpc框架也得定义自己的通信协议。为什么要定义协议这个问题对于开发的老手来说没有必要去解释，不过我还是得啰嗦一下。在网络应用程序中，所有的数据在网络上的传输都是二进制格式，也就是0101010这样的机器码。当然也有人会反驳：不是有基于字符的数据吗？我的理解是在宏观上来说确实存在，那是因为上层的协议已经将代表字符串的01010解码成了可读的字符串。但是在底层的传输，也就是在物理层比如网线、电磁波中的传输依旧还是0101。当然用0101来比喻也是不恰当，更准确的说法应该是电平信号。而协议的作用是将通信双方的内容进行规范。就像以前写书信的时候，开头得有称谓，然后写正文，最后是落款这样一种格式。别人收到后就知道，嗯，这是一封信而不是一篇散文或者自传。当然这个比喻不是很恰当，但是就这样吧，不想废话了。</p>
+<p>既然定义了协议，那么就得去处理协议。Netty中提供了很多内置的协议解析的类。通常被称作编解码器。顾名思义也就是将二进制转化为我们想要的数据结构，这样方便统一处理。这张图中的具体体现就是先解码，然后再处理，最后将处理结果编码后发送出去。编解码器将是本文讨论的重点。然而还有别的几个组件如空闲链路检查<code>IdleStateChecker</code>和业务处理<code>AcceptorHandler</code>组件，这些放在后面讨论。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">boot.childHandler(<span class="keyword">new</span> ChannelInitializer&lt;Channel&gt;() &#123;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(Channel ch)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">                ch.pipeline().addLast(</div><div class="line">                        <span class="keyword">new</span> IdleStateChecker(timer, JConstants.READER_IDLE_TIME_SECONDS, <span class="number">0</span>, <span class="number">0</span>),</div><div class="line">                        idleStateTrigger,</div><div class="line">                        CodecConfig.isCodecLowCopy() ? <span class="keyword">new</span> LowCopyProtocolDecoder() : <span class="keyword">new</span> ProtocolDecoder(),</div><div class="line">                        encoder,</div><div class="line">                        handler);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div></pre></td></tr></table></figure>
+<p>这段代码就是初始化编解码器等组件。可以看到handler作为业务核心处理器放在了最后。这是Netty的机制所决定的。关于Netty的一些设计可以看看<a href="http://ifeve.com/netty-in-action-1/" target="_blank" rel="external">这本书</a>作为基础入门。</p>
+<p>看到解码器和编码器还有点不一样。解码器是直接new的方式添加到pipeline中的，而编码器是new好了再添加到pipeline中。其实具体差别就在于解码器不能共享。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProtocolDecoder</span> <span class="keyword">extends</span> <span class="title">ReplayingDecoder</span>&lt;<span class="title">ProtocolDecoder</span>.<span class="title">State</span>&gt; </span>&#123;</div><div class="line">	<span class="comment">// ...</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@ChannelHandler</span>.Sharable</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProtocolEncoder</span> <span class="keyword">extends</span> <span class="title">MessageToByteEncoder</span>&lt;<span class="title">PayloadHolder</span>&gt; </span>&#123;</div><div class="line">	<span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>所谓的能共享，就是意味着每次都能使用这个编码器而不需要每次用就得实例化出来。而解码器不能被共享也是有原因的。因为解码器解码的数据全部来自于网络请求，网络通常而言是不可靠的，不能保证每次都能发送完整的数据包也有可能需要的数据还没收到。那么如何保证接受到的数据是完整的呢？实际上是没法保证，只能够“假装”是完整的。所以decoder是继承自<code>ReplayingDecoder</code>。这个类的作用简单通俗来理解就是如果网络上的数据还没发完，我就继续接收，直到收完为止。具体的工作原理可以参考api文档或者源码，这里不再过多探讨。为什么继承这个类后就不能共享呢？这个类是个泛型，参数是一个state的字眼。看到这里大概可以联想到这个类肯定和状态有关系。这样就很容易理解了，有状态的对象通常不能被共享。想象一下，在多线程环境下，线程A将这个状态改为1线程B这时候拿到执行权又把这个状态改为2，然后线程A又要使用这个状态变量了，这时候就不是他刚开始改变的状态了。如此一来，全部乱套了。这些都是并发基础相关的内容，有兴趣可以去谷歌。这里不再过多描述。而encode则没有状态变量，需要编码的数据一定是确定的，不存在解码器中数据不完整的情况。因此使用共享实例没什么问题。具体可以看看其中的代码实现：<a href="https://github.com/Mr-Vincent/Jupiter/blob/master/jupiter-transport/jupiter-transport-netty/src/main/java/org/jupiter/transport/netty/handler/ProtocolDecoder.java" target="_blank" rel="external">ProtocolDecoder</a>  <a href="https://github.com/Mr-Vincent/Jupiter/blob/master/jupiter-transport/jupiter-transport-netty/src/main/java/org/jupiter/transport/netty/handler/ProtocolEncoder.java" target="_blank" rel="external">ProtocolEncoder</a></p>
+<p>解释完这些鸡毛蒜皮的细节，接下来开始分析一下这个协议的定义以及解析。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">* **************************************************************************************************</div><div class="line">*                                          Protocol</div><div class="line">*  ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐</div><div class="line">*       2   │   1   │    1   │     8     │      4      │</div><div class="line">*  ├ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┤</div><div class="line">*           │       │        │           │             │</div><div class="line">*  │  MAGIC   Sign    Status   Invoke Id    Body Size                    Body Content              │</div><div class="line">*           │       │        │           │             │</div><div class="line">*  └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘</div><div class="line">*</div><div class="line">* 消息头16个字节定长</div><div class="line">* = 2 // magic = (short) 0xbabe</div><div class="line">* + 1 // 消息标志位, 低地址4位用来表示消息类型request/response/heartbeat等, 高地址4位用来表示序列化类型</div><div class="line">* + 1 // 状态位, 设置请求响应状态</div><div class="line">* + 8 // 消息 id, long 类型, 未来jupiter可能将id限制在48位, 留出高地址的16位作为扩展字段</div><div class="line">* + 4 // 消息体 body 长度, int 类型</div><div class="line">*</div></pre></td></tr></table></figure>
+<p>作者在代码中将协议格式完全标注出来了:16字节的消息头+消息体。消息头中的MAGIC字段仅仅是为了标识这个数据包是属于jupiter。就像java class文件以<code>0xCAFEBABE</code>开头一样。没有实际的意义，仅仅做个标识而已。其他的字段也就没什么可说的了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> USE_COMPOSITE_BUF = SystemPropertyUtil.getBoolean(<span class="string">"jupiter.io.decoder.composite.buf"</span>, <span class="keyword">false</span>);</div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="title">ProtocolDecoder</span><span class="params">()</span> </span>&#123;</div><div class="line">       <span class="keyword">super</span>(State.MAGIC);</div><div class="line">       <span class="keyword">if</span> (USE_COMPOSITE_BUF) &#123;</div><div class="line">           setCumulator(COMPOSITE_CUMULATOR);</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">enum</span> State &#123;</div><div class="line">       MAGIC,</div><div class="line">       SIGN,</div><div class="line">       STATUS,</div><div class="line">       ID,</div><div class="line">       BODY_SIZE,</div><div class="line">       BODY</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>解码器的构造函数中直接调用了父类的构造函数，将枚举类型<code>State</code>传入。这个枚举类型所代表的就是要解析协议数据中的位置（下标）。因此构造器中传入的当然是协议的第一个字段，也就表示从第一个位置开始解析。然后有一个布尔标识，这个变量从系统变量中获取，用来决定是否使用<code>COMPOSITE_CUMULATOR</code>。默认的CUMULATOR是<code>MERGE_CUMULATOR</code>.区别可能在性能上有点差距吧。具体差异得去研究源码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> JProtocolHeader header = <span class="keyword">new</span> JProtocolHeader();</div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">decode</span><span class="params">(ChannelHandlerContext ctx, ByteBuf in, List&lt;Object&gt; out)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="keyword">switch</span> (state()) &#123;</div><div class="line">            <span class="keyword">case</span> MAGIC:</div><div class="line">                checkMagic(in.readShort());         <span class="comment">// MAGIC</span></div><div class="line">                checkpoint(State.SIGN);</div><div class="line">            <span class="keyword">case</span> SIGN:</div><div class="line">                header.sign(in.readByte());         <span class="comment">// 消息标志位</span></div><div class="line">                checkpoint(State.STATUS);</div><div class="line">            <span class="keyword">case</span> STATUS:</div><div class="line">                header.status(in.readByte());       <span class="comment">// 状态位</span></div><div class="line">                checkpoint(State.ID);</div><div class="line">            <span class="keyword">case</span> ID:</div><div class="line">                header.id(in.readLong());           <span class="comment">// 消息id</span></div><div class="line">                checkpoint(State.BODY_SIZE);</div><div class="line">            <span class="keyword">case</span> BODY_SIZE:</div><div class="line">                header.bodySize(in.readInt());      <span class="comment">// 消息体长度</span></div><div class="line">                checkpoint(State.BODY);</div><div class="line">            <span class="keyword">case</span> BODY:</div><div class="line">                <span class="keyword">switch</span> (header.messageCode()) &#123;</div><div class="line">                    <span class="keyword">case</span> JProtocolHeader.HEARTBEAT:</div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    <span class="keyword">case</span> JProtocolHeader.REQUEST: &#123;</div><div class="line">                        <span class="keyword">int</span> length = checkBodySize(header.bodySize());</div><div class="line">                        <span class="keyword">byte</span>[] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[length];</div><div class="line">                        in.readBytes(bytes);</div><div class="line"></div><div class="line">                        JRequestPayload request = <span class="keyword">new</span> JRequestPayload(header.id());</div><div class="line">                        request.timestamp(SystemClock.millisClock().now());</div><div class="line">                        request.bytes(header.serializerCode(), bytes);</div><div class="line"></div><div class="line">                        out.add(request);</div><div class="line"></div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">case</span> JProtocolHeader.RESPONSE: &#123;</div><div class="line">                        <span class="keyword">int</span> length = checkBodySize(header.bodySize());</div><div class="line">                        <span class="keyword">byte</span>[] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[length];</div><div class="line">                        in.readBytes(bytes);</div><div class="line"></div><div class="line">                        JResponsePayload response = <span class="keyword">new</span> JResponsePayload(header.id());</div><div class="line">                        response.status(header.status());</div><div class="line">                        response.bytes(header.serializerCode(), bytes);</div><div class="line"></div><div class="line">                        out.add(response);</div><div class="line"></div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">default</span>:</div><div class="line">                        <span class="keyword">throw</span> IoSignals.ILLEGAL_SIGN;</div><div class="line">                &#125;</div><div class="line">                checkpoint(State.MAGIC);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>正真的解析逻辑全部在<code>decode</code>方法中。这里的每个case并没有break，道理很简单，每解析一段数据后得接着继续往下解析，如果break掉了后面的数据不全都放弃解析了吗？每当解析到一个位置，都将这个位置上读取的数据放到<code>header</code>变量中，同时将接下来需要解析的位置记录下来（通过<code>checkpoint(...)</code>方法）。之所以要记录下来，万一某个位置解析出错，下次就不用从头再来了，直接上次出错的位置接着来就行了，也是为了提高性能。然而解析到body部分的时候，header里面内容都已经全部填充好了。接下来就是根据消息类型来处理body里的内容。如果是心跳包，那么什么都不做直接返回，因为body里肯定是没有数据的。如果是请求包(<code>REQUEST</code>类型)，先从header里读取这个body到底有多长，然后再去读这么长的数据，最后通过<code>JRequestPayload</code>对象将这个body数据封装起来，同时将消息id和序列化类型code也封装进去了。响应包类型逻辑与之类似。整个解码器解析逻辑就完成了。</p>
+<p>与之对应的就是编码器了，编码器逻辑更简单。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">encode</span><span class="params">(ChannelHandlerContext ctx, PayloadHolder msg, ByteBuf out)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="keyword">if</span> (msg <span class="keyword">instanceof</span> JRequestPayload) &#123;</div><div class="line">            doEncodeRequest((JRequestPayload) msg, out);</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (msg <span class="keyword">instanceof</span> JResponsePayload) &#123;</div><div class="line">            doEncodeResponse((JResponsePayload) msg, out);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(Reflects.simpleClassName(msg));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">doEncodeRequest</span><span class="params">(JRequestPayload request, ByteBuf out)</span> </span>&#123;</div><div class="line">        <span class="keyword">byte</span> sign = JProtocolHeader.toSign(request.serializerCode(), JProtocolHeader.REQUEST);</div><div class="line">        <span class="keyword">long</span> invokeId = request.invokeId();</div><div class="line">        <span class="keyword">byte</span>[] bytes = request.bytes();</div><div class="line">        <span class="keyword">int</span> length = bytes.length;</div><div class="line"></div><div class="line">        out.writeShort(JProtocolHeader.MAGIC)</div><div class="line">                .writeByte(sign)</div><div class="line">                .writeByte(<span class="number">0x00</span>)</div><div class="line">                .writeLong(invokeId)</div><div class="line">                .writeInt(length)</div><div class="line">                .writeBytes(bytes);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">doEncodeResponse</span><span class="params">(JResponsePayload response, ByteBuf out)</span> </span>&#123;</div><div class="line">        <span class="keyword">byte</span> sign = JProtocolHeader.toSign(response.serializerCode(), JProtocolHeader.RESPONSE);</div><div class="line">        <span class="keyword">byte</span> status = response.status();</div><div class="line">        <span class="keyword">long</span> invokeId = response.id();</div><div class="line">        <span class="keyword">byte</span>[] bytes = response.bytes();</div><div class="line">        <span class="keyword">int</span> length = bytes.length;</div><div class="line"></div><div class="line">        out.writeShort(JProtocolHeader.MAGIC)</div><div class="line">                .writeByte(sign)</div><div class="line">                .writeByte(status)</div><div class="line">                .writeLong(invokeId)</div><div class="line">                .writeInt(length)</div><div class="line">                .writeBytes(bytes);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>和解码器相反，编码器就是将对象中的数据按协议中的定义挨个写到buf中。</p>
+<p>以上，jupiter中的消息编解码器的实现就全部整理完了。当然还有空闲链路检测部分，因此我决定暂时放弃这部分，太复杂了，等所有逻辑整理完毕后再接着填坑。</p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+    <hr />
+    <h3>留言:</h3>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/Mr-Vincent" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2018 Mr-Vincent<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+<script type="text/javascript">
+    var disqus_shortname = 'wei-dong';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+</body>
+
+</html>
