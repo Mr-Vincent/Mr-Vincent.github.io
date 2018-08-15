@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="以梦为马 不负韶华">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Mr-Vincent">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="小白探索大前端--使用vue实现简单轮播图"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="以梦为马 不负韶华" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="DongWei&#39;s Blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>小白探索大前端--使用vue实现简单轮播图 - DongWei&#39;s Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">DongWei's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/Mr-Vincent">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e5a31d03ddee66863a599421f792e07b&auto=format&fit=crop&w=1500&q=80')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>小白探索大前端--使用vue实现简单轮播图</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2018-08-15
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/VUE/">#VUE</a> <a href="/tags/Javascript/">#Javascript</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/前端/">前端</a>
+
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>最近看完了《Vue实战》这本书，这也是我第一次完整的看完的一本关于前端的书籍（现在还在看的是《CSS世界》，有点想放弃了）。照着书中的demo都写了一遍，虽然很多栗子非常简单，但是值得学习的地方还是挺多的。当然也不得不吐槽很多用法都有点过时，尤其是关于webpack的配置。不过现在的前端发展很快，各种工具版本不断更新，代码过时也是能够理解的。对于学习者来说当然得学习最新的东西。</p>
+<p>这篇文章主要是用来记录在自己实现一个【知乎日报移动版】的过程中遇到的一个坑，说坑也算不上，只能叫做坎坷之路吧。因为书中给的实战demo是一个pc版的，自己跟着写了一遍，觉得没有什么难度。然后在github上找了一下，发现用知乎日报来练手的项目很多，原因也很简单–api是现成的。于是我也蠢蠢欲动，决定使用vue亲自撸一个【知乎daily】。</p>
+<p>虽然gayhub很多现成的项目，但是我并不打算去抄一遍。我在手机上下载了一个知乎日报的APP，按照不同功能截屏来一一实现。没办法，这就是工(zhuang)匠(bi)情(xin)怀(tai).</p>
+<p>开发过程中，整体的框架功能上基本没什么问题，该自己写组件就自己写，绝没有偷懒。也遇到很多问题，比如开发环境下的接口代理、知乎图片的同源策略等。这些问题肯定难不倒我，都不值一提。让我觉得难受的还是首页的轮播图实现。这个问题困扰了我2天（准确时间是一天半，还有半天在工作：逃）。</p>
+<p>遇到这个功能的时候第一反应是使用一个开源库，分分钟就搞定了。但是经过10s的思想斗争，工匠情怀终于战胜了理智，下定决心打算自己手动实现。然而，带来的结果就是卡顿了半天，没任何进展。网上也有很多教程，也是很简单的，可以说是基础操作了。可惜我被一篇文章带偏了，走了一点弯路。</p>
+<p>这篇文章的思路很常规，很有道理。首先将一个框框用来装你要显示的图片，仅仅只能显示这个框框，而图片呢就放后面排排坐，通过定时器去移动图片，就像一格格的胶卷一样，轮到谁谁就被看到了。</p>
+<p>我一开始就是按照这种思路去整，结果怎么整都实现不了（在移动端）。在一筹莫展之际，发现了一个更加屌的思路。这个思路和之前的不一样，区别在于后面的图片不是排排坐好，而是叠加到一块去。下面通过代码去一探究竟。</p>
+<p>首先得整一个窗口，简单来说就是用来显示一张图片的容器，它的宽度对移动端而言就是屏幕宽度。他得有一个非常重要的属性<code>overflow：hidden</code>，当子元素尺寸超过其父亲的大小多余内容就会被隐藏。这里用<code>ul</code>标签来装图片，其实使用<code>div</code>也是没问题的。元素<code>li</code>的<code>position</code>属性得设置为<code>absolute</code>.因为使用这个属性就能脱离文档流，也就不会“排排坐”了，而是叠加到一起了，当然，最后的肯定叠在最上面，前提是没有显示的设置<code>z-index</code>属性。还有很重要的一点，子元素定位设置为<code>absolute</code>父元素记得也设置一下定位属性，因为子元素的相对位置是按照第一个祖先元素不为<code>static</code>的元素来的，不然会粗大事。 html代码结构如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"window"</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"container"</span> <span class="attr">ref</span>=<span class="string">"imagesWrapper"</span>&gt;</span></div><div class="line">       </div><div class="line">       <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">"(e,i) in imgs"</span> <span class="attr">:key</span>=<span class="string">"i"</span>&gt;</span></div><div class="line">         <span class="tag">&lt;<span class="name">img</span> <span class="attr">:src</span>=<span class="string">"e.image"</span> <span class="attr">:alt</span>=<span class="string">"e.title"</span>&gt;</span></div><div class="line">         <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"desc"</span>&gt;</span>&#123;&#123;e.title&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">       <span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">       </div><div class="line">     <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line"></div><div class="line">     <span class="tag">&lt;<span class="name">ol</span> <span class="attr">class</span>=<span class="string">"point-wrap"</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">li</span> <span class="attr">:class</span>=<span class="string">"&#123;active:i==currentIndex&#125;"</span> <span class="attr">v-for</span>=<span class="string">"(e,i) in imgs"</span> <span class="attr">:key</span>=<span class="string">"i"</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">ol</span>&gt;</span></div><div class="line"></div><div class="line">   <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">* &#123;</div><div class="line">  <span class="attribute">padding</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">margin</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">list-style-type</span>: none;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">img</span> &#123;</div><div class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.container</span> &#123;</div><div class="line">  <span class="attribute">position</span>: relative;</div><div class="line">  <span class="attribute">min-height</span>: <span class="number">100%</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.container</span> <span class="selector-tag">li</span> &#123;</div><div class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">  <span class="attribute">height</span>: <span class="number">100%</span>;</div><div class="line">  <span class="attribute">position</span>: absolute;</div><div class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">transform</span>: <span class="built_in">translateX</span>(100%);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.window</span> &#123;</div><div class="line">  <span class="attribute">position</span>: relative;</div><div class="line">  <span class="attribute">height</span>: <span class="number">100%</span>;</div><div class="line">  <span class="attribute">margin</span>: <span class="number">0</span> auto;</div><div class="line">  <span class="attribute">overflow</span>: hidden;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里有一个小技巧，在静态样式中并没有将图片直接展示出来，而是将所有图片向右偏移一个窗口宽度。这是有玄机的。</p>
+<p>说了这么多，还没谈到vue的部分。在<code>container</code>容器中有一个<code>ref</code>标签。这是在vue中用来获取dom元素的。也许在vue中操作dom是不被推荐的，但是对于这种动态生成的<code>li</code>元素我找不到怎么去动态绑定其样式。因此采用了这种比较low的办法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">init() &#123;</div><div class="line">     <span class="keyword">let</span> wrappers = <span class="keyword">this</span>.$refs.imagesWrapper;</div><div class="line">     <span class="keyword">let</span> children = wrappers.children;</div><div class="line">     <span class="keyword">let</span> total = <span class="keyword">this</span>.imgs.length;</div><div class="line">     <span class="comment">// 纯js操作 只需要先将三张图片位置确定好</span></div><div class="line">     <span class="comment">// 最左边按道理说是没有图片的 但是为了无限滚动效果 这里将其置为最后一张</span></div><div class="line">     <span class="keyword">let</span> left = total - <span class="number">1</span>;</div><div class="line">     <span class="keyword">let</span> center = <span class="number">0</span>;</div><div class="line">     <span class="keyword">let</span> right = <span class="number">1</span>;</div><div class="line"></div><div class="line">     <span class="comment">// 初始化的时候将li左移动了一个屏幕宽度，就是为了防止叠加的元素挡住要显示的图</span></div><div class="line">     <span class="comment">// 现在第一张显示的图片实际是最后一张 3张轮播起来就行了 没必要对每个图片进行位置计算</span></div><div class="line">     <span class="comment">// left处于最左边的位置 不显示</span></div><div class="line">     children[left].style.transform = <span class="string">"translateX("</span> + -<span class="keyword">this</span>.distance + <span class="string">"px)"</span>;</div><div class="line">     <span class="comment">// center处于中间位置 显示</span></div><div class="line">     children[center].style.transform = <span class="string">"translateX("</span> + <span class="number">0</span> + <span class="string">"px)"</span>;</div><div class="line">     <span class="comment">// right处于右边 不显示</span></div><div class="line">     children[right].style.transform = <span class="string">"translateX("</span> + <span class="keyword">this</span>.distance + <span class="string">"px)"</span>;</div><div class="line">     <span class="keyword">this</span>.sliderItem = children;</div><div class="line">     <span class="comment">// this.play();</span></div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>首先就是初始化显示的内容，之前在静态css样式中将图片移动到右边看不到的地方去了，现在就得手动操作让其可见。刚开始我以为直接将这些图片全部“铺开”，然后滚动，后来发现这么做很笨。直接操作三张就行了！为了实现无限滚动的效果，第一张的逻辑上的前一张是最后一张，因此将第一张的“上一张”给放到屏幕左边，下一张放到屏幕右边，要显示的也就是第一张（下标为0）归位到窗口，这和之前设置的全局的样式<code>transform: translateX(100%)</code>对应起来了。</p>
+<p>如此以来，初始化的三张图片就定位好了，逻辑上也是没什么问题的。其余的改不显示还是显示不了，也不会参与移动。下面看看怎么“滚”。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">next() &#123;</div><div class="line">     this.currentIndex++;</div><div class="line">     // 边界判断</div><div class="line">     if (this.currentIndex &gt; this.imgs.length - 1) &#123;</div><div class="line">       this.currentIndex = 0;</div><div class="line">     &#125;</div><div class="line"></div><div class="line">     // center 为显示的图片</div><div class="line">     let center = this.currentIndex;</div><div class="line">     // 左边的 如果为负数 就取最后一张图片下标</div><div class="line">     let left = center - 1 &lt; 0 ? this.imgs.length - 1 : center - 1;</div><div class="line">     // 右边的 如果超过了最大图片数量 取第一张图片下标</div><div class="line">     let right = center + 1 == this.imgs.length ? 0 : center + 1;</div><div class="line"></div><div class="line">     let children = this.sliderItem;</div><div class="line">     // 给元素添加过渡</div><div class="line">     children[center].style.transition = "transform .5s";</div><div class="line">     children[left].style.transition = "transform .5s";</div><div class="line">     // 右边的图片是替补图片，不需要走过渡</div><div class="line">     children[right].style.transition = "none";</div><div class="line">     // 3张图片同时移动</div><div class="line">     children[left].style.transform = "translateX(" + -this.distance + "px)";</div><div class="line">     children[center].style.transform = "translateX(0px)";</div><div class="line">     children[right].style.transform = "translateX(" + this.distance + "px)";</div><div class="line">   &#125;,</div></pre></td></tr></table></figure>
+<p><code>currentIndex</code>为全局变量，指当前显示的图片下标，每次调用<code>next</code>会子增，到上限后会回归到0，这些都是很常规的操作。接下来就是计算上一张，下一张图片的下标，也是很容易理解，无非多了一点判断，在最后一张显示的时候下一张的下标得置为0，上一张也是同理，不然就回”空指针”了。接下来就是针对这三张图片改变样式，原则就是移动到哪个下标就显示哪个图片，上一张就移到左边，下一站移动到右边，顺便给加个动画效果。如此而已！</p>
+<p>最后就是自动播放的逻辑，也是非常简单，一个定时器就搞定：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">play() &#123;</div><div class="line">     <span class="keyword">if</span> (<span class="keyword">this</span>.timer) &#123;</div><div class="line">       <span class="built_in">window</span>.clearInterval(<span class="keyword">this</span>.timer);</div><div class="line">       <span class="keyword">this</span>.timer = <span class="literal">null</span>;</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">this</span>.timer = <span class="built_in">window</span>.setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">       <span class="keyword">this</span>.next();</div><div class="line">     &#125;, <span class="keyword">this</span>.interval);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>然后在钩子函数中将这方法加上去就完事了。一个自制的轮播组件就写完了。简陋但是简单。这里有一个不太重要的细节，针对窗口变化的时候得动态改变偏移量。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 窗口变化 重新初始化</span></div><div class="line">   windowChange() &#123;</div><div class="line">     <span class="keyword">const</span> that = <span class="keyword">this</span>;</div><div class="line">     <span class="built_in">window</span>.onresize = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">       <span class="keyword">return</span> <span class="function">(<span class="params">(</span>) =&gt;</span> &#123;</div><div class="line">         <span class="built_in">window</span>.screenWidth = <span class="built_in">document</span>.body.clientWidth;</div><div class="line">         that.distance = <span class="built_in">window</span>.screenWidth;</div><div class="line">         <span class="keyword">this</span>.init();</div><div class="line">       &#125;)();</div><div class="line">     &#125;;</div><div class="line">   &#125;,</div></pre></td></tr></table></figure>
+<p>这样在pc端下也能正常“滚”动了。</p>
+<p>最后，做一下小小的总结。这个组件虽然简单，但是也花了一定时间，毕竟踩坑的路是不能跳过的。其中花了很多时间纠结布局和样式，很是难受，都怪我没有把《CSS世界》看完。虽然简单，但是功能也很局限，比如没有实现手动去滑动。APP上是有这个功能的，那是因为我还没学会怎么在vue下使用touch事件（实际上是懒）。比如没有代码优化等等，总不能要求一个新手来造一个完美的轮子吧（给自己一点上升的空间咯）。造轮子不是目的，理解其中的所以然才是目的，现成的库有很多，完成功能也很容易，但是不能仅仅满足于此，我觉得作为手艺人得有一种格(xi)物(huan)致(zhuang)知(B)的精神。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3117395-0a23d3aadd128f5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/662" alt="image"></p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="http://web.jobbole.com/94701/" target="_blank" rel="external">CSS深入理解之relative定位</a></p>
+<p><a href="https://segmentfault.com/a/1190000011013572#articleHeader2" target="_blank" rel="external">几种原生js轮播图</a></p>
+<p><a href="https://github.com/Mr-Vincent/zhihu-daily-app" target="_blank" rel="external">源码地址</a></p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+    <hr />
+    <h3>留言:</h3>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/Mr-Vincent" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2018 Mr-Vincent<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+<script type="text/javascript">
+    var disqus_shortname = 'wei-dong';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+</body>
+
+</html>
