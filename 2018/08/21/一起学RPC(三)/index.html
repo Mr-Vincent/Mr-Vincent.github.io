@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="以梦为马 不负韶华">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Mr-Vincent">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="一起学RPC(三)"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="以梦为马 不负韶华" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="DongWei&#39;s Blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>一起学RPC(三) - DongWei&#39;s Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">DongWei's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/Mr-Vincent">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('https://images.unsplash.com/photo-1489875347897-49f64b51c1f8?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7ca95b1290dfb28db0ee368546e55487&auto=format&fit=crop&w=1500&q=80')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>一起学RPC(三)</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2018-08-21
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/源码解读/">#源码解读</a> <a href="/tags/Jupiter/">#Jupiter</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/一起读源码/">一起读源码</a>
+
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>在上一篇文章中讲到jupiter的传输模块transport中的编解码器的实现。对server来言，编解码器扮演着一头一尾的门卫角色，保证进来的人是干净的，也得保证出去的人也是干净的。当然这么比喻很不恰当，但是也想不到别的比喻了。</p>
+<p>编解码器固然重要，但是没有核心的业务处理器也没多大意义。本文的重点就是核心处理器：<code>AcceptorHandler</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@ChannelHandler</span>.Sharable</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AcceptorHandler</span> <span class="keyword">extends</span> <span class="title">ChannelInboundHandlerAdapter</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> ProviderProcessor processor;</div><div class="line">	<span class="comment">// ...</span></div><div class="line">	<span class="function"><span class="keyword">public</span> ProviderProcessor <span class="title">processor</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> processor;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">processor</span><span class="params">(ProviderProcessor processor)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.processor = processor;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>要实现一个handler很容易，直接继承<code>ChannelInboundHandlerAdapter</code>就行了。当然这是针对server来说的。根据类名来看，正常情况下首先会联想到肯定会有个与之对应的。针对server来说，要处理的就是入站数据，使用inbound就行了。如果有更加复杂的逻辑处理，可以去看看官方文档中其他的派生类。同时，这个实例也是能够被共享的，道理也很简单：没有状态。也许你会问：这里分明是有成员变量的呀。但是，这个成员变量是不会被改变的。如果发生了变化，这个程序设计上就有问题。理论上是绝对不允许改变的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelRead</span><span class="params">(ChannelHandlerContext ctx, Object msg)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">       Channel ch = ctx.channel();</div><div class="line"></div><div class="line">       <span class="keyword">if</span> (msg <span class="keyword">instanceof</span> JRequestPayload) &#123;</div><div class="line">           JChannel jChannel = NettyChannel.attachChannel(ch);</div><div class="line">           <span class="keyword">try</span> &#123;</div><div class="line">               processor.handleRequest(jChannel, (JRequestPayload) msg);</div><div class="line">           &#125; <span class="keyword">catch</span> (Throwable t) &#123;</div><div class="line">               processor.handleException(jChannel, (JRequestPayload) msg, Status.SERVER_ERROR, t);</div><div class="line">           &#125;</div><div class="line">       &#125; <span class="keyword">else</span> &#123;</div><div class="line">           logger.warn(<span class="string">"Unexpected message type received: &#123;&#125;, channel: &#123;&#125;."</span>, msg.getClass(), ch);</div><div class="line"></div><div class="line">           ReferenceCountUtil.release(msg);</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   <span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelActive</span><span class="params">(ChannelHandlerContext ctx)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">       <span class="keyword">int</span> count = channelCounter.incrementAndGet();</div><div class="line"></div><div class="line">       logger.info(<span class="string">"Connects with &#123;&#125; as the &#123;&#125;th channel."</span>, ctx.channel(), count);</div><div class="line"></div><div class="line">       <span class="keyword">super</span>.channelActive(ctx);</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   <span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelInactive</span><span class="params">(ChannelHandlerContext ctx)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">       <span class="keyword">int</span> count = channelCounter.getAndDecrement();</div><div class="line"></div><div class="line">       logger.warn(<span class="string">"Disconnects with &#123;&#125; as the &#123;&#125;th channel."</span>, ctx.channel(), count);</div><div class="line"></div><div class="line">       <span class="keyword">super</span>.channelInactive(ctx);</div><div class="line">   &#125;</div><div class="line">   <span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelWritabilityChanged</span><span class="params">(ChannelHandlerContext ctx)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">       Channel ch = ctx.channel();</div><div class="line">       ChannelConfig config = ch.config();</div><div class="line"></div><div class="line">       <span class="comment">// 高水位线: ChannelOption.WRITE_BUFFER_HIGH_WATER_MARK</span></div><div class="line">       <span class="comment">// 低水位线: ChannelOption.WRITE_BUFFER_LOW_WATER_MARK</span></div><div class="line">       <span class="keyword">if</span> (!ch.isWritable()) &#123;</div><div class="line">           <span class="comment">// 当前channel的缓冲区(OutboundBuffer)大小超过了WRITE_BUFFER_HIGH_WATER_MARK</span></div><div class="line">           <span class="keyword">if</span> (logger.isWarnEnabled()) &#123;</div><div class="line">               logger.warn(<span class="string">"&#123;&#125; is not writable, high water mask: &#123;&#125;, the number of flushed entries that are not written yet: &#123;&#125;."</span>,</div><div class="line">                       ch, config.getWriteBufferHighWaterMark(), ch.unsafe().outboundBuffer().size());</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           config.setAutoRead(<span class="keyword">false</span>);</div><div class="line">       &#125; <span class="keyword">else</span> &#123;</div><div class="line">           <span class="comment">// 曾经高于高水位线的OutboundBuffer现在已经低于WRITE_BUFFER_LOW_WATER_MARK了</span></div><div class="line">           <span class="keyword">if</span> (logger.isWarnEnabled()) &#123;</div><div class="line">               logger.warn(<span class="string">"&#123;&#125; is writable(rehabilitate), low water mask: &#123;&#125;, the number of flushed entries that are not written yet: &#123;&#125;."</span>,</div><div class="line">                       ch, config.getWriteBufferLowWaterMark(), ch.unsafe().outboundBuffer().size());</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           config.setAutoRead(<span class="keyword">true</span>);</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>可以看到，<code>AcceptorHandler</code>重写了几个方法。注意，重写<code>channelRead()</code>方法的时候记得调用<code>ReferenceCountUtil.release(msg)</code>。</p>
+<p>其中最核心的逻辑在<code>channelRead()</code>中处理。无非就是将解码器中反序列化后的对象进行处理罢了。当然这里接受的仅仅是<code>JRequestPayload</code>类型。然后将Netty的原生<code>Channel</code>转化为自定义的<code>JChannel</code>类型。这样做的目的是为了将api统一，方便接入其他网络库实现。也就说如果要换别的网络框架如mina，不需要去改动我业务的代码，只需针对别的网络库的api进行编码即可。然后使用<code>ProviderProcessor</code>来处理具体的业务逻辑。这个接口中提供了两个操作：<code>handleRequest</code>和 <code>handleException</code>.因此具体的业务逻辑处理全部都传递给<code>ProviderProcessor</code>实现了。</p>
+<p>而<code>channelWritabilityChanged</code>方法在可写状态发生变化的时候会被调用。可以通过<code>Channel#isWritable()</code>方法来获取状态。而这里对其重写是为了判断OutboundBuffer的大小有没有超过高水位线，这里的水位线是在<code>ChannelConfig</code>中设置的，server初始化的时候。超过高水位线就不允许自动去读数据了。这里有一点疑惑，不清楚为什么需要调用<code>config.setAutoRead(false)</code>。一个比较模糊的概念是Netty的写动作并不是直接向socket中写，而是写到Netty中的缓冲区中，这个缓冲区叫做<code>ChannelOutboundBuffer</code>，而这个buffer的实现是使用的无界链表，如果对方的接受太慢，就会导致这个链表无限大，最坏情况会导致OOM。因此提供一种机制：设置水位线。如果超过水位线就让用户来自己决定怎么处理，具体做法就是调用<code>channelWritabilityChanged</code>方法。这里的这个方法将自动读关闭了，这里面大有玄机。其实是利用了TCP的滑动窗口来控制的。</p>
+<blockquote>
+<p>比如咱俩喝酒, 你喝完一杯我就立刻给你满上, 最终你喝不动了 ,<br>不再举起杯子…. 你的杯子一直是满的, 我也没法继续给你倒酒</p>
+</blockquote>
+<p>这个栗子很形象地解释了滑动窗口。结合这个<a href="https://media.pearsoncmg.com/aw/ecs_kurose_compnetwork_7/cw/content/interactiveanimations/selective-repeat-protocol/index.html" target="_blank" rel="external">动画</a>更直观。</p>
+<p><a href="http://www.cnblogs.com/rainy-shurun/p/5213086.html" target="_blank" rel="external">这里</a>有一篇文章值得参考。</p>
+<p><img src="https://github.com/Mr-Vincent/pic-bed/blob/master/images/water-2018-08-06-10-52-13.jpg?raw=true" alt="image"></p>
+<p>接下来要讨论的是这个<code>processor</code>到底是怎么处理消息的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> InternalLogger logger = InternalLoggerFactory.getInstance(DefaultProviderProcessor.class);</div><div class="line"></div><div class="line">   <span class="keyword">private</span> <span class="keyword">final</span> CloseableExecutor executor;</div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="title">DefaultProviderProcessor</span><span class="params">()</span> </span>&#123;</div><div class="line">       <span class="keyword">this</span>(ProviderExecutors.executor());</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="title">DefaultProviderProcessor</span><span class="params">(CloseableExecutor executor)</span> </span>&#123;</div><div class="line">       <span class="keyword">this</span>.executor = executor;</div><div class="line">   &#125;</div><div class="line"><span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleRequest</span><span class="params">(JChannel channel, JRequestPayload requestPayload)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">       MessageTask task = <span class="keyword">new</span> MessageTask(<span class="keyword">this</span>, channel, <span class="keyword">new</span> JRequest(requestPayload));</div><div class="line">       <span class="keyword">if</span> (executor == <span class="keyword">null</span>) &#123;</div><div class="line">           task.run();</div><div class="line">       &#125; <span class="keyword">else</span> &#123;</div><div class="line">           executor.execute(task);</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>其实不难想到，<code>handleRequest</code>方法中将接受到的数据做了一层封装，然后丢给线程池去处理。在Netty中，业务处理逻辑绝对不能放在IO线程中执行。IO线程只负责读取/发送数据，不能进行业务处理。这是因为如果业务逻辑中有耗时的操作就会将IO线程阻塞住，这样正常的请求也就被阻塞了，影响应用的性能。而这里的线程池也被自定义了。</p>
+<p><code>CloseableExecutor</code>是一个接口类型，正真的实现类是通过SPI机制由工厂创建出来的。关于SPI机制这里不会展开，将单独去整理一篇文章来说明。这种机制在很多框架中都有体现。</p>
+<p>而包装类<code>MessageTask</code>的实现就很关键了。既然这个对象能放到线程池中，那么一定是一个<code>Runnable</code>或者<code>Callable</code>的实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">       <span class="comment">// stack copy</span></div><div class="line">       <span class="keyword">final</span> DefaultProviderProcessor _processor = processor;</div><div class="line">       <span class="keyword">final</span> JRequest _request = request;</div><div class="line"></div><div class="line">       <span class="comment">// 全局流量控制</span></div><div class="line">       ControlResult ctrl = _processor.flowControl(_request);</div><div class="line">       <span class="keyword">if</span> (!ctrl.isAllowed()) &#123;</div><div class="line">           rejected(Status.APP_FLOW_CONTROL, <span class="keyword">new</span> JupiterFlowControlException(String.valueOf(ctrl)));</div><div class="line">           <span class="keyword">return</span>;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       MessageWrapper msg;</div><div class="line">       <span class="keyword">try</span> &#123;</div><div class="line">           JRequestPayload _requestPayload = _request.payload();</div><div class="line"></div><div class="line">           <span class="keyword">byte</span> s_code = _requestPayload.serializerCode();</div><div class="line">           Serializer serializer = SerializerFactory.getSerializer(s_code);</div><div class="line"></div><div class="line">           <span class="comment">// 在业务线程中反序列化, 减轻IO线程负担</span></div><div class="line">           <span class="keyword">if</span> (CodecConfig.isCodecLowCopy()) &#123;</div><div class="line">               InputBuf inputBuf = _requestPayload.inputBuf();</div><div class="line">               msg = serializer.readObject(inputBuf, MessageWrapper.class);</div><div class="line">           &#125; <span class="keyword">else</span> &#123;</div><div class="line">               <span class="keyword">byte</span>[] bytes = _requestPayload.bytes();</div><div class="line">               msg = serializer.readObject(bytes, MessageWrapper.class);</div><div class="line">           &#125;</div><div class="line">           _requestPayload.clear();</div><div class="line"></div><div class="line">           _request.message(msg);</div><div class="line">       &#125; <span class="keyword">catch</span> (Throwable t) &#123;</div><div class="line">           rejected(Status.BAD_REQUEST, <span class="keyword">new</span> JupiterBadRequestException(<span class="string">"reading request failed"</span>, t));</div><div class="line">           <span class="keyword">return</span>;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="comment">// 查找服务</span></div><div class="line">       <span class="keyword">final</span> ServiceWrapper service = _processor.lookupService(msg.getMetadata());</div><div class="line">       <span class="keyword">if</span> (service == <span class="keyword">null</span>) &#123;</div><div class="line">           rejected(Status.SERVICE_NOT_FOUND, <span class="keyword">new</span> JupiterServiceNotFoundException(String.valueOf(msg)));</div><div class="line">           <span class="keyword">return</span>;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="comment">// provider私有流量控制</span></div><div class="line">       FlowController&lt;JRequest&gt; childController = service.getFlowController();</div><div class="line">       <span class="keyword">if</span> (childController != <span class="keyword">null</span>) &#123;</div><div class="line">           ctrl = childController.flowControl(_request);</div><div class="line">           <span class="keyword">if</span> (!ctrl.isAllowed()) &#123;</div><div class="line">               rejected(Status.PROVIDER_FLOW_CONTROL, <span class="keyword">new</span> JupiterFlowControlException(String.valueOf(ctrl)));</div><div class="line">               <span class="keyword">return</span>;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="comment">// processing</span></div><div class="line">       Executor childExecutor = service.getExecutor();</div><div class="line">       <span class="keyword">if</span> (childExecutor == <span class="keyword">null</span>) &#123;</div><div class="line">           process(service);</div><div class="line">       &#125; <span class="keyword">else</span> &#123;</div><div class="line">           <span class="comment">// provider私有线程池执行</span></div><div class="line">           childExecutor.execute(<span class="keyword">new</span> Runnable() &#123;</div><div class="line"></div><div class="line">               <span class="meta">@Override</span></div><div class="line">               <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                   process(service);</div><div class="line">               &#125;</div><div class="line">           &#125;);</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>这段代码十分简洁。首先将全局变量赋值为局部变量，我依稀记得在一个老外的代码中看到过，目的大概是为了节省性能。接下来就是全局流量控制，所谓的流量控制简单理解为防止请求太猛导致服务垮掉。有全局的就一定有局部的。而局部的控制是针对rpc中对外暴露某个服务。其粒度更小一点。然后就是反序列化了，这个过程在编解码器中也能完成，但是作者并没有这么做。目的也很简单，毕竟序列化是比较耗性能的，再说了，编解码器实际上也是在IO线程中处理的。这么做也是为了减轻IO线程负担。紧接着就是将序列化后的对象中的<code>ServiceMetadata</code>取出来 ，通过这个对象去本地容器中找<code>ServiceWrapper</code>。本地容器就是rpc的provider在发布一个服务到注册中心的时候本地也保存一个这个服务的相关信息。所谓的服务简单理解为就是一个service bean。而这个容器简单理解为就是一个map映射，<code>ServiceMetadata</code>为key，<code>ServiceWrapper</code>为value。找到这个<code>ServiceWrapper</code>后就很好办了，接下来就是调用这个service了。但是这个<code>ServiceWrapper</code>不仅仅是一个service，里面有很多额外的功能，比方可以有一个私有的线程池。如果有，那么在具体调用这个service的时候会使用这个私有的线程池。这种场景我反正没见过，但不排除有这种情况。如果没有那就很简单了，直接处理。这个处理过程也很容易想到，无非就是将要调用的service执行一遍，将结果序列化，再写出去。然而里面的代码实现可没有那么简单。</p>
+<p>具体的处理逻辑全部都在<code>process</code>方法中。当然，在看具体实现之前很有必要对其中几个核类如<code>ServiceWrapper</code>和<code>MessageWrapper</code>进行解读。</p>
+<p><code>MessageWrapper</code>可以简单理解为调用者发送的数据。包含要调用的对象，对象的方法，方法的参数。当然实际上比这些内容要复杂很多，比如链路追踪id等。有个最重要的参数<code>ServiceMetadata</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceMetadata</span> <span class="keyword">extends</span> <span class="title">Directory</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">8908295634641380163L</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String group;               <span class="comment">// 服务组别</span></div><div class="line">    <span class="keyword">private</span> String serviceProviderName; <span class="comment">// 服务名称</span></div><div class="line">    <span class="keyword">private</span> String version;             <span class="comment">// 服务版本号</span></div><div class="line">	<span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>Directory</code>是一个抽象类。这个命名也很容易理解，顾名思义Directory是目录的意思。对于某个服务来说，单纯的知道服务名就足矣完成调用。但是在复杂的场景下，有成百上千个服务，要做到准确调用就得对其进行分类了。而且有时候还有同一个服务版本也不一样的情形，因此版本号也得作为这个目录中的某个层级。为什么成为metadata呢？这个属性在<code>ServiceWrapper</code>对象中也有。可以猜到了，一定是一一对应起来的。通俗解释来说<code>ServiceWrapper</code>是属于服务端的。也就是说provider发布本地服务到注册中心的同时，仅仅是将元数据发出去了，注册中心有了还不能完事，自己本地得确实存在呀，不然consumer从注册中心中拿到服务元数据了去provider里找不到这个服务，这非得骂娘不可。而ServiceWrapper正是将需要暴露出去的服务在本地存起来。仅此而已。其中最重要的属性就是服务对象<code>serviceProvider</code>了，对于rpc来说，consumer知道的仅仅是接口，正真去干活的还是实现类。而其余的花里胡哨的东西还是有点用的，得分场景。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceWrapper</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">6690575889849847348L</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 服务元数据</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ServiceMetadata metadata;</div><div class="line">    <span class="comment">// 服务对象</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Object serviceProvider;</div><div class="line">    <span class="comment">// 服务拦截器</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ProviderInterceptor[] interceptors;</div><div class="line">    <span class="comment">// key:     method name</span></div><div class="line">    <span class="comment">// value:   pair.first:  方法参数类型(用于根据JLS规则实现方法调用的静态分派)</span></div><div class="line">    <span class="comment">//          pair.second: 方法显式声明抛出的异常类型</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, List&lt;Pair&lt;Class&lt;?&gt;[], Class&lt;?&gt;[]&gt;&gt;&gt; extensions;</div><div class="line"></div><div class="line">    <span class="comment">// 权重 hashCode() 与 equals() 不把weight计算在内</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> weight = JConstants.DEFAULT_WEIGHT;</div><div class="line">    <span class="comment">// provider私有线程池</span></div><div class="line">    <span class="keyword">private</span> Executor executor;</div><div class="line">    <span class="comment">// provider私有流量控制器</span></div><div class="line">    <span class="keyword">private</span> FlowController&lt;JRequest&gt; flowController;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>而具体的核心处理逻辑<code>process</code>以后再慢慢看。</p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+    <hr />
+    <h3>留言:</h3>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/Mr-Vincent" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2018 Mr-Vincent<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+<script type="text/javascript">
+    var disqus_shortname = 'wei-dong';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+</body>
+
+</html>
