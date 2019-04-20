@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wei-dong.top/"/>
-  <updated>2018-09-12T09:07:20.764Z</updated>
+  <updated>2019-04-20T08:47:04.358Z</updated>
   <id>http://www.wei-dong.top/</id>
   
   <author>
@@ -14,6 +14,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>为什么要写作</title>
+    <link href="http://www.wei-dong.top/2019/04/20/why_writting/"/>
+    <id>http://www.wei-dong.top/2019/04/20/why_writting/</id>
+    <published>2019-04-20T08:14:23.000Z</published>
+    <updated>2019-04-20T08:47:04.358Z</updated>
+    
+    <content type="html"><![CDATA[<p>有一天，天一同学突然问我一个问题：你的博客是不打算更新了么？一时间我不知道怎么回答，因为我也不确定回答是或者否。</p>
+<p>然后接下来好几天都在想这个问题。即使天一同学不提到，我也意识到很久没有更新文章了。然后回想一下，自从换了工作到云集工作后就再也没有更新博客了。就连github也没怎么更新过。原先买的3年期的域名，本打算在这段时间给自己留下点什么，仔细翻了翻以往写的东西，可能真的要半途而废了。</p>
+<p>拿半途而废来形容是不准确的，毕竟这个域名还没到期，仅仅废了一半。那就好好分析一下为什么没想到去写文章了，总结一个字–懒！现在工作还是有压力的，业余时间都放松玩去了，压根没想到要写点什么记录一下。其次就是对技术的热爱没有那么强烈了。以前看到一些比较厉害的源码总是有那么一点小激动和兴奋，总想着去学习一下记录这个过程。而现在这种想法不是那么强烈，想着到时候需要的时候再来研究。那就不得不说，现在对什么兴趣比较强烈。现在对绘画、书法之类的比较感兴趣。空闲时间都会去b站看看，总想着有一天我也会这些东西，而不仅仅只会写代码。我想这种想法不仅仅我一个人有过，很多人都想过。同时也会关注一下那些技术博主的关于编码之外的文章，比方说生活琐事之类的。大概是因为自己从事这个行业时间久了，内心世界十分贫瘠，总是一些枯燥的代码。长久以来，我觉得技术之中也存在着某种艺术以及设计哲学，因此更加想去找到这两者之间的联系。</p>
+<p>除了懒，还有一个比较重要的原因。觉得自己的语言组织能力不足，不足以将一件事情表达清楚，或者文笔不够好，担心写出来的东西太low，入不了眼。因此就更不愿意写，如此往复恶性循环。但是这个理由是站不住脚的。自己写的文章仅仅是用来取悦自己而不是取悦他人，干嘛有这么多心理负担，又不是上学那会让写个作文还得打分。因此还是一个字懒导致的。</p>
+<p>还发现一个现象，随着年龄的增加，越来越多的人都不愿意在社交网络上表达自己了。我曾记得以前总是在微博盆友圈上发表一些想法感受，而现在却很少了。说不清为什么，大致觉得生活无非就是这样，稀疏平常的事情也没必要去抱怨或者去“晒”吧。或者是说成年人的世界比较复杂？</p>
+<p>通篇下来，都是在讲我为什么没继续写作了，但丝毫没说为什么要写作。</p>
+<p>为了留下点什么，为了不被忘记！</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;有一天，天一同学突然问我一个问题：你的博客是不打算更新了么？一时间我不知道怎么回答，因为我也不确定回答是或者否。&lt;/p&gt;
+&lt;p&gt;然后接下来好几天都在想这个问题。即使天一同学不提到，我也意识到很久没有更新文章了。然后回想一下，自从换了工作到云集工作后就再也没有更新博客了。就连
+    
+    </summary>
+    
+      <category term="写作" scheme="http://www.wei-dong.top/categories/%E5%86%99%E4%BD%9C/"/>
+    
+    
+      <category term="编码之外" scheme="http://www.wei-dong.top/tags/%E7%BC%96%E7%A0%81%E4%B9%8B%E5%A4%96/"/>
+    
+  </entry>
   
   <entry>
     <title>Netty中的线程模型之OIO</title>
@@ -1412,46 +1442,6 @@
     <summary type="html">
     
       &lt;p&gt;JUC是jdk1.5之后一强大的工具包。其中对JAVA的并发做了很好的支持。仔细阅读源码你会发现很多代码的作者是&lt;a href=&quot;https://en.wikipedia.org/wiki/Doug_Lea&quot;&gt;Doug Lea&lt;/a&gt;。所以现在开始细细琢磨这位大神的鬼斧神工。&lt;br&gt;
-    
-    </summary>
-    
-      <category term="JDK SOURCE" scheme="http://www.wei-dong.top/categories/JDK-SOURCE/"/>
-    
-    
-      <category term="源码解读" scheme="http://www.wei-dong.top/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
-    
-      <category term="JDK" scheme="http://www.wei-dong.top/tags/JDK/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JUC之CyclicBarrier</title>
-    <link href="http://www.wei-dong.top/2017/07/01/juc_CyclicBarrier/"/>
-    <id>http://www.wei-dong.top/2017/07/01/juc_CyclicBarrier/</id>
-    <published>2017-07-01T14:14:41.000Z</published>
-    <updated>2017-07-01T14:28:20.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>从这个名字来理解这个东西叫做循环栅栏。也许这样翻译很生硬，但是具体什么意思大概可以很清楚地明白了。</p>
-<blockquote>
-<p>A synchronization aid that allows a set of threads to all wait for each other to reach a common barrier point. CyclicBarriers are useful in programs involving a fixed sized party of threads that must occasionally wait for each other. The barrier is called cyclic because it can be re-used after the waiting threads are released.<br><a id="more"></a><br>JDK文档的解释是这样的：CyclicBarrier是一个同步辅助类，允许一组线程互相等待，直到到达某个公共屏障点 (common barrier point)。因为该 barrier 在释放等待线程后可以重用，所以称它为循环 的 barrier。<br>看个DEMO先：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">public class CyclicBarrierTest1 &#123;</div><div class="line"></div><div class="line">    private static int SIZE = 5;</div><div class="line">    private static CyclicBarrier cb;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line"></div><div class="line">        cb = new CyclicBarrier(SIZE);</div><div class="line"></div><div class="line">        // 新建5个任务</div><div class="line">        for(int i=0; i&lt;SIZE; i++)</div><div class="line">            new InnerThread().start();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    static class InnerThread extends Thread&#123;</div><div class="line">        public void run() &#123;</div><div class="line">            try &#123;</div><div class="line">                System.out.println(Thread.currentThread().getName() + &quot; wait for CyclicBarrier.&quot;);</div><div class="line"></div><div class="line">                // 将cb的参与者数量加1</div><div class="line">                cb.await();</div><div class="line"></div><div class="line">                // cb的参与者数量等于5时，才继续往后执行</div><div class="line">                System.out.println(Thread.currentThread().getName() + &quot; continued.&quot;);</div><div class="line">            &#125; catch (BrokenBarrierException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125; catch (InterruptedException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-</blockquote>
-<p>执行结果：<br><code>Thread-1 wait for CyclicBarrier.
-Thread-2 wait for CyclicBarrier.
-Thread-3 wait for CyclicBarrier.
-Thread-4 wait for CyclicBarrier.
-Thread-0 wait for CyclicBarrier.
-Thread-0 continued.
-Thread-4 continued.
-Thread-2 continued.
-Thread-3 continued.
-Thread-1 continued.</code></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;从这个名字来理解这个东西叫做循环栅栏。也许这样翻译很生硬，但是具体什么意思大概可以很清楚地明白了。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;A synchronization aid that allows a set of threads to all wait for each other to reach a common barrier point. CyclicBarriers are useful in programs involving a fixed sized party of threads that must occasionally wait for each other. The barrier is called cyclic because it can be re-used after the waiting threads are released.&lt;br&gt;
     
     </summary>
     
