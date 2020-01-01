@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wei-dong.top/"/>
-  <updated>2019-11-24T10:08:27.722Z</updated>
+  <updated>2020-01-01T06:11:24.507Z</updated>
   <id>http://www.wei-dong.top/</id>
   
   <author>
@@ -14,6 +14,52 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>写在2020</title>
+    <link href="http://www.wei-dong.top/2020/01/01/%E5%86%99%E5%9C%A82020/"/>
+    <id>http://www.wei-dong.top/2020/01/01/写在2020/</id>
+    <published>2020-01-01T03:33:18.000Z</published>
+    <updated>2020-01-01T06:11:24.507Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天是2020第一天。</p>
+<h2 id="回首"><a href="#回首" class="headerlink" title="回首"></a>回首</h2><p>此时的我坐在电脑前对着屏幕发呆，仔细回忆着发生在2019值得纪念的事情。最值得被纪念的还得是我这一年的成长吧。</p>
+<p>当然这个成长只能算是工作上的。自从2018年来到YJ后，回想起之前的工作经历可以说是浪费时间。刚来那时候面对新环境我真的是一个dd，d中d。对于工作中的基本操作都显得十分笨拙，那时候我还是有两年的工作经验呢。在试用期的几个月内，我真的十分崩溃。在完成第一个需求的时候痛苦不堪。有个坑b的产品，加上对接的东西又很多，老代码写得和狗屎一样，这些对我来说无疑是困难。毕竟之前从未在这么大规模的研发团队中工作过，团队的协作与沟通俨然成为一道阻碍我前行的屏障。说实话代码的难度倒是没难倒我，只是对于那么大的团队协作的工作方式觉得很困惑。曾经一度想直接和经理说干不下去了太难受了我不搞了，但最后还是坚持下来了，终于熬过试用期了。还记得那时候压力太大和父亲通话，他劝我说搞不了就别搞了，机会多的是干嘛和自己过不去呢。那时候我反驳了他没听他的，我就是想证明一下自己到底能不能扛得住这些压力。因为我之前之前的日子里过得实在是太安逸了，没有任何压力，每天都不知道自己做了些什么，甚至还有点自闭。度过那段难受的时光之后我逐渐轻车熟路，慢慢知道了一些常见的套路。这得感谢我的直接领导文颗，他是一个很出色的95后，情商很高，处理人际关系很有一套。有时候看他做事方式并不像一个95的年轻人，成熟的不像95后。后来慢慢负责了一块单独的业务，那时候我才正真体会到了价值和责任，也慢慢学会了沟通的技巧，但还是不知道怎么怼人。相比之前，2019在YJ的这段时间确实让我经历了许多，至少能抗住压力了。</p>
+<p>再值得纪念的是和天一兄弟的‘云创业’。那时候他提出做自媒体的想法，然后招集几个小伙伴一起出谋划策实施落地方案。我记得当时两周一次会议，每次会议一个小时，轮岗主持人制。刚开始积极性还是很高的，后来就没有了太多热情，最后坚持了一两个月就宣布失败了。不过还是学到很多实用的东西，比如会议的控场，主题的把控等很多小技巧。不得不说创业其实还是很困难的。目前天一兄弟的博客也不更新了，可能是时间都用来陪伴女朋友了吧。</p>
+<p>记得五一的时候回家过一躺，一个老朋友结婚去参加了婚礼，也是我人生中第一次参加别人的婚礼。男孩女孩都是老同学了，他们经历太多最后还是走到一起。在婚礼中有那么一瞬间真的很感动，甚至想哭。因为婚礼的缘故也遇到了很多老同学老朋友，神奇的是那么多年没见再次相遇居然还没有任何生疏的感觉，一切好像昨天才见面一样熟悉。曾经以为有些人一辈子都不会再见面了，现在却真实的站在我面前。</p>
+<p>再谈谈2019哪些做了哪些没做吧。这一年读几本书，正真感兴趣的不是太多。</p>
+<ul>
+<li>《激荡三十年（上）》</li>
+<li>《激荡十年 水大鱼大》</li>
+<li>《浪潮之巅》</li>
+<li>《未来简史》</li>
+<li>《褚时健传》</li>
+<li>《淘宝技术这十年》</li>
+<li>《我们仨》 </li>
+<li>《读懂财经新闻的第一本书》</li>
+</ul>
+<p>总的来说对那些带有历史变革背景的作品比较感兴趣。对非技术类的文学作品还是缺少耐心。技术类的书籍看得多，但大多都没看完在那里吃灰，比如《CSAPP》、《TCP/IP详解》等。</p>
+<p>这一年专业技术水平没有太多的提升，最多的尝试是读源码，但是正真收获的却没有太多。有个阿里P7大佬写了个开源的RPC框架我是真的一点不漏的看完了，反反复复地看，还写出了几篇解读文章。值得高兴的是被他收录到他github上去了。那时候真的有一种付出就有回报的感觉，很自豪。为什么读不下去源码，因为做这种事情时间周期久而且得到的反馈太慢了，现在都讲究短平快，及时满足感，像这种起码得花好几天才能有回报的事情做起来太吃力了。还有一个根本原因：你不够热爱！突然想起最近和一个B站插画up主聊天，他说有时候下班还会去画画，因为喜欢。我反思了一下，我下班后还会打开电脑写代码么？</p>
+<p>最近值得纪念的事情就是公司裁员，这让原本和谐融洽的气氛变得十分紧张。毕竟走了近一半的同学，还是挺难过的。</p>
+<p>这一年的兴趣爱好似乎依旧没有培养起来，用四个字总结就是有心无力。总是期待着成为XXX样的人，一直在内心幻想着，却没有正真去付出时间和精力。还是源自内心的恐惧，害怕失败，害怕没有结果，害怕中途放弃…</p>
+<p>这一年我没有成为有趣的人，没认识新的朋友，没去过有趣的地方。</p>
+<h2 id="展望"><a href="#展望" class="headerlink" title="展望"></a>展望</h2><p>对于2020我不想立太多flag。我希望找到自己的热爱，付出和实践；直面恐惧，发现生活的乐趣，做个内心世界丰富且强大的人。</p>
+<h2 id="尾声"><a href="#尾声" class="headerlink" title="尾声"></a>尾声</h2><p>2019已经过去了，我还是很怀念它！<br><img src="https://github.com/Mr-Vincent/pic-bed/blob/master/images/jim-carry.jpg?raw=true" alt="image"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天是2020第一天。&lt;/p&gt;
+&lt;h2 id=&quot;回首&quot;&gt;&lt;a href=&quot;#回首&quot; class=&quot;headerlink&quot; title=&quot;回首&quot;&gt;&lt;/a&gt;回首&lt;/h2&gt;&lt;p&gt;此时的我坐在电脑前对着屏幕发呆，仔细回忆着发生在2019值得纪念的事情。最值得被纪念的还得是我这一年的
+    
+    </summary>
+    
+      <category term="beyond coding" scheme="http://www.wei-dong.top/categories/beyond-coding/"/>
+    
+    
+      <category term="生活" scheme="http://www.wei-dong.top/tags/%E7%94%9F%E6%B4%BB/"/>
+    
+  </entry>
   
   <entry>
     <title>浮生一记</title>
@@ -1395,43 +1441,6 @@
       <category term="源码解读" scheme="http://www.wei-dong.top/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
     
       <category term="JDK" scheme="http://www.wei-dong.top/tags/JDK/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>自定义Spring Schema</title>
-    <link href="http://www.wei-dong.top/2017/07/01/spring%20schema/"/>
-    <id>http://www.wei-dong.top/2017/07/01/spring schema/</id>
-    <published>2017-07-01T14:18:23.000Z</published>
-    <updated>2017-07-01T14:28:27.000Z</updated>
-    
-    <content type="html"><![CDATA[<h5 id="What’s-schema"><a href="#What’s-schema" class="headerlink" title="What’s schema"></a>What’s schema</h5><p>schema中文翻译是概要、计划、图表。这里的schema指的是xml schema，也就是对xml的约束。在xml schema之前，对xml进行约束的是DTD。现在xml schema占据了主流。其中spring framework中xml配置文件就是使用的是xml schema，后缀名为xsd。<br><a id="more"></a> </p>
-<h5 id="How-to-define-a-xml-schema"><a href="#How-to-define-a-xml-schema" class="headerlink" title="How to define a xml schema"></a>How to define a xml schema</h5><p>在spring framework中的applicationContext.xml文件中见到最多的就是<code>&lt;bean&gt;</code>标签。有时候想自己也整一个标签满足自己的需求（装逼or真的是需要自己实现）那就得自己去按照spring的标准去实现了，就好比JDK中的SPI机制，要按照JDK的规范去做。Spring是怎么要求的呢？<br>以maven工程为例，在resources目录下的META_INF下需要自己定义一个.xsd文件。这里我定义了一个以dongwei为名的dongwei.xsd文件：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">xsd:schema</span> <span class="attr">xmlns</span>=<span class="string">"http://www.dongwei.com/schema/dongwei"</span></span></div><div class="line">            <span class="attr">xmlns:xsd</span>=<span class="string">"http://www.w3.org/2001/XMLSchema"</span></div><div class="line">            <span class="attr">xmlns:tool</span>=<span class="string">"http://www.springframework.org/schema/tool"</span></div><div class="line">            <span class="attr">xmlns:beans</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></div><div class="line">            <span class="attr">targetNamespace</span>=<span class="string">"http://www.dongwei.com/schema/dongwei"</span>&gt;</div><div class="line">	<span class="comment">&lt;!-- 这里import有好几个schema 可同时去约束被约束的xml --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">xsd:import</span> <span class="attr">namespace</span>=<span class="string">"http://www.w3.org/XML/1998/namespace"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">xsd:import</span> <span class="attr">namespace</span>=<span class="string">"http://www.springframework.org/schema/tool"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">xsd:import</span> <span class="attr">namespace</span>=<span class="string">"http://www.springframework.org/schema/beans"</span>/&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">xsd:element</span> <span class="attr">name</span>=<span class="string">"user"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">xsd:complexType</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">xsd:complexContent</span>&gt;</span></div><div class="line">				<span class="tag">&lt;<span class="name">xsd:extension</span> <span class="attr">base</span>=<span class="string">"beans:identifiedType"</span>&gt;</span></div><div class="line">					<span class="tag">&lt;<span class="name">xsd:attribute</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">type</span>=<span class="string">"xsd:string"</span>&gt;</span></div><div class="line">						<span class="tag">&lt;<span class="name">xsd:annotation</span>&gt;</span></div><div class="line">							<span class="tag">&lt;<span class="name">xsd:documentation</span>&gt;</span>姓名<span class="tag">&lt;/<span class="name">xsd:documentation</span>&gt;</span></div><div class="line">						<span class="tag">&lt;/<span class="name">xsd:annotation</span>&gt;</span></div><div class="line">					<span class="tag">&lt;/<span class="name">xsd:attribute</span>&gt;</span></div><div class="line">				<span class="tag">&lt;/<span class="name">xsd:extension</span>&gt;</span></div><div class="line">			<span class="tag">&lt;/<span class="name">xsd:complexContent</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">xsd:complexType</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">xsd:element</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">xsd:schema</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<p>上面的xsd文件就定义了一个约束。接下来还需要在resources/META_INF下新建两个文件<code>spring.handlers</code>和<code>spring.schemas</code> 内容分别是这样的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http\://www.dongwei.com/schema/dongwei=com.hnisi.springscheme.schema.DongweiNamespaceHandler</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http\://www.dongwei.com/schema/dongwei/dongwei.xsd=META-INF/dongwei.xsd</div></pre></td></tr></table></figure>
-<p>handlers的内容可以是多条，表示对这个标签的处理器。schema表示的是xsd的文件位置，在url不能访问的时候（断网）程序可以去本地找schema。</p>
-<h5 id="schema-handlers"><a href="#schema-handlers" class="headerlink" title="schema handlers"></a>schema handlers</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DongweiNamespaceHandler</span>  <span class="keyword">extends</span> <span class="title">NamespaceHandlerSupport</span></span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">		registerBeanDefinitionParser(<span class="string">"user"</span>, <span class="keyword">new</span> UserBeanDefinitionParser());		</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>自定义的handler就是酱紫，需实现父类的<code>init</code>方法。他去调用了<code>registerBeanDefinitionParser</code>去注册标签。第一个参数是标签名，第二个是对这个标签的解析。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserBeanDefinitionParser</span> <span class="keyword">extends</span>  <span class="title">AbstractSingleBeanDefinitionParser</span>  </span>&#123;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doParse</span><span class="params">(Element element, BeanDefinitionBuilder builder)</span> </span>&#123;</div><div class="line">		String id = element.getAttribute(<span class="string">"id"</span>);</div><div class="line">		String name = element.getAttribute(<span class="string">"name"</span>);</div><div class="line">		</div><div class="line">		builder.addPropertyValue(<span class="string">"id"</span>, id);</div><div class="line">		builder.addPropertyValue(<span class="string">"name"</span>, name);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">protected</span> Class&lt;?&gt; getBeanClass(Element element) &#123;</div><div class="line">		<span class="keyword">return</span> User.class;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这个解析器重写了父类的<code>doParse</code>和<code>getBeanClass</code>  其中<code>doParse</code>处理的就是xsd中定义的属性。<br>当然，也不能少了我们要定义的标签bean<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</div><div class="line">	 <span class="keyword">private</span> String id;</div><div class="line">	 <span class="keyword">private</span> String name;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> id;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(String id)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.id = id;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> name;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.name = name;</div><div class="line">	&#125;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">"User [id="</span> + id + <span class="string">", name="</span> + name + <span class="string">"]"</span>;</div><div class="line">	&#125;</div><div class="line">	 </div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>实际上这就是一个bean，和在applicationContext.xml中配置的<code>&lt;bean&gt;</code>是一个意思。这样定义标签去处理个人觉得是为了更加灵活，可以在xml文件中去配置bean的属性，想改就改。</p>
-<h5 id="How-to-use"><a href="#How-to-use" class="headerlink" title="How to use"></a>How to use</h5><p>再来看看applicationContext.xml中怎么使用<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line">&lt;beans xmlns="http://www.springframework.org/schema/beans"</div><div class="line">    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" </div><div class="line">    xmlns:dongwei="http://www.dongwei.com/schema/dongwei"</div><div class="line">    xsi:schemaLocation="http://www.springframework.org/schema/beans </div><div class="line">    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd    </div><div class="line">    http://www.dongwei.com/schema/dongwei</div><div class="line">    http://www.dongwei.com/schema/dongwei/dongwei.xsd"&gt;</div><div class="line">    </div><div class="line">    &lt;dongwei:user id="eric" name="123"/&gt;</div><div class="line">    </div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure></p>
-<p>这里的dongwei是namespace。本质上来讲这就是一个bean。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestSpringSchema</span> </span>&#123;</div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSchame</span><span class="params">()</span></span>&#123;</div><div class="line">		ClassPathXmlApplicationContext context = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"classpath:applicationContext.xml"</span>);</div><div class="line">		User bean = context.getBean(User.class);</div><div class="line">		System.out.println(bean);</div><div class="line">		</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h5 id="Last-summary"><a href="#Last-summary" class="headerlink" title="Last summary"></a>Last summary</h5><p>这是我看到SOA框架的时候发现配置文件中有很多类似<code>&lt;mango:registry protocol=&quot;zookeeper&quot; address=&quot;localhost:2181&quot; connect-timeout=&quot;5000&quot; /&gt;</code>的东西，突然觉得好奇然后去了解了一下。不仅第三方框架中有这样的自定义标签，spring framework也有：<code>&lt;context:annotation-config/&gt;</code> 这和我们最常使用的<code>&lt;bean&gt;</code>长得还是有点不一样的。然后去看了看怎么去自定义一个这样的东西。这只是一个最简单的实现，实际上功能健全的实现是很复杂的。也可以想象spring framework想得还是很周到的，水也很深。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h5 id=&quot;What’s-schema&quot;&gt;&lt;a href=&quot;#What’s-schema&quot; class=&quot;headerlink&quot; title=&quot;What’s schema&quot;&gt;&lt;/a&gt;What’s schema&lt;/h5&gt;&lt;p&gt;schema中文翻译是概要、计划、图表。这里的schema指的是xml schema，也就是对xml的约束。在xml schema之前，对xml进行约束的是DTD。现在xml schema占据了主流。其中spring framework中xml配置文件就是使用的是xml schema，后缀名为xsd。&lt;br&gt;
-    
-    </summary>
-    
-      <category term="Spring Framework" scheme="http://www.wei-dong.top/categories/Spring-Framework/"/>
-    
-    
-      <category term="Spring" scheme="http://www.wei-dong.top/tags/Spring/"/>
-    
-      <category term="XML" scheme="http://www.wei-dong.top/tags/XML/"/>
     
   </entry>
   

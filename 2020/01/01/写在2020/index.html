@@ -20,7 +20,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="ftpserver（Ⅳ）"/>
+        <meta property="og:title" content="写在2020"/>
     
 
     <!--Open Graph Description-->
@@ -44,7 +44,7 @@
 
     <!-- Title -->
     
-    <title>ftpserver（Ⅳ） - DongWei&#39;s Blog</title>
+    <title>写在2020 - DongWei&#39;s Blog</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
@@ -133,18 +133,18 @@
     <!-- Page Header -->
 <!-- Set your background image for this header in your post front-matter: cover -->
 
-<header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
+<header class="intro-header" style="background-image: url('https://images.unsplash.com/photo-1576441335949-c4f4a2baf347?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1334&q=80')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>ftpserver（Ⅳ）</h1>
+                    <h1>写在2020</h1>
                     
                     <span class="meta">
                         <!-- Date and Author -->
                         
                         
-                            2017-04-10
+                            2020-01-01
                         
                     </span>
                 </div>
@@ -165,7 +165,7 @@
                         
 
 
-<a href="/tags/源码解读/">#源码解读</a> <a href="/tags/Apache/">#Apache</a>
+<a href="/tags/生活/">#生活</a>
 
 
                     
@@ -174,7 +174,7 @@
                     
                         
 
-<a href="/categories/Apache-Open-Project/">Apache Open Project</a>
+<a href="/categories/beyond-coding/">beyond coding</a>
 
                     
                 </div>
@@ -185,22 +185,29 @@
 
             <!-- Post Main Content -->
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <p>今天就来谈谈FtpServer中的线程模型，准确来讲是MINA中的线程模型。之前一直关注于FtpServer的实现逻辑，却没去在意NIO底层的这些设计。<br><a id="more"></a><br>先看看我们用MINA简单实现一个server<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public static void main(String[] args) throws IOException &#123;</div><div class="line"></div><div class="line">        SocketAcceptor socketAcceptor = new NioSocketAcceptor();</div><div class="line"></div><div class="line">        //加上一个编码过滤器，不然客户端输入的什么服务端看到的都是buf</div><div class="line">        socketAcceptor.getFilterChain().addLast(&quot;codec&quot;, new ProtocolCodecFilter(new MyCodecFactory()));</div><div class="line">        socketAcceptor.getFilterChain().addLast(&quot;log&quot;, new LoggingFilter());</div><div class="line"></div><div class="line">        socketAcceptor.setHandler(new MyHandler());</div><div class="line"></div><div class="line">        socketAcceptor.bind(new InetSocketAddress(&quot;localhost&quot;,9090));</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p>上述代码中只加入了log过滤器和编码过滤器，实际上什么都不加也是可以完成启动服务器监听的。然后启动服务器我们用telnet命令去连接它，多用几个命令窗口去连接，在控制台上可以看到这样的  </p>
-<blockquote>
-<p>[NioProcessor-2][FTP]21:31:35,053 INFO [LoggingFilter.log]:186 - CREATED<br>created<br>[NioProcessor-2][FTP]21:31:35,058 INFO [LoggingFilter.log]:186 - OPENED</p>
-</blockquote>
-<p>这里我们设置了日志的格式，将最前面的置为当前线程的名称。我们再启动一个客户端去连接：</p>
-<blockquote>
-<p>[NioProcessor-3][FTP]21:33:14,655 DEBUG [ProtocolCodecFilter.messageReceived]:211 - Processing a MESSAGE_RECEIVED for session 2<br>[NioProcessor-3][FTP]21:33:14,657 INFO [LoggingFilter.log]:157 - RECEIVED: dada  </p>
-</blockquote>
-<p>很明显可以看到NioProcessor变了。如此往复，不断去启动命令行客户端去连，会发现NioProcessor后的编号只会从1到5。也许你会觉得奇怪，难道用于处理连接的线程数只有5个吗？没错，如果不对其进行设置默认就是这么多个：cpu核数加1个。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/** The default pool size, when no size is provided. */</div><div class="line">private static final int DEFAULT_SIZE = Runtime.getRuntime().availableProcessors() + 1;</div></pre></td></tr></table></figure></p>
-<p>这就可以聊到MINA中的线程模型了。它用于处理IO用NioProcessor来，处理handler用其他的线程来。到底怎么去用呢？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public static void main(String[] args) throws IOException &#123;</div><div class="line"></div><div class="line">        SocketAcceptor socketAcceptor = new NioSocketAcceptor();</div><div class="line"></div><div class="line">        //加上一个编码过滤器，不然客户端输入的什么服务端看到的都是buf</div><div class="line">        socketAcceptor.getFilterChain().addLast(&quot;codec&quot;, new ProtocolCodecFilter(new MyCodecFactory()));</div><div class="line">        socketAcceptor.getFilterChain().addLast(&quot;log&quot;, new LoggingFilter());</div><div class="line">        //添加Executor过滤器，让其线程池处理业务逻辑</div><div class="line">        socketAcceptor.getFilterChain().addLast(&quot;threadPool&quot;, new ExecutorFilter(Executors.newCachedThreadPool()));</div><div class="line"></div><div class="line">        socketAcceptor.setHandler(new MyHandler());</div><div class="line"></div><div class="line">        socketAcceptor.bind(new InetSocketAddress(&quot;localhost&quot;,9090));</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p>这时候再启动telnet客户端去访问服务器，控制台下打印的就是这样了：</p>
-<blockquote>
-<p>[pool-3-thread-1][FTP]21:51:41,436 DEBUG [IoFilterEvent.fire]:117 - Event MESSAGE_RECEIVED has been fired for session 1</p>
-</blockquote>
-<p>因此验证了业务逻辑的处理线程不再又那可怜巴巴的只有5个处理IO连接的来分担了，而是由额外的线程来处理，至于这些线程是否和处理IO线程来自同一个线程池我没有仔细去研究。同时，这里还有一个线程值得关注：NioSocketAcceptor-1（使用jvisualvm可以看到所有线程）这个用于监听所有连接事件，只有一个。其中涉及到了什么selector模型什么的就不继续深入了。事件到达后将其封装成IoSession丢给IoProcessor处理，然后继续站岗监听，啥子都不管了，就做这一件事情。<br>这让我不禁想到一个问题，NIo模型中没有对每个连接开辟线程去处理，只用一个线程去响应连接事件，后续的都交给其他线程去处理，那么如果连接的数量很多，岂不是也需要很多线程去处理这些请求了？优势又在哪里呢？</p>
+                <p>今天是2020第一天。</p>
+<h2 id="回首"><a href="#回首" class="headerlink" title="回首"></a>回首</h2><p>此时的我坐在电脑前对着屏幕发呆，仔细回忆着发生在2019值得纪念的事情。最值得被纪念的还得是我这一年的成长吧。</p>
+<p>当然这个成长只能算是工作上的。自从2018年来到YJ后，回想起之前的工作经历可以说是浪费时间。刚来那时候面对新环境我真的是一个dd，d中d。对于工作中的基本操作都显得十分笨拙，那时候我还是有两年的工作经验呢。在试用期的几个月内，我真的十分崩溃。在完成第一个需求的时候痛苦不堪。有个坑b的产品，加上对接的东西又很多，老代码写得和狗屎一样，这些对我来说无疑是困难。毕竟之前从未在这么大规模的研发团队中工作过，团队的协作与沟通俨然成为一道阻碍我前行的屏障。说实话代码的难度倒是没难倒我，只是对于那么大的团队协作的工作方式觉得很困惑。曾经一度想直接和经理说干不下去了太难受了我不搞了，但最后还是坚持下来了，终于熬过试用期了。还记得那时候压力太大和父亲通话，他劝我说搞不了就别搞了，机会多的是干嘛和自己过不去呢。那时候我反驳了他没听他的，我就是想证明一下自己到底能不能扛得住这些压力。因为我之前之前的日子里过得实在是太安逸了，没有任何压力，每天都不知道自己做了些什么，甚至还有点自闭。度过那段难受的时光之后我逐渐轻车熟路，慢慢知道了一些常见的套路。这得感谢我的直接领导文颗，他是一个很出色的95后，情商很高，处理人际关系很有一套。有时候看他做事方式并不像一个95的年轻人，成熟的不像95后。后来慢慢负责了一块单独的业务，那时候我才正真体会到了价值和责任，也慢慢学会了沟通的技巧，但还是不知道怎么怼人。相比之前，2019在YJ的这段时间确实让我经历了许多，至少能抗住压力了。</p>
+<p>再值得纪念的是和天一兄弟的‘云创业’。那时候他提出做自媒体的想法，然后招集几个小伙伴一起出谋划策实施落地方案。我记得当时两周一次会议，每次会议一个小时，轮岗主持人制。刚开始积极性还是很高的，后来就没有了太多热情，最后坚持了一两个月就宣布失败了。不过还是学到很多实用的东西，比如会议的控场，主题的把控等很多小技巧。不得不说创业其实还是很困难的。目前天一兄弟的博客也不更新了，可能是时间都用来陪伴女朋友了吧。</p>
+<p>记得五一的时候回家过一躺，一个老朋友结婚去参加了婚礼，也是我人生中第一次参加别人的婚礼。男孩女孩都是老同学了，他们经历太多最后还是走到一起。在婚礼中有那么一瞬间真的很感动，甚至想哭。因为婚礼的缘故也遇到了很多老同学老朋友，神奇的是那么多年没见再次相遇居然还没有任何生疏的感觉，一切好像昨天才见面一样熟悉。曾经以为有些人一辈子都不会再见面了，现在却真实的站在我面前。</p>
+<p>再谈谈2019哪些做了哪些没做吧。这一年读几本书，正真感兴趣的不是太多。</p>
+<ul>
+<li>《激荡三十年（上）》</li>
+<li>《激荡十年 水大鱼大》</li>
+<li>《浪潮之巅》</li>
+<li>《未来简史》</li>
+<li>《褚时健传》</li>
+<li>《淘宝技术这十年》</li>
+<li>《我们仨》 </li>
+<li>《读懂财经新闻的第一本书》</li>
+</ul>
+<p>总的来说对那些带有历史变革背景的作品比较感兴趣。对非技术类的文学作品还是缺少耐心。技术类的书籍看得多，但大多都没看完在那里吃灰，比如《CSAPP》、《TCP/IP详解》等。</p>
+<p>这一年专业技术水平没有太多的提升，最多的尝试是读源码，但是正真收获的却没有太多。有个阿里P7大佬写了个开源的RPC框架我是真的一点不漏的看完了，反反复复地看，还写出了几篇解读文章。值得高兴的是被他收录到他github上去了。那时候真的有一种付出就有回报的感觉，很自豪。为什么读不下去源码，因为做这种事情时间周期久而且得到的反馈太慢了，现在都讲究短平快，及时满足感，像这种起码得花好几天才能有回报的事情做起来太吃力了。还有一个根本原因：你不够热爱！突然想起最近和一个B站插画up主聊天，他说有时候下班还会去画画，因为喜欢。我反思了一下，我下班后还会打开电脑写代码么？</p>
+<p>最近值得纪念的事情就是公司裁员，这让原本和谐融洽的气氛变得十分紧张。毕竟走了近一半的同学，还是挺难过的。</p>
+<p>这一年的兴趣爱好似乎依旧没有培养起来，用四个字总结就是有心无力。总是期待着成为XXX样的人，一直在内心幻想着，却没有正真去付出时间和精力。还是源自内心的恐惧，害怕失败，害怕没有结果，害怕中途放弃…</p>
+<p>这一年我没有成为有趣的人，没认识新的朋友，没去过有趣的地方。</p>
+<h2 id="展望"><a href="#展望" class="headerlink" title="展望"></a>展望</h2><p>对于2020我不想立太多flag。我希望找到自己的热爱，付出和实践；直面恐惧，发现生活的乐趣，做个内心世界丰富且强大的人。</p>
+<h2 id="尾声"><a href="#尾声" class="headerlink" title="尾声"></a>尾声</h2><p>2019已经过去了，我还是很怀念它！<br><img src="https://github.com/Mr-Vincent/pic-bed/blob/master/images/jim-carry.jpg?raw=true" alt="image"></p>
 
 
                 
