@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="以梦为马 不负韶华">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Mr-Vincent">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="池技术使用-commons-pool2"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="以梦为马 不负韶华" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="DongWei&#39;s Blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>池技术使用-commons-pool2 - DongWei&#39;s Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">DongWei's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/Mr-Vincent">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('https://images.unsplash.com/photo-1503437313881-503a91226402?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2689&q=80')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>池技术使用-commons-pool2</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2020-07-03
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/源码/">#源码</a> <a href="/tags/apache/">#apache</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/pool-笔记/">pool 笔记</a>
+
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h2 id="池技术"><a href="#池技术" class="headerlink" title="池技术"></a>池技术</h2><p>日常搬砖过程中对池技术的接触很多，最具代表的是连接池。<br>连接池也是一种池技术，本质上都是对象池。commons-pool是apacha基金会开源的一款常见的对象池工具库。</p>
+<p>使用池化主要是为了节省对象创建的开销。比如日常开发息息相关的数据源连接池，就是为了减少连接创建的时间而生的。可以简单评估一下一个连接的创建经历哪些操作：对象创建，tcp连接等。tcp连接又得经历三次握手，如果是tls/ssl还得做证书签名验证，想想都麻烦。所以使用连接池可以减少这些消耗性能的操作，把机器更多的性能留给业务。</p>
+<h2 id="快速上手"><a href="#快速上手" class="headerlink" title="快速上手"></a>快速上手</h2><p>这里直接搬运官网的demo。</p>
+<p>下面是一个从流中读取字符串的工具类。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.Reader; </div><div class="line"><span class="keyword">import</span> java.io.IOException; </div><div class="line"> </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReaderUtil</span> </span>&#123; </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ReaderUtil</span><span class="params">()</span> </span>&#123; </div><div class="line">    &#125; </div><div class="line"> </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * Dumps the contents of the &#123;<span class="doctag">@link</span> Reader&#125; to a </div><div class="line">     * String, closing the &#123;<span class="doctag">@link</span> Reader&#125; when done. </div><div class="line">     */ </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">readToString</span><span class="params">(Reader in)</span> <span class="keyword">throws</span> IOException </span>&#123; </div><div class="line">        StringBuffer buf = <span class="keyword">new</span> StringBuffer(); </div><div class="line">        <span class="keyword">try</span> &#123; </div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> c = in.read(); c != -<span class="number">1</span>; c = in.read()) &#123; </div><div class="line">                buf.append((<span class="keyword">char</span>)c); </div><div class="line">            &#125; </div><div class="line">            <span class="keyword">return</span> buf.toString(); </div><div class="line">        &#125; <span class="keyword">catch</span>(IOException e) &#123; </div><div class="line">            <span class="keyword">throw</span> e; </div><div class="line">        &#125; <span class="keyword">finally</span> &#123; </div><div class="line">            <span class="keyword">try</span> &#123; </div><div class="line">                in.close(); </div><div class="line">            &#125; <span class="keyword">catch</span>(Exception e) &#123; </div><div class="line">                <span class="comment">// ignored </span></div><div class="line">            &#125; </div><div class="line">        &#125; </div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>咋看上去没什么毛病，我们在日常搬砖中也会写出这样的工具类，也可以很好的工作。为了突出说明池化技术的优点，这个工具类还能继续优化，虽然优化空间不是很大。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.io.Reader;</div><div class="line"><span class="keyword">import</span> org.apache.commons.pool2.ObjectPool;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReaderUtil</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> ObjectPool&lt;StringBuffer&gt; pool;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ReaderUtil</span><span class="params">(ObjectPool&lt;StringBuffer&gt; pool)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.pool = pool;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Dumps the contents of the &#123;<span class="doctag">@link</span> Reader&#125; to a String, closing the &#123;<span class="doctag">@link</span> Reader&#125; when done.</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">readToString</span><span class="params">(Reader in)</span></span></div><div class="line">        <span class="keyword">throws</span> IOException &#123;</div><div class="line">        StringBuffer buf = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            buf = pool.borrowObject();</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> c = in.read(); c != -<span class="number">1</span>; c = in.read()) &#123;</div><div class="line">                buf.append((<span class="keyword">char</span>) c);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> buf.toString();</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            <span class="keyword">throw</span> e;</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Unable to borrow buffer from pool"</span> + e.toString());</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                in.close();</div><div class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">                <span class="comment">// ignored</span></div><div class="line">            &#125;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                <span class="keyword">if</span> (<span class="keyword">null</span> != buf) &#123;</div><div class="line">                    pool.returnObject(buf);</div><div class="line">                &#125;</div><div class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">                <span class="comment">// ignored</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>明眼人很快就能看出区别，无非就是将StringBuffer的创建方式做了变化，以前是直接new，每次调用都得new一下，现在是通过向pool借。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.commons.pool2.BasePooledObjectFactory;</div><div class="line"><span class="keyword">import</span> org.apache.commons.pool2.PooledObject;</div><div class="line"><span class="keyword">import</span> org.apache.commons.pool2.impl.DefaultPooledObject;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringBufferFactory</span></span></div><div class="line">    <span class="keyword">extends</span> <span class="title">BasePooledObjectFactory</span>&lt;<span class="title">StringBuffer</span>&gt; &#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> StringBuffer <span class="title">create</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> StringBuffer();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Use the default PooledObject implementation.</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> PooledObject&lt;StringBuffer&gt; <span class="title">wrap</span><span class="params">(StringBuffer buffer)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DefaultPooledObject&lt;StringBuffer&gt;(buffer);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * When an object is returned to the pool, clear the buffer.</div><div class="line">     */</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">passivateObject</span><span class="params">(PooledObject&lt;StringBuffer&gt; pooledObject)</span> </span>&#123;</div><div class="line">        pooledObject.getObject().setLength(<span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// for all other methods, the no-op implementation</span></div><div class="line">    <span class="comment">// in BasePooledObjectFactory will suffice</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最终只需要将pool传给这个util：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ReaderUtil readerUtil = <span class="keyword">new</span> ReaderUtil(<span class="keyword">new</span> GenericObjectPool&lt;StringBuffer&gt;(<span class="keyword">new</span> StringBufferFactory()));</div></pre></td></tr></table></figure>
+<p>需要开发关注的仅仅是对象工厂StringBufferFactory的实现，在这个工厂中，主要任务是创建对象，也就是最开始的new对象。把对象的创建工作转移到了工厂里，而不是硬生生的new出来，这也是设计模式的一种体现。</p>
+<p>官网给的这个例子非常简洁易懂，很容易快速上手。然而其中还有很多配置参数，能让对象池功能更加丰富。</p>
+<h2 id="带配置参数的入门"><a href="#带配置参数的入门" class="headerlink" title="带配置参数的入门"></a>带配置参数的入门</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">        <span class="comment">// 创建池对象工厂</span></div><div class="line">        PooledObjectFactory&lt;StringBuilder&gt; factory = <span class="keyword">new</span> MyPoolableObjectFactory();</div><div class="line"></div><div class="line">        GenericObjectPoolConfig poolConfig = <span class="keyword">new</span> GenericObjectPoolConfig();</div><div class="line">        <span class="comment">// 最大空闲数</span></div><div class="line">        poolConfig.setMaxIdle(<span class="number">5</span>);</div><div class="line">        <span class="comment">// 最小空闲数, 池中只有一个空闲对象的时候，池会在创建一个对象，并借出一个对象，从而保证池中最小空闲数为1</span></div><div class="line">        poolConfig.setMinIdle(<span class="number">1</span>);</div><div class="line">        <span class="comment">// 最大池对象总数</span></div><div class="line">        poolConfig.setMaxTotal(<span class="number">20</span>);</div><div class="line">        <span class="comment">// 逐出连接的最小空闲时间 默认1800000毫秒(30分钟)</span></div><div class="line">        poolConfig.setMinEvictableIdleTimeMillis(<span class="number">1800000</span>);</div><div class="line">        <span class="comment">// 逐出扫描的时间间隔(毫秒) 如果为负数,则不运行逐出线程, 默认-1</span></div><div class="line">        poolConfig.setTimeBetweenEvictionRunsMillis(<span class="number">1800000</span> * <span class="number">2L</span>);</div><div class="line">        <span class="comment">// 在获取对象的时候检查有效性, 默认false</span></div><div class="line">        poolConfig.setTestOnBorrow(<span class="keyword">true</span>);</div><div class="line">        <span class="comment">// 在归还对象的时候检查有效性, 默认false</span></div><div class="line">        poolConfig.setTestOnReturn(<span class="keyword">false</span>);</div><div class="line">        <span class="comment">// 在空闲时检查有效性, 默认false</span></div><div class="line">        poolConfig.setTestWhileIdle(<span class="keyword">false</span>);</div><div class="line">        <span class="comment">// 最大等待时间， 默认的值为-1，表示无限等待。</span></div><div class="line">        poolConfig.setMaxWaitMillis(<span class="number">6000</span>);</div><div class="line">        <span class="comment">// 是否启用后进先出, 默认true</span></div><div class="line">        poolConfig.setLifo(<span class="keyword">true</span>);</div><div class="line">        <span class="comment">// 连接耗尽时是否阻塞, false报异常,true阻塞直到超时, 默认true</span></div><div class="line">        poolConfig.setBlockWhenExhausted(<span class="keyword">true</span>);</div><div class="line">        <span class="comment">// 每次逐出检查时 逐出的最大数目 默认3</span></div><div class="line">        poolConfig.setNumTestsPerEvictionRun(<span class="number">3</span>);</div><div class="line"></div><div class="line">        CountDownLatch latch = <span class="keyword">new</span> CountDownLatch(<span class="number">40</span>);</div><div class="line">        <span class="comment">// 创建对象池</span></div><div class="line">        <span class="keyword">final</span> GenericObjectPool&lt;StringBuilder&gt; pool = <span class="keyword">new</span> GenericObjectPool&lt;StringBuilder&gt;(factory, poolConfig);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">40</span>; i++) &#123;</div><div class="line">            <span class="keyword">int</span> finalI = i;</div><div class="line">            <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                    StringBuilder resource = <span class="keyword">null</span>;</div><div class="line">                    <span class="keyword">try</span> &#123;</div><div class="line">                        <span class="comment">// 注意，如果对象池没有空余的对象，那么这里会block，可以设置block的超时时间</span></div><div class="line">                        resource = pool.borrowObject();</div><div class="line">                        resource.append(<span class="string">"+"</span>).append(finalI);</div><div class="line">                        System.out.println(resource);</div><div class="line">                        Thread.sleep(<span class="number">2000</span>);</div><div class="line">                    &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">                        e.printStackTrace();</div><div class="line">                    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                        <span class="comment">// 申请的资源用完了记得归还，不然其他人要申请时可能就没有资源用了</span></div><div class="line">                        pool.returnObject(resource);</div><div class="line">                        latch.countDown();</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;).start();</div><div class="line"></div><div class="line">        &#125;</div><div class="line">        latch.await();</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"=====finish===="</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MyPoolableObjectFactory</span> <span class="keyword">extends</span> <span class="title">BasePooledObjectFactory</span>&lt;<span class="title">StringBuilder</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> StringBuilder <span class="title">create</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> StringBuilder();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> PooledObject&lt;StringBuilder&gt; <span class="title">wrap</span><span class="params">(StringBuilder obj)</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> DefaultPooledObject&lt;&gt;(obj);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>这个demo中给了很多配置参数，注释中写的都很明白。值得注意的是这个demo中输出的结果可能不一致。因为多线程的缘故。</p>
+<p>下面是其中的一种输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">+5</div><div class="line">+9</div><div class="line">+8</div><div class="line">+11</div><div class="line">+12</div><div class="line">+10</div><div class="line">+4</div><div class="line">+1</div><div class="line">+3</div><div class="line">+2</div><div class="line">+7</div><div class="line">+13</div><div class="line">+15</div><div class="line">+16</div><div class="line">+6</div><div class="line">+17</div><div class="line">+18</div><div class="line">+19</div><div class="line">+0</div><div class="line">+14</div><div class="line">+3+20</div><div class="line">+9+21</div><div class="line">+11+22</div><div class="line">+4+25</div><div class="line">+2+23</div><div class="line">+5+24</div><div class="line">+1+26</div><div class="line">+0+27</div><div class="line">+14+28</div><div class="line">+9+21+29</div><div class="line">+3+20+30</div><div class="line">+4+25+31</div><div class="line">+1+26+32</div><div class="line">+2+23+33</div><div class="line">+11+22+35</div><div class="line">+5+24+34</div><div class="line">+0+27+36</div><div class="line">+14+28+37</div><div class="line">+3+20+30+38</div><div class="line">+9+21+29+39</div><div class="line">=====finish====</div></pre></td></tr></table></figure>
+<p>这里开了40个线程去获取对象，通过使用latch使得所有线程都结束后再结束主线程。<br>这个latch得控制为40，因为每个线程跑完都得减一，直到为0后表示所有线程都结束。这里都latch只是用于控制先后顺序，也就是即使主线程结束了，子线程也能继续执行下去，除非子线程都是守护线程。</p>
+<p>由于设置都最大数量为20，因此会有20个线程先获取到stringbuffer对象，然后这里睡眠了2秒钟，模拟一下对这个对象的使用，剩下的20个线程会尝试去“借”对象，但是之前的20个线程还没用完，因此不会马上获取到，这里设置了一个超时时间6s，也就是最多等6s，如果6s后还是没能等到，那就直接抛异常了。因为模拟只使用2s，到期了就直接“还”回去了，因此这里的输出会将之前的也打印出来，虽然归还了，但是却没清理掉它的内容。</p>
+<p>仔细来看，带参数的也就不过如此，对于开发者而言也没有什么太复杂的地方，十分容易上手。接下来就拨开云雾，仔细瞧瞧池技术是如何实现的。</p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+    <hr />
+    <h3>留言:</h3>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/Mr-Vincent" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2020 Mr-Vincent<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+<script type="text/javascript">
+    var disqus_shortname = 'wei-dong';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+</body>
+
+</html>
