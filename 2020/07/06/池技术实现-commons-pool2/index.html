@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="以梦为马 不负韶华">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Mr-Vincent">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="池技术实现-commons-pool2"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="以梦为马 不负韶华" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="DongWei&#39;s Blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>池技术实现-commons-pool2 - DongWei&#39;s Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">DongWei's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/Mr-Vincent">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2550&q=80')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>池技术实现-commons-pool2</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2020-07-06
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/源码/">#源码</a> <a href="/tags/apache/">#apache</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/pool-笔记/">pool 笔记</a>
+
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h2 id="核心接口"><a href="#核心接口" class="headerlink" title="核心接口"></a>核心接口</h2><h3 id="PooledObjectFactory"><a href="#PooledObjectFactory" class="headerlink" title="PooledObjectFactory"></a>PooledObjectFactory</h3><p>顾名思义，这个接口是一个工厂，用于创建要池化的对象。在使用的时候一般都不直接实现，而是去继承它默认抽象实现类<code>BasePooledObjectFactory</code>。</p>
+<p>只需要实现这个抽象类中的两个抽象方法即可：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> T <span class="title">create</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> PooledObject&lt;T&gt; <span class="title">wrap</span><span class="params">(T obj)</span></span>;</div></pre></td></tr></table></figure>
+<h3 id="ObjectPool"><a href="#ObjectPool" class="headerlink" title="ObjectPool"></a>ObjectPool</h3><p>这个接口为对象池的抽象定义，定义了很多对池的操作方法。如<code>addObject</code>等。可以简单理解为一个装对象的容器像list之类的数据结构。默认的抽象实现为<code>BaseGenericObjectPool</code>具体实现有好几个，最常见的为<code>GenericObjectPool</code>.</p>
+<h3 id="GenericObjectPoolConfig"><a href="#GenericObjectPoolConfig" class="headerlink" title="GenericObjectPoolConfig"></a>GenericObjectPoolConfig</h3><p>配置类对象，就是一个简单的实体，封装很多配置参数而已。</p>
+<h2 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h2><p>先针对最基本的借出对象的操作实现</p>
+<h3 id="“借对象”"><a href="#“借对象”" class="headerlink" title="“借对象”"></a>“借对象”</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> T <span class="title">borrowObject</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="keyword">return</span> borrowObject(getMaxWaitMillis());</div><div class="line">    &#125;</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">public</span> T <span class="title">borrowObject</span><span class="params">(<span class="keyword">final</span> <span class="keyword">long</span> borrowMaxWaitMillis)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        assertOpen();</div><div class="line"></div><div class="line">        <span class="keyword">final</span> AbandonedConfig ac = <span class="keyword">this</span>.abandonedConfig;</div><div class="line">        <span class="keyword">if</span> (ac != <span class="keyword">null</span> &amp;&amp; ac.getRemoveAbandonedOnBorrow() &amp;&amp;</div><div class="line">                (getNumIdle() &lt; <span class="number">2</span>) &amp;&amp;</div><div class="line">                (getNumActive() &gt; getMaxTotal() - <span class="number">3</span>) ) &#123;</div><div class="line">            removeAbandoned(ac);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        PooledObject&lt;T&gt; p = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">        <span class="comment">// Get local copy of current config so it is consistent for entire</span></div><div class="line">        <span class="comment">// method execution</span></div><div class="line">        <span class="keyword">final</span> <span class="keyword">boolean</span> blockWhenExhausted = getBlockWhenExhausted();</div><div class="line"></div><div class="line">        <span class="keyword">boolean</span> create;</div><div class="line">        <span class="keyword">final</span> <span class="keyword">long</span> waitTime = System.currentTimeMillis();</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (p == <span class="keyword">null</span>) &#123;</div><div class="line">            create = <span class="keyword">false</span>;</div><div class="line">            p = idleObjects.pollFirst();</div><div class="line">            <span class="keyword">if</span> (p == <span class="keyword">null</span>) &#123;</div><div class="line">                p = create();</div><div class="line">                <span class="keyword">if</span> (p != <span class="keyword">null</span>) &#123;</div><div class="line">                    create = <span class="keyword">true</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (blockWhenExhausted) &#123;</div><div class="line">                <span class="keyword">if</span> (p == <span class="keyword">null</span>) &#123;</div><div class="line">                    <span class="keyword">if</span> (borrowMaxWaitMillis &lt; <span class="number">0</span>) &#123;</div><div class="line">                        p = idleObjects.takeFirst();</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        p = idleObjects.pollFirst(borrowMaxWaitMillis,</div><div class="line">                                TimeUnit.MILLISECONDS);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (p == <span class="keyword">null</span>) &#123;</div><div class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException(</div><div class="line">                            <span class="string">"Timeout waiting for idle object"</span>);</div><div class="line">                &#125;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">if</span> (p == <span class="keyword">null</span>) &#123;</div><div class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException(<span class="string">"Pool exhausted"</span>);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (!p.allocate()) &#123;</div><div class="line">                p = <span class="keyword">null</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (p != <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    factory.activateObject(p);</div><div class="line">                &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> Exception e) &#123;</div><div class="line">                    <span class="keyword">try</span> &#123;</div><div class="line">                        destroy(p);</div><div class="line">                    &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> Exception e1) &#123;</div><div class="line">                        <span class="comment">// Ignore - activation failure is more important</span></div><div class="line">                    &#125;</div><div class="line">                    p = <span class="keyword">null</span>;</div><div class="line">                    <span class="keyword">if</span> (create) &#123;</div><div class="line">                        <span class="keyword">final</span> NoSuchElementException nsee = <span class="keyword">new</span> NoSuchElementException(</div><div class="line">                                <span class="string">"Unable to activate object"</span>);</div><div class="line">                        nsee.initCause(e);</div><div class="line">                        <span class="keyword">throw</span> nsee;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (p != <span class="keyword">null</span> &amp;&amp; getTestOnBorrow()) &#123;</div><div class="line">                    <span class="keyword">boolean</span> validate = <span class="keyword">false</span>;</div><div class="line">                    Throwable validationThrowable = <span class="keyword">null</span>;</div><div class="line">                    <span class="keyword">try</span> &#123;</div><div class="line">                        validate = factory.validateObject(p);</div><div class="line">                    &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> Throwable t) &#123;</div><div class="line">                        PoolUtils.checkRethrow(t);</div><div class="line">                        validationThrowable = t;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">if</span> (!validate) &#123;</div><div class="line">                        <span class="keyword">try</span> &#123;</div><div class="line">                            destroy(p);</div><div class="line">                            destroyedByBorrowValidationCount.incrementAndGet();</div><div class="line">                        &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> Exception e) &#123;</div><div class="line">                            <span class="comment">// Ignore - validation failure is more important</span></div><div class="line">                        &#125;</div><div class="line">                        p = <span class="keyword">null</span>;</div><div class="line">                        <span class="keyword">if</span> (create) &#123;</div><div class="line">                            <span class="keyword">final</span> NoSuchElementException nsee = <span class="keyword">new</span> NoSuchElementException(</div><div class="line">                                    <span class="string">"Unable to validate object"</span>);</div><div class="line">                            nsee.initCause(validationThrowable);</div><div class="line">                            <span class="keyword">throw</span> nsee;</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        updateStatsBorrow(p, System.currentTimeMillis() - waitTime);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> p.getObject();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>如果没有给定<code>borrowMaxWaitMillis</code>参数，那就使用默认的最大等待时间（仅仅当<code>getBlockWhenExhausted</code>为true的时候），超出这个时间就直接抛异常。</p>
+<p>首先需要根据配置参数中的<code>getRemoveAbandonedOnBorrow</code>来决定是不是在每次“借”的时候抛弃掉那些快“过气”的对象。当然还是得有条件的：闲置的对象数量小于2，且当前活跃的对象数量比最大数量的差值小于3，翻译成人话就是池子快装满了呗。</p>
+<h4 id="“借对象”之前的判断"><a href="#“借对象”之前的判断" class="headerlink" title="“借对象”之前的判断"></a>“借对象”之前的判断</h4><p>看看移除掉“过气”对象的逻辑：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">removeAbandoned</span><span class="params">(<span class="keyword">final</span> AbandonedConfig ac)</span> </span>&#123;</div><div class="line">        <span class="comment">// Generate a list of abandoned objects to remove</span></div><div class="line">        <span class="keyword">final</span> <span class="keyword">long</span> now = System.currentTimeMillis();</div><div class="line">        <span class="keyword">final</span> <span class="keyword">long</span> timeout =</div><div class="line">                now - (ac.getRemoveAbandonedTimeout() * <span class="number">1000L</span>);</div><div class="line">        <span class="keyword">final</span> ArrayList&lt;PooledObject&lt;T&gt;&gt; remove = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="keyword">final</span> Iterator&lt;PooledObject&lt;T&gt;&gt; it = allObjects.values().iterator();</div><div class="line">        <span class="keyword">while</span> (it.hasNext()) &#123;</div><div class="line">            <span class="keyword">final</span> PooledObject&lt;T&gt; pooledObject = it.next();</div><div class="line">            <span class="keyword">synchronized</span> (pooledObject) &#123;</div><div class="line">                <span class="comment">// 上次使用的时间在五分钟之前 说明需要抛弃</span></div><div class="line">                <span class="keyword">if</span> (pooledObject.getState() == PooledObjectState.ALLOCATED &amp;&amp;</div><div class="line">                        pooledObject.getLastUsedTime() &lt;= timeout) &#123;</div><div class="line">                    pooledObject.markAbandoned();</div><div class="line">                    remove.add(pooledObject);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// Now remove the abandoned objects</span></div><div class="line">        <span class="keyword">final</span> Iterator&lt;PooledObject&lt;T&gt;&gt; itr = remove.iterator();</div><div class="line">        <span class="keyword">while</span> (itr.hasNext()) &#123;</div><div class="line">            <span class="keyword">final</span> PooledObject&lt;T&gt; pooledObject = itr.next();</div><div class="line">            <span class="keyword">if</span> (ac.getLogAbandoned()) &#123;</div><div class="line">                pooledObject.printStackTrace(ac.getLogWriter());</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                invalidateObject(pooledObject.getObject());</div><div class="line">            &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> Exception e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>其中有个配置参数<code>getRemoveAbandonedTimeout</code>用于判断对象是否“过气”，这个值默认是30分钟。在对象池中使用<code>allObjects</code>变量来保存所有的被“池化”的对象，这是个map类型的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * All of the objects currently associated with this pool in any state. It</div><div class="line"> * excludes objects that have been destroyed. The size of</div><div class="line"> * &#123;@link #allObjects&#125; will always be less than or equal to &#123;@link</div><div class="line"> * #_maxActive&#125;. Map keys are pooled objects, values are the PooledObject</div><div class="line"> * wrappers used internally by the pool.</div><div class="line"> */</div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> Map&lt;IdentityWrapper&lt;T&gt;, PooledObject&lt;T&gt;&gt; allObjects =</div><div class="line">    <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</div></pre></td></tr></table></figure>
+<p>然而，并不是将我们要创建的对象直接保存到这个map中，而是将对象包装成<code>PooledObject</code>放进去的，key为对象的hash值。这个对象用于池子的内部处理，比如加几个属性什么的。这种设计在很多库或者框架中很常见。为了将复杂性不直接暴露给用户，因此重新包装了一下。</p>
+<p>这里的逻辑是将所有被“池化”的对象遍历出来，判断如果使用时间超过给定的时间，那就说明这个对象“过气”了，得移除掉。使用<code>invalidateObject</code>方法来销毁这个对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">invalidateObject</span><span class="params">(<span class="keyword">final</span> T obj)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    <span class="keyword">final</span> PooledObject&lt;T&gt; p = allObjects.get(<span class="keyword">new</span> IdentityWrapper&lt;&gt;(obj));</div><div class="line">    <span class="keyword">if</span> (p == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">if</span> (isAbandonedConfig()) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</div><div class="line">                <span class="string">"Invalidated object not currently part of this pool"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">synchronized</span> (p) &#123;</div><div class="line">        <span class="keyword">if</span> (p.getState() != PooledObjectState.INVALID) &#123;</div><div class="line">            destroy(p);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    ensureIdle(<span class="number">1</span>, <span class="keyword">false</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">(<span class="keyword">final</span> PooledObject&lt;T&gt; toDestroy)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        toDestroy.invalidate();</div><div class="line">        idleObjects.remove(toDestroy);</div><div class="line">        allObjects.remove(<span class="keyword">new</span> IdentityWrapper&lt;&gt;(toDestroy.getObject()));</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            factory.destroyObject(toDestroy);</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            destroyedCount.incrementAndGet();</div><div class="line">            createCount.decrementAndGet();</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>销毁逻辑很简单，从空闲对象列表中移除，在<code>allObjects</code>中移除，然后再更新次数，这些数据仅仅是用于对象池数据统计。</p>
+<p>最核心的方法还是<code>ensureIdle</code>方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ensureIdle</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> idleCount, <span class="keyword">final</span> <span class="keyword">boolean</span> always)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="keyword">if</span> (idleCount &lt; <span class="number">1</span> || isClosed() || (!always &amp;&amp; !idleObjects.hasTakeWaiters())) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (idleObjects.size() &lt; idleCount) &#123;</div><div class="line">            <span class="keyword">final</span> PooledObject&lt;T&gt; p = create();</div><div class="line">            <span class="keyword">if</span> (p == <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="comment">// Can't create objects, no reason to think another call to</span></div><div class="line">                <span class="comment">// create will work. Give up.</span></div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (getLifo()) &#123;</div><div class="line">                idleObjects.addFirst(p);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                idleObjects.addLast(p);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (isClosed()) &#123;</div><div class="line">            <span class="comment">// Pool closed while object was being added to idle objects.</span></div><div class="line">            <span class="comment">// Make sure the returned object is destroyed rather than left</span></div><div class="line">            <span class="comment">// in the idle object pool (which would effectively be a leak)</span></div><div class="line">            clear();</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>顾名思义，这个方法保证对象池中有指定的空闲对象能用。不然你来借的时候对象池都空了，那多尴尬。</p>
+<p>如果当前池中的空闲对象小于指定的值，那么就得去创建对象了，这里使用的<code>create()</code>方法就是在前文中说到的对象工厂抽象实现类中的<code>create()</code>做一样的事情，只不过这个方法创建的是一个<code>PooledObject</code>包装类型，以及一些其他的属性。然后将这个新创建的对象装到<code>idleObjects</code>容器中，这个容器类型为<code>LinkedBlockingDeque&lt;PooledObject&lt;T&gt;&gt;</code>链表结构，是这个库自己实现的。</p>
+<h4 id="“借对象”的细节"><a href="#“借对象”的细节" class="headerlink" title="“借对象”的细节"></a>“借对象”的细节</h4><p>之前说到<code>getBlockWhenExhausted</code>属性用于判断当“借”的时候没有是否需要等待。如果给定超时时间那就按照超时时间去等，没等到那就返回空对象，如果没给超时时间，那就死等。</p>
+<p>这个属性最终决定如果池子里没对象最终抛出的异常，如果这个属性为false，那就直接抛<code>Pool exhausted</code>异常，如果为true那就抛出<code>&quot;Timeout waiting for idle object&quot;</code>异常（给了超时时间）。</p>
+<p>首先得从空闲的容器中取“空闲对象”，接着判断是否是有效的。然后使用之前提到的工厂方法“激活”这个对象，默认实现中是空实现，在使用过程中可以去重写这个方法实现自定义的需求。<br><code>updateStatsBorrow</code>方法用来更新对象池的统计数据信息，不需要太关注。最后就直接返回我们需要的对象。</p>
+<p>如果空闲的容器中没得可用的对象咋办？那只能去create一个了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> PooledObject&lt;T&gt; <span class="title">create</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="keyword">int</span> localMaxTotal = getMaxTotal();</div><div class="line">        <span class="comment">// This simplifies the code later in this method</span></div><div class="line">        <span class="keyword">if</span> (localMaxTotal &lt; <span class="number">0</span>) &#123;</div><div class="line">            localMaxTotal = Integer.MAX_VALUE;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">final</span> <span class="keyword">long</span> localStartTimeMillis = System.currentTimeMillis();</div><div class="line">        <span class="keyword">final</span> <span class="keyword">long</span> localMaxWaitTimeMillis = Math.max(getMaxWaitMillis(), <span class="number">0</span>);</div><div class="line"></div><div class="line">        <span class="comment">// Flag that indicates if create should:</span></div><div class="line">        <span class="comment">// - TRUE:  call the factory to create an object</span></div><div class="line">        <span class="comment">// - FALSE: return null</span></div><div class="line">        <span class="comment">// - null:  loop and re-test the condition that determines whether to</span></div><div class="line">        <span class="comment">//          call the factory</span></div><div class="line">        Boolean create = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">while</span> (create == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">synchronized</span> (makeObjectCountLock) &#123;</div><div class="line">                <span class="keyword">final</span> <span class="keyword">long</span> newCreateCount = createCount.incrementAndGet();</div><div class="line">                <span class="keyword">if</span> (newCreateCount &gt; localMaxTotal) &#123;</div><div class="line">                    <span class="comment">// The pool is currently at capacity or in the process of</span></div><div class="line">                    <span class="comment">// making enough new objects to take it to capacity.</span></div><div class="line">                    createCount.decrementAndGet();</div><div class="line">                    <span class="keyword">if</span> (makeObjectCount == <span class="number">0</span>) &#123;</div><div class="line">                        <span class="comment">// There are no makeObject() calls in progress so the</span></div><div class="line">                        <span class="comment">// pool is at capacity. Do not attempt to create a new</span></div><div class="line">                        <span class="comment">// object. Return and wait for an object to be returned</span></div><div class="line">                        create = Boolean.FALSE;</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        <span class="comment">// There are makeObject() calls in progress that might</span></div><div class="line">                        <span class="comment">// bring the pool to capacity. Those calls might also</span></div><div class="line">                        <span class="comment">// fail so wait until they complete and then re-test if</span></div><div class="line">                        <span class="comment">// the pool is at capacity or not.</span></div><div class="line">                        makeObjectCountLock.wait(localMaxWaitTimeMillis);</div><div class="line">                    &#125;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    <span class="comment">// The pool is not at capacity. Create a new object.</span></div><div class="line">                    makeObjectCount++;</div><div class="line">                    create = Boolean.TRUE;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">// Do not block more if maxWaitTimeMillis is set.</span></div><div class="line">            <span class="keyword">if</span> (create == <span class="keyword">null</span> &amp;&amp;</div><div class="line">                (localMaxWaitTimeMillis &gt; <span class="number">0</span> &amp;&amp;</div><div class="line">                 System.currentTimeMillis() - localStartTimeMillis &gt;= localMaxWaitTimeMillis)) &#123;</div><div class="line">                create = Boolean.FALSE;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (!create.booleanValue()) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">final</span> PooledObject&lt;T&gt; p;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            p = factory.makeObject();</div><div class="line">            <span class="keyword">if</span> (getTestOnCreate() &amp;&amp; !factory.validateObject(p)) &#123;</div><div class="line">                createCount.decrementAndGet();</div><div class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> Throwable e) &#123;</div><div class="line">            createCount.decrementAndGet();</div><div class="line">            <span class="keyword">throw</span> e;</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            <span class="keyword">synchronized</span> (makeObjectCountLock) &#123;</div><div class="line">                makeObjectCount--;</div><div class="line">                makeObjectCountLock.notifyAll();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">final</span> AbandonedConfig ac = <span class="keyword">this</span>.abandonedConfig;</div><div class="line">        <span class="keyword">if</span> (ac != <span class="keyword">null</span> &amp;&amp; ac.getLogAbandoned()) &#123;</div><div class="line">            p.setLogAbandoned(<span class="keyword">true</span>);</div><div class="line">            p.setRequireFullStackTrace(ac.getRequireFullStackTrace());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        createdCount.incrementAndGet();</div><div class="line">        allObjects.put(<span class="keyword">new</span> IdentityWrapper&lt;&gt;(p.getObject()), p);</div><div class="line">        <span class="keyword">return</span> p;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>这个逻辑很简单，需要注意的是其中的while循环，如果池中正在创建的对象超过了最大数量，那就直接返回空。</p>
+<p>至此，“借”对象的整个过程就结束了。</p>
+<h3 id="驱逐逻辑"><a href="#驱逐逻辑" class="headerlink" title="驱逐逻辑"></a>驱逐逻辑</h3><p>在配置参数中有个属性<code>timeBetweenEvictionRunsMillis</code>，如果这个值为负数，就不会去运行驱逐线程，否则以配置的值作为时间间隔去扫描池中的对象，驱逐出“过气”对象。<br>具体的驱逐逻辑如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">evict</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        assertOpen();</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (idleObjects.size() &gt; <span class="number">0</span>) &#123;</div><div class="line"></div><div class="line">            PooledObject&lt;T&gt; underTest = <span class="keyword">null</span>;</div><div class="line">            <span class="keyword">final</span> EvictionPolicy&lt;T&gt; evictionPolicy = getEvictionPolicy();</div><div class="line"></div><div class="line">            <span class="keyword">synchronized</span> (evictionLock) &#123;</div><div class="line">                <span class="keyword">final</span> EvictionConfig evictionConfig = <span class="keyword">new</span> EvictionConfig(</div><div class="line">                        getMinEvictableIdleTimeMillis(),</div><div class="line">                        getSoftMinEvictableIdleTimeMillis(),</div><div class="line">                        getMinIdle());</div><div class="line"></div><div class="line">                <span class="keyword">final</span> <span class="keyword">boolean</span> testWhileIdle = getTestWhileIdle();</div><div class="line"></div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, m = getNumTests(); i &lt; m; i++) &#123;</div><div class="line">                    <span class="keyword">if</span> (evictionIterator == <span class="keyword">null</span> || !evictionIterator.hasNext()) &#123;</div><div class="line">                        evictionIterator = <span class="keyword">new</span> EvictionIterator(idleObjects);</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">if</span> (!evictionIterator.hasNext()) &#123;</div><div class="line">                        <span class="comment">// Pool exhausted, nothing to do here</span></div><div class="line">                        <span class="keyword">return</span>;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="keyword">try</span> &#123;</div><div class="line">                        underTest = evictionIterator.next();</div><div class="line">                    &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> NoSuchElementException nsee) &#123;</div><div class="line">                        <span class="comment">// Object was borrowed in another thread</span></div><div class="line">                        <span class="comment">// Don't count this as an eviction test so reduce i;</span></div><div class="line">                        i--;</div><div class="line">                        evictionIterator = <span class="keyword">null</span>;</div><div class="line">                        <span class="keyword">continue</span>;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="keyword">if</span> (!underTest.startEvictionTest()) &#123;</div><div class="line">                        <span class="comment">// Object was borrowed in another thread</span></div><div class="line">                        <span class="comment">// Don't count this as an eviction test so reduce i;</span></div><div class="line">                        i--;</div><div class="line">                        <span class="keyword">continue</span>;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="comment">// User provided eviction policy could throw all sorts of</span></div><div class="line">                    <span class="comment">// crazy exceptions. Protect against such an exception</span></div><div class="line">                    <span class="comment">// killing the eviction thread.</span></div><div class="line">                    <span class="keyword">boolean</span> evict;</div><div class="line">                    <span class="keyword">try</span> &#123;</div><div class="line">                        evict = evictionPolicy.evict(evictionConfig, underTest,</div><div class="line">                                idleObjects.size());</div><div class="line">                    &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> Throwable t) &#123;</div><div class="line">                        <span class="comment">// Slightly convoluted as SwallowedExceptionListener</span></div><div class="line">                        <span class="comment">// uses Exception rather than Throwable</span></div><div class="line">                        PoolUtils.checkRethrow(t);</div><div class="line">                        swallowException(<span class="keyword">new</span> Exception(t));</div><div class="line">                        <span class="comment">// Don't evict on error conditions</span></div><div class="line">                        evict = <span class="keyword">false</span>;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="keyword">if</span> (evict) &#123;</div><div class="line">                        destroy(underTest);</div><div class="line">                        destroyedByEvictorCount.incrementAndGet();</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        <span class="keyword">if</span> (testWhileIdle) &#123;</div><div class="line">                            <span class="keyword">boolean</span> active = <span class="keyword">false</span>;</div><div class="line">                            <span class="keyword">try</span> &#123;</div><div class="line">                                factory.activateObject(underTest);</div><div class="line">                                active = <span class="keyword">true</span>;</div><div class="line">                            &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> Exception e) &#123;</div><div class="line">                                destroy(underTest);</div><div class="line">                                destroyedByEvictorCount.incrementAndGet();</div><div class="line">                            &#125;</div><div class="line">                            <span class="keyword">if</span> (active) &#123;</div><div class="line">                                <span class="keyword">if</span> (!factory.validateObject(underTest)) &#123;</div><div class="line">                                    destroy(underTest);</div><div class="line">                                    destroyedByEvictorCount.incrementAndGet();</div><div class="line">                                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                                    <span class="keyword">try</span> &#123;</div><div class="line">                                        factory.passivateObject(underTest);</div><div class="line">                                    &#125; <span class="keyword">catch</span> (<span class="keyword">final</span> Exception e) &#123;</div><div class="line">                                        destroy(underTest);</div><div class="line">                                        destroyedByEvictorCount.incrementAndGet();</div><div class="line">                                    &#125;</div><div class="line">                                &#125;</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line">                        <span class="keyword">if</span> (!underTest.endEvictionTest(idleObjects)) &#123;</div><div class="line">                            <span class="comment">// TODO - May need to add code here once additional</span></div><div class="line">                            <span class="comment">// states are used</span></div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">final</span> AbandonedConfig ac = <span class="keyword">this</span>.abandonedConfig;</div><div class="line">        <span class="keyword">if</span> (ac != <span class="keyword">null</span> &amp;&amp; ac.getRemoveAbandonedOnMaintenance()) &#123;</div><div class="line">            removeAbandoned(ac);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p><code>EvictionPolicy</code>为驱逐策略接口，用于指定使用哪种策略把过气对象清理出对象池。默认实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultEvictionPolicy</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> <span class="title">EvictionPolicy</span>&lt;<span class="title">T</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">evict</span><span class="params">(<span class="keyword">final</span> EvictionConfig config, <span class="keyword">final</span> PooledObject&lt;T&gt; underTest,</span></span></div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> idleCount) &#123;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> ((config.getIdleSoftEvictTime() &lt; underTest.getIdleTimeMillis() &amp;&amp;</div><div class="line">                config.getMinIdle() &lt; idleCount) ||</div><div class="line">                config.getIdleEvictTime() &lt; underTest.getIdleTimeMillis()) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其策略为</p>
+<ul>
+<li>对象池中某个对象的空闲的时间长于<code>getMinEvictableIdleTimeMillis</code></li>
+<li>在对象池中的空闲对象有超过<code>getMinIdle</code>且某个对象的空闲时间长于<code>getSoftMinEvictableIdleTimeMillis</code></li>
+</ul>
+<p>满足其中之一即返回真，执行驱逐操作。</p>
+<p>而这个线程每次只会扫描<code>getNumTests</code>数量的对象。使用<code>EvictionIterator</code>将池中所有空闲对象包装起来，其实这里使用的是迭代器模式（处处都体现设计模式呀）。如果没取到，那就将这个空对象跳过去，反正必须得取<code>getNumTests</code>这么多个，空的不算数。最后就是使用<code>destroy</code>方法将其销毁掉了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文介绍了<code>commons-pool</code>几个核心接口以及相关配置参数和代表的含义，针对核心API的实现做了源码解读。总的来说这个工具的实现其实很简单，源码读起来没有太大难度。当然除了文中提到的默认对象池实现之外，<code>commons-pool</code>还提供基于key的对象池<code>KeyedObjectPool</code>以及基于代理的对象池<code>ProxiedObjectPool</code>的实现。由于暂时没找到使用的场景，就没有继续深入解读。</p>
+<p>看了对象池的实现后，觉得这些看似“高大上”的东西也不过如此。接着尝试去了解一下更加专业的“池”–连接池。</p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+    <hr />
+    <h3>留言:</h3>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/Mr-Vincent" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2020 Mr-Vincent<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+<script type="text/javascript">
+    var disqus_shortname = 'wei-dong';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+</body>
+
+</html>
