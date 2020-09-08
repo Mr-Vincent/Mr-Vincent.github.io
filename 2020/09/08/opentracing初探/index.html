@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="以梦为马 不负韶华">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Mr-Vincent">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="OpenTracing初探"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="以梦为马 不负韶华" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="DongWei&#39;s Blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>OpenTracing初探 - DongWei&#39;s Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">DongWei's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/Mr-Vincent">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('https://images.unsplash.com/photo-1503437313881-503a91226402?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2689&q=80')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>OpenTracing初探</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2020-09-08
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/入门，opentracing/">#入门，opentracing</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/笔记/">笔记</a>
+
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h3 id="what"><a href="#what" class="headerlink" title="what"></a>what</h3><p>OpenTracing分布式链路追踪的一种标准。根据google的论文Dapper，很多厂商根据这篇论文做出了自己的实现，然而每个厂商的实现都不同，因此如果你的分布式应用需要接入某个实现，那必须使用这个厂商提供的API，若哪一天不想用这个厂商的实现了咋办？得去改代码。因此出现了opentracing标准。这好比JSR规范，只提出API定义，至于厂商怎么去实现我不管，大家想用的话只需要使用这个标准API就行。</p>
+<h3 id="how"><a href="#how" class="headerlink" title="how"></a>how</h3><p>opentracing提供多语言的支持，如Java/Python/Ruby等。这里使用Java语言演示一下如何使用。<br>首先需要引入依赖：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;io.opentracing&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;opentracing-api&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;0.33.0&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;!--这里使用的是jaeger的实现--&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;io.jaegertracing&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;jaeger-client&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;$&#123;jaeger.version&#125;&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hello</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Tracer tracer;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Hello</span><span class="params">(Tracer tracer)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.tracer = tracer;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">(String hello)</span></span>&#123;</div><div class="line">        Span span = tracer.buildSpan(<span class="string">"say-hello"</span>).start();</div><div class="line">        System.out.println(hello);</div><div class="line">        span.finish();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        String hello = <span class="string">"hello world"</span>;</div><div class="line"></div><div class="line">        <span class="keyword">new</span> Hello(initTracer(<span class="string">"hello-world"</span>)).sayHello(hello);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> JaegerTracer <span class="title">initTracer</span><span class="params">(String name)</span></span>&#123;</div><div class="line">        Configuration.SamplerConfiguration samplecfg = Configuration.SamplerConfiguration.fromEnv().withType(<span class="string">"const"</span>).withParam(<span class="number">1</span>);</div><div class="line"></div><div class="line">        Configuration.ReporterConfiguration reporterConfiguration = Configuration.ReporterConfiguration.fromEnv().withLogSpans(<span class="keyword">true</span>);</div><div class="line"></div><div class="line">        Configuration configuration = <span class="keyword">new</span> Configuration(name).withSampler(samplecfg).withReporter(reporterConfiguration);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> configuration.getTracer();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>有个核心的API <code>Tracer</code>,这个类用于创建Span。<br>什么是Span呢？简而言之可以理解为一个调用，这里描述可能太过于抽象。可以具体为一次http请求，一次rpc调用。一个Span里可能会出现多个Span，比如你的一次http请求中会调用多个rpc服务，而rpc服务又会去调用别的rpc服务…这样这些Span就形成了类似父子关系的结构，用术语来描述就是DAG（Direct Acyclic Graph）。当然这里描述的仅仅是最常见的一种情况，也就是父子关系的情况。<br><img src="https://pic2.zhimg.com/v2-05e888f1a7ea2e975673db6135b72a75_r.jpg" alt=""><br>参考这张图可以很轻松的理解Span。<br>代码中的方法<code>sayHello()</code>通过Tracer创建了一个名为<code>say-hello</code>的Span，方法结束后通过调用finish完成Span的终止。一个Span就这样简单的完成了，看上去是不是非常直观呢！</p>
+<p>当然这仅仅是在代码层面的，有小伙伴可能会产生疑问，我写这些代码有啥用？之前说到，Tracer仅仅是一个标准，实现的厂家有很多，因此这里选择一个实现这个标准的厂家即可。<code>initTracer</code>方法初始化一个名叫<code>hello-world</code>的服务，其实现为Jaeger，这样我们的一些trace和span信息就能在Jaeger提供的控制面板中看到了。当然你也可以不选择Jaeger的实现，使用Zipkin也是一样的。<br>如果选择Jaeger实现，那需要启动一个Jaeger的服务，这里直接省事使用Docker跑一个Jaeger容器：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">docker run \</div><div class="line">  --rm \</div><div class="line">  -p 6831:6831/udp \</div><div class="line">  -p 6832:6832/udp \</div><div class="line">  -p 16686:16686 \</div><div class="line">  jaegertracing/all-in-one:1.7 \</div><div class="line">  --log-level=debug</div></pre></td></tr></table></figure></p>
+<p>这里的端口配置和<code>initTracer</code>方法中config中配置的默认端口应该是一样的，也就是这些config用于和Jaeger服务进行通信。将这个程序跑起来，就会在Jaeger的UI界面上看到<code>sayHello()</code>方法相关的调用信息了。<br><img src="https://upload-images.jianshu.io/upload_images/3117395-c9fa431385fcd506.jpg?imageMogr2/auto-orient/strip|imageView2/2/format/webp" alt="opentracing"></p>
+<p>说了这么多，貌似和想象中的有点差距。不着急，这仅仅是港开始。</p>
+<p>之前说到，一个Span里会有多个子Span，具体体现在代码中是这样的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">(String helloTo)</span> </span>&#123;</div><div class="line">    Span span = tracer.buildSpan(<span class="string">"say-hello"</span>).start();</div><div class="line">    span.setTag(<span class="string">"hello-to"</span>, helloTo);</div><div class="line"></div><div class="line">    String helloStr = formatString(span, helloTo);</div><div class="line">    printHello(span, helloStr);</div><div class="line"></div><div class="line">    span.finish();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span>  String <span class="title">formatString</span><span class="params">(Span rootSpan, String helloTo)</span> </span>&#123;</div><div class="line">    Span span = tracer.buildSpan(<span class="string">"formatString"</span>).asChildOf(rootSpan).start();</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        String helloStr = String.format(<span class="string">"Hello, %s!"</span>, helloTo);</div><div class="line">        span.log(ImmutableMap.of(<span class="string">"event"</span>, <span class="string">"string-format"</span>, <span class="string">"value"</span>, helloStr));</div><div class="line">        <span class="keyword">return</span> helloStr;</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        span.finish();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">printHello</span><span class="params">(Span rootSpan, String helloStr)</span> </span>&#123;</div><div class="line">    Span span = tracer.buildSpan(<span class="string">"printHello"</span>).asChildOf(rootSpan).start();</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        System.out.println(helloStr);</div><div class="line">        span.log(ImmutableMap.of(<span class="string">"event"</span>, <span class="string">"println"</span>));</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        span.finish();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>首先使用<code>formatString</code>来格式化，接着使用<code>printHello</code>来打印到控制台。这里就很能体现出父子Span到层级关系了。通过<code>asChildOf</code>方法来表示这个层级关系，即：<code>formatString</code>和<code>printHello</code>的调用Span是<code>sayHello</code>方法的子Span。运行一下程序，在后台UI中看到的就是这样的层级关系了：<br><img src="https://upload-images.jianshu.io/upload_images/3117395-dd53ae32bdf1415c.jpg?imageMogr2/auto-orient/strip|imageView2/2/format/webp" alt="span 层级"></p>
+<p>当然这里还有同感span打印日志操作，语义十分清晰，这里不做过多解释了。<br>看到这里，似乎觉得这代码写起来是不是有点冗余了？没错，在方法之间非得把rootSpan拿来传递下去，显得格外麻烦。因此opentracing提供一种好用的方式，简化了方法之间传递rootSpan的复杂性。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">(String helloTo)</span> </span>&#123;</div><div class="line">    Span span = tracer.buildSpan(<span class="string">"say-hello"</span>).start();</div><div class="line">    <span class="keyword">try</span> (Scope scope = tracer.scopeManager().activate(span)) &#123;</div><div class="line">        span.setTag(<span class="string">"hello-to"</span>, helloTo);</div><div class="line"></div><div class="line">        String helloStr = formatString(helloTo);</div><div class="line">        printHello(helloStr);</div><div class="line">    &#125; <span class="keyword">finally</span>&#123;</div><div class="line">        span.finish();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span>  String <span class="title">formatString</span><span class="params">(String helloTo)</span> </span>&#123;</div><div class="line">    Span span = tracer.buildSpan(<span class="string">"formatString"</span>).start();</div><div class="line">    <span class="keyword">try</span> (Scope scope = tracer.scopeManager().activate(span)) &#123;</div><div class="line">        String helloStr = String.format(<span class="string">"Hello, %s!"</span>, helloTo);</div><div class="line">        span.log(ImmutableMap.of(<span class="string">"event"</span>, <span class="string">"string-format"</span>, <span class="string">"value"</span>, helloStr));</div><div class="line">        <span class="keyword">return</span> helloStr;</div><div class="line">    &#125; <span class="keyword">finally</span>&#123;</div><div class="line">        span.finish();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">printHello</span><span class="params">(String helloStr)</span> </span>&#123;</div><div class="line">    Span span = tracer.buildSpan(<span class="string">"printHello"</span>).start();</div><div class="line">    <span class="keyword">try</span> (Scope scope = tracer.scopeManager().activate(span)) &#123;</div><div class="line">        System.out.println(helloStr);</div><div class="line">        span.log(ImmutableMap.of(<span class="string">"event"</span>, <span class="string">"println"</span>));</div><div class="line">    &#125; <span class="keyword">finally</span>&#123;</div><div class="line">        span.finish();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过<code>activate</code>方法来简化rootSpan在方法之间的传递。同时使用try with resource语法巧妙的对资源进行控制。其实现原理是线程上下文。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocalScopeManager</span> <span class="keyword">implements</span> <span class="title">ScopeManager</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> ThreadLocal&lt;ThreadLocalScope&gt; tlsScope = <span class="keyword">new</span> ThreadLocal&lt;ThreadLocalScope&gt;();</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Scope <span class="title">activate</span><span class="params">(Span span)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ThreadLocalScope(<span class="keyword">this</span>, span);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Span <span class="title">activeSpan</span><span class="params">()</span> </span>&#123;</div><div class="line">        ThreadLocalScope scope = tlsScope.get();</div><div class="line">        <span class="keyword">return</span> scope == <span class="keyword">null</span> ? <span class="keyword">null</span> : scope.span();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocalScope</span> <span class="keyword">implements</span> <span class="title">Scope</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ThreadLocalScopeManager scopeManager;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Span wrapped;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ThreadLocalScope toRestore;</div><div class="line"></div><div class="line">    <span class="comment">// 创建的时候，先拿到之前保存的存到变量中，再将自己放进线程上下文</span></div><div class="line">    ThreadLocalScope(ThreadLocalScopeManager scopeManager, Span wrapped) &#123;</div><div class="line">        <span class="keyword">this</span>.scopeManager = scopeManager;</div><div class="line">        <span class="keyword">this</span>.wrapped = wrapped;</div><div class="line">        <span class="keyword">this</span>.toRestore = scopeManager.tlsScope.get();</div><div class="line">        scopeManager.tlsScope.set(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 关闭的时候，将上次的信息恢复</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (scopeManager.tlsScope.get() != <span class="keyword">this</span>) &#123;</div><div class="line">            <span class="comment">// This shouldn't happen if users call methods in the expected order. Bail out.</span></div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        scopeManager.tlsScope.set(toRestore);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function">Span <span class="title">span</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> wrapped;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>因为try语句在方法中是嵌套的，因此采用这样的方式最终的效果是都能找到上次的span。理解起来可能有点费力，<code>tlsScope</code>实例一直被传递，因为仅此一个实例（并没有显式去new，而是通过this去传递的），而<code>ThreadLocalScope</code>类却会每次创建出来，与此同时每次的span也会不一样。通过<code>toRestore</code>变量来不断地倒转，每次activate调用，创建新的Scope，放进上下文，try执行完，再将上次的Scope放进上下文。一来一回形成闭环有头有尾，类似括号匹配。<br>这种方式和之前采用方法中传递rootSpan变量是一样的效果。</p>
+<p>看到这里，似乎也没觉得有太大的用处，因为这仅仅是在进程内进行trace，进程之间的trace如何实现呢？先看看这个demo：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">(String helloTo)</span> </span>&#123;</div><div class="line">    Span span = tracer.buildSpan(<span class="string">"say-hello"</span>).start();</div><div class="line">    <span class="keyword">try</span> (Scope scope = tracer.scopeManager().activate(span)) &#123;</div><div class="line">        span.setTag(<span class="string">"hello-to"</span>, helloTo);</div><div class="line"></div><div class="line">        String helloStr = formatString(helloTo);</div><div class="line">        printHello(helloStr);</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        span.finish();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> String <span class="title">formatString</span><span class="params">(String helloTo)</span> </span>&#123;</div><div class="line">    Span span = tracer.buildSpan(<span class="string">"formatString"</span>).start();</div><div class="line">    <span class="keyword">try</span> (Scope scope = tracer.scopeManager().activate(span)) &#123;</div><div class="line">        String helloStr = getHttp(<span class="number">8081</span>, <span class="string">"format"</span>, <span class="string">"helloTo"</span>, helloTo);</div><div class="line">        span.log(ImmutableMap.of(<span class="string">"event"</span>, <span class="string">"string-format"</span>, <span class="string">"value"</span>, helloStr));</div><div class="line">        <span class="keyword">return</span> helloStr;</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        span.finish();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">printHello</span><span class="params">(String helloStr)</span> </span>&#123;</div><div class="line">    Span span = tracer.buildSpan(<span class="string">"printHello"</span>).start();</div><div class="line">    <span class="keyword">try</span> (Scope scope = tracer.scopeManager().activate(span)) &#123;</div><div class="line">        getHttp(<span class="number">8082</span>, <span class="string">"publish"</span>, <span class="string">"helloStr"</span>, helloStr);</div><div class="line">        span.log(ImmutableMap.of(<span class="string">"event"</span>, <span class="string">"println"</span>));</div><div class="line">    &#125; <span class="keyword">finally</span>&#123;</div><div class="line">        span.finish();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">private</span> String <span class="title">getHttp</span><span class="params">(<span class="keyword">int</span> port, String path, String param, String value)</span> </span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        HttpUrl url = <span class="keyword">new</span> HttpUrl.Builder().scheme(<span class="string">"http"</span>).host(<span class="string">"localhost"</span>).port(port).addPathSegment(path)</div><div class="line">                .addQueryParameter(param, value).build();</div><div class="line">        Request.Builder requestBuilder = <span class="keyword">new</span> Request.Builder().url(url);</div><div class="line">        Request request = requestBuilder.build();</div><div class="line">        Response response = client.newCall(request).execute();</div><div class="line"></div><div class="line">        Tags.HTTP_STATUS.set(tracer.activeSpan(), response.code());</div><div class="line">        <span class="keyword">if</span> (response.code() != <span class="number">200</span>) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Bad HTTP result: "</span> + response);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> response.body().string();</div><div class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>与之前不同的是，这里的格式化字符串和输出方法都不是在同一个进程执行的，而是跨进程了。这两个操作通过http进行远程方法调用。跑一下在UI界面中依然能看到与之前相同的结果；<br><img src="https://upload-images.jianshu.io/upload_images/3117395-a577c0874994f090.jpg?imageMogr2/auto-orient/strip|imageView2/2/format/webp" alt="跨进程"><br>是不是发现了有什么不对？没错，按道理说跨进程调用，被调用的那一方也应该被trace到，而这里却只有发起方的trace记录，和之前在同一个进程内调用的根本没什么区别。因此这里需要对服务的提供方进行trace一下。</p>
+<p>最通俗的解释就是怎么把我的rootSpan传递给别的进程。opentracing api提供了两种方式：</p>
+<ul>
+<li>inject(spanContext, format, carrier) </li>
+<li>extract(format, carrier)<br>顾名思义，一个是注入，另一个是抽取。其中的format参数也提供了如下可选：</li>
+<li>TEXT_MAP where span context is encoded as a collection of string key-value pairs,</li>
+<li>BINARY where span context is encoded as an opaque byte array,</li>
+<li>HTTP_HEADERS, which is similar to TEXT_MAP except that the keys must be safe to be used as HTTP headers.<br>第一个最简单，键值对，可以理解为一个map；第二个是二进制格式；第三个是基于http的头，其实也是键值对格式。而carrier则是根据format来确定的，如果format=TEXT_MAP，那么carrier就提供一个针对键值对的写入入口类似put(key,value).<br>接下来对上述代码进行改造。<br>首先是注入，简单理解为在发起调用的那一头把自己的rootSpan写到被调用方中去。因此这里使用inject方法：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> String <span class="title">getHttp</span><span class="params">(<span class="keyword">int</span> port, String path, String param, String value)</span> </span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        HttpUrl url = <span class="keyword">new</span> HttpUrl.Builder().scheme(<span class="string">"http"</span>).host(<span class="string">"localhost"</span>).port(port).addPathSegment(path)</div><div class="line">                .addQueryParameter(param, value).build();</div><div class="line">        Request.Builder requestBuilder = <span class="keyword">new</span> Request.Builder().url(url);</div><div class="line">        </div><div class="line">        Span activeSpan = tracer.activeSpan();</div><div class="line">        Tags.SPAN_KIND.set(activeSpan, Tags.SPAN_KIND_CLIENT);</div><div class="line">        Tags.HTTP_METHOD.set(activeSpan, <span class="string">"GET"</span>);</div><div class="line">        Tags.HTTP_URL.set(activeSpan, url.toString());</div><div class="line">        tracer.inject(activeSpan.context(), Format.Builtin.HTTP_HEADERS, <span class="keyword">new</span> RequestBuilderCarrier(requestBuilder));</div><div class="line"></div><div class="line">        Request request = requestBuilder.build();</div><div class="line">        Response response = client.newCall(request).execute();</div><div class="line"></div><div class="line">        Tags.HTTP_STATUS.set(activeSpan, response.code());</div><div class="line">        <span class="keyword">if</span> (response.code() != <span class="number">200</span>) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Bad HTTP result: "</span> + response);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> response.body().string();</div><div class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">        Tags.ERROR.set(tracer.activeSpan(), <span class="keyword">true</span>);</div><div class="line">        tracer.activeSpan().log(ImmutableMap.of(Fields.EVENT, <span class="string">"error"</span>, Fields.ERROR_OBJECT, e));</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RequestBuilderCarrier</span> <span class="keyword">implements</span> <span class="title">io</span>.<span class="title">opentracing</span>.<span class="title">propagation</span>.<span class="title">TextMap</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Request.Builder builder;</div><div class="line"></div><div class="line">    RequestBuilderCarrier(Request.Builder builder) &#123;</div><div class="line">        <span class="keyword">this</span>.builder = builder;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">public</span> Iterator&lt;Map.Entry&lt;String, String&gt;&gt; iterator() &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException(<span class="string">"carrier is write-only"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(String key, String value)</span> </span>&#123;</div><div class="line">        builder.addHeader(key, value);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如果不去深入源码实现，这里也能够猜到inject的操作是将span上下文信息通过键值对的形式写到了http header中了，包含url，method等信息。这样，客户端的trace就完成了，接下来再看看服务端的trace怎么处理。</p>
+<p>前面提到inject对应的方法是extract，看看没改动之前的样子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Path</span>(<span class="string">"/format"</span>)</div><div class="line"><span class="meta">@Produces</span>(MediaType.TEXT_PLAIN)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FormatterResource</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@GET</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">format</span><span class="params">(@QueryParam(<span class="string">"helloTo"</span>)</span> String helloTo) </span>&#123;</div><div class="line">        String helloStr = String.format(<span class="string">"Hello, %s!"</span>, helloTo);</div><div class="line">        <span class="keyword">return</span> helloStr;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>看看改动之后的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@GET</span></div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">format</span><span class="params">(@QueryParam(<span class="string">"helloTo"</span>)</span> String helloTo, @Context HttpHeaders httpHeaders) </span>&#123;</div><div class="line">    Span span =  Tracing.startServerSpan(tracer, httpHeaders, <span class="string">"format"</span>);</div><div class="line">    <span class="keyword">try</span> (Scope scope = tracer.scopeManager().activate(span)) &#123;</div><div class="line">        String helloStr = String.format(<span class="string">"Hello, %s!"</span>, helloTo);</div><div class="line">        span.log(ImmutableMap.of(<span class="string">"event"</span>, <span class="string">"string-format"</span>, <span class="string">"value"</span>, helloStr));</div><div class="line">        <span class="keyword">return</span> helloStr;</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        span.finish();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Span <span class="title">startServerSpan</span><span class="params">(Tracer tracer, javax.ws.rs.core.HttpHeaders httpHeaders, String operationName)</span> </span>&#123;</div><div class="line">    <span class="comment">// format the headers for extraction</span></div><div class="line">    MultivaluedMap&lt;String, String&gt; rawHeaders = httpHeaders.getRequestHeaders();</div><div class="line">    <span class="keyword">final</span> HashMap&lt;String, String&gt; headers = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</div><div class="line">    <span class="keyword">for</span> (String key : rawHeaders.keySet()) &#123;</div><div class="line">        headers.put(key, rawHeaders.get(key).get(<span class="number">0</span>));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Tracer.SpanBuilder spanBuilder;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        SpanContext parentSpanCtx = tracer.extract(Format.Builtin.HTTP_HEADERS, <span class="keyword">new</span> TextMapAdapter(headers));</div><div class="line">        <span class="keyword">if</span> (parentSpanCtx == <span class="keyword">null</span>) &#123;</div><div class="line">            spanBuilder = tracer.buildSpan(operationName);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            spanBuilder = tracer.buildSpan(operationName).asChildOf(parentSpanCtx);</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">catch</span> (IllegalArgumentException e) &#123;</div><div class="line">        spanBuilder = tracer.buildSpan(operationName);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// TODO could add more tags like http.url</span></div><div class="line">    <span class="keyword">return</span> spanBuilder.withTag(Tags.SPAN_KIND.getKey(), Tags.SPAN_KIND_SERVER).start();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>与之前不同的是增加了一个参数<code>HttpHeaders</code>，然后获取header中的键值对，通过extract方法将span上下文还原，作为当前span的父亲，最后打上tag信息。同理对于print方法也是如此，最终在Jeager UI中看到的会是这样：<br><img src="https://upload-images.jianshu.io/upload_images/3117395-dc4b6b9e45172ba7.jpg?imageMogr2/auto-orient/strip|imageView2/2/format/webp" alt="RPC CALL"><br>这里多了几个span，因为将服务端的span也trace到了。</p>
+<h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>本文介绍了opentracing 的一些基础使用和主要概念，理解起来相对比较简单。上述的代码在使用上稍微不是很方便，因为需要开发者手工去针对trace做一下适配。然而opentracing生态提供了相关的库，如上述代码中针对okhttp的定制就可以使用现成的<a href="https://github.com/opentracing-contrib/java-okhttp" target="_blank" rel="external">okhttp</a>.<br>除了使用之外，你肯定对这些span信息如何上报到服务端很感兴趣，等有时间再回头看看书如何实现的。</p>
+<h3 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h3><p><a href="https://www.jianshu.com/p/82cd923191fb" target="_blank" rel="external">分布式全链路监控 – opentracing小试</a><br><a href="https://github.com/yurishkuro/opentracing-tutorial" target="_blank" rel="external">opentracing-tutorial</a><br><a href="https://zhuanlan.zhihu.com/p/83654617" target="_blank" rel="external">分布式追踪系统 – Opentracing</a></p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+    <hr />
+    <h3>留言:</h3>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/Mr-Vincent" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2020 Mr-Vincent<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+<script type="text/javascript">
+    var disqus_shortname = 'wei-dong';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+</body>
+
+</html>
