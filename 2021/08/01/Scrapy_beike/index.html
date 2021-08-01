@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="以梦为马 不负韶华">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Mr-Vincent">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Scrapy入门"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="以梦为马 不负韶华" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="DongWei&#39;s Blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>Scrapy入门 - DongWei&#39;s Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../../../css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">DongWei's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="../../../../index.html">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="../../../../archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/Mr-Vincent">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('https://images.unsplash.com/photo-1446582186851-3fe172f6acb9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Scrapy入门</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2021-08-01
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/code/">#code</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/scrapy/">scrapy</a>
+
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>最近因为工作上有数据采集相关内容，特地研究了一下Scrapy相关使用。总结了一下Scrapy的一些入门和实践经验。</p>
+<p>考虑到想在武汉上车，因此就去采集了贝壳找房上的一些数据。具体的字段可以存到数据库或者文件中。这里是我定义的一些字段。<br><img src="/2021/08/01/Scrapy_beike/data_structure.png" alt="数据结构"></p>
+<p>最终采集完数据之后，一般会对数据进行一些分析。如果会sql的直接写语句处理就好了，更友好的方式是用可视化展示出来，这样更直观。因此这里采用了pandas来处理数据，用pyecharts展示数据。这里是一个简单的效果图。<br><img src="/2021/08/01/Scrapy_beike/bar_loupan.png" alt="柱状图"></p>
+<h2 id="Scrapy安装"><a href="#Scrapy安装" class="headerlink" title="Scrapy安装"></a>Scrapy安装</h2><p>对于使用过Python的同学而言，这些内容可以忽略。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install scrapy</div></pre></td></tr></table></figure></p>
+<p>使用scrapy创建工程，这个脚本很方便，可以一键生成模板。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scrapy genspider [你的工程名称]</div></pre></td></tr></table></figure></p>
+<p>最终的工程结构是这样的：<br><img src="/2021/08/01/Scrapy_beike/project_structrure.png" alt="工程结构"></p>
+<h2 id="Scrapy使用"><a href="#Scrapy使用" class="headerlink" title="Scrapy使用"></a>Scrapy使用</h2><p>生成的文件都有自己的作用。<code>items.py</code>中定义数据字段。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BeikeWuhanItem</span><span class="params">(scrapy.Item)</span>:</span></div><div class="line">    name = scrapy.Field()</div><div class="line">    lp_type = scrapy.Field()</div><div class="line">    image = scrapy.Field()</div><div class="line">    block = scrapy.Field()</div><div class="line">    address = scrapy.Field()</div><div class="line">    room_type = scrapy.Field()</div><div class="line">    spec = scrapy.Field()</div><div class="line">    ava_price = scrapy.Field()</div><div class="line">    total_range = scrapy.Field()</div><div class="line">    tags = scrapy.Field()</div><div class="line">    detail_url = scrapy.Field()</div><div class="line">    create_time = scrapy.Field()</div></pre></td></tr></table></figure></p>
+<p>可以发现这里的字段和在数据库中定义的一模一样。</p>
+<p><code>settings.py</code>中定义一些设置属性。具体如何使用可以点击注释中的链接详细研究，scrapy的文档写的很全，对新手很友好。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 下载间隔 10秒一次 太频繁了网站会给你封掉 要么用代理池</span></div><div class="line">DOWNLOAD_DELAY = <span class="number">10</span></div><div class="line"><span class="comment"># 后面的数字代表顺序</span></div><div class="line">DOWNLOADER_MIDDLEWARES = &#123;</div><div class="line">   <span class="string">'BeikeSpider.middlewares.IPProxyMiddleware'</span>: <span class="number">100</span>,</div><div class="line">   <span class="string">'BeikeSpider.middlewares.BeikespiderDownloaderMiddleware'</span>: <span class="number">543</span>,</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>pipelines.py</code>中定义对采集到的数据的处理。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BeikespiderPipeline</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        self.connection = pymysql.connect(</div><div class="line">            host=MYSQL_HOST,</div><div class="line">            user=MYSQL_USER,</div><div class="line">            password=MYSQL_PASS,</div><div class="line">            db=MYSQL_DB,</div><div class="line">            charset=<span class="string">"utf8mb4"</span>,</div><div class="line">            cursorclass=pymysql.cursors.DictCursor,</div><div class="line">        )</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></div><div class="line">        <span class="keyword">if</span> isinstance(item, BeikeWuhanItem):</div><div class="line">            self.insert(item)</div><div class="line">        <span class="keyword">return</span> item</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">insert</span><span class="params">(self, item)</span>:</span></div><div class="line">        cursor = self.connection.cursor()</div><div class="line">        keys = item.keys()</div><div class="line">        values = tuple(item.values())</div><div class="line">        fields = <span class="string">","</span>.join(keys)</div><div class="line">        temp = <span class="string">","</span>.join([<span class="string">"%s"</span>] * len(keys))</div><div class="line">        sql = <span class="string">"INSERT INTO wh_loupan (%s) VALUES (%s)"</span> % (fields, temp)</div><div class="line">        cursor.execute(sql, values)</div><div class="line">        self.connection.commit()</div></pre></td></tr></table></figure></p>
+<p>这里的逻辑是将采集到的数据写入mysql，当然也可以写文件到excel也是没问题的。需要注意的是，这个pipeline写完了一定要在settings中配置一下。</p>
+<p>最后就是自己的爬取逻辑了，<code>beike_wuhan.py</code>这个文件不会被自动生成出来，需要自己定义。这里是爬虫的入口。<br><code>start_requests</code>方法是父类中的定义，这个方法中定义爬虫的名称，以及从哪个url出发。最后通过yield关键字将这个请求交给Scrapy的下载器处理，其中还有一个callback函数，表示处理完请求后要做什么操作。<br><code>parse</code>函数也是父类的，通过参数response可以看出在这里做返回数据的解析。</p>
+<p>在解析页面数据的时候使用xpath是比较快捷的。不过对于眼神不好的还是考虑别的选择器，因为层级多了容易看花。至于如何使用xpath这里不细说，不过浏览器中打开调试器能直接选择元素复制其xpath，非常好用。提取出元素信息将其值填充到<code>BeikeWuhanItem</code>中，这个过程还是比较繁琐的，需要点耐心。item构建完依然通过yield出去。这里的item就传递到了pipline中了，可以直接被<code>process_item</code>函数处理。</p>
+<p>因为爬取的不仅仅只有这一页数据，还要继续接着爬。这里涉及到了翻页动作。贝壳页面中虽然有下一页按钮，但是这个按钮的渲染是通过JS动态生成的，直接通过请求地址是不会反悔这个按钮的元素的。这点值得注意一下，最简答的办法是查看网页源代码，如果能找到这个元素说明通过xpath可以取到，否则怎么都取不到。因此这里不能去通过判断是不是有下一页按钮去做翻页，而是得通过具体的总数去判断到底要不要继续爬。观察到如果到了最后一页，页面元素上的总条数就变成了0，这时候就不用继续翻页了。翻页的url也是通过yield传递给下载器，类似for循环，一直去下载解析。<br>这里也发现了贝壳的bug，显示有80页，其实到了40页就没数据了。导致我开始计算总页数的时候以为总页数就那么多，实际上的bug在有的页显示10条，有的页显示20条，不讲武德。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line">p_room_type = re.compile(<span class="string">'[0-9]+'</span>)</div><div class="line">p_room_spec = re.compile(<span class="string">'[\s\S]*㎡$'</span>)</div><div class="line"></div><div class="line">root_url = <span class="string">'https://wh.fang.ke.com/'</span></div><div class="line">default_schema = <span class="string">'https:'</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BeikeWuhanSpider</span><span class="params">(Spider)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, **kwargs)</span>:</span></div><div class="line">        super().__init__(**kwargs)</div><div class="line">        self.curr_page = <span class="number">1</span></div><div class="line">        self.url_template = <span class="string">"https://wh.fang.ke.com/loupan/nhs1pg%s"</span></div><div class="line"></div><div class="line">    name = <span class="string">"beike_wuhan"</span></div><div class="line">    allowed_domains = [<span class="string">"wh.fang.ke.com"</span>]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">start_requests</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="comment"># 武汉楼盘的首页</span></div><div class="line">        baseurl = <span class="string">"https://wh.fang.ke.com/loupan/nhs1pg1"</span></div><div class="line"></div><div class="line">        UserAgents = [</div><div class="line">            <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36 Edg/92.0.902.62'</span>,</div><div class="line">            <span class="string">'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE'</span>,</div><div class="line">            <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'</span>]</div><div class="line">        UserAgent = random.choice(UserAgents)</div><div class="line"></div><div class="line">        headers = &#123;<span class="string">'User-Agent'</span>: UserAgent&#125;</div><div class="line">        <span class="keyword">yield</span> Request(</div><div class="line">            url=baseurl,</div><div class="line">            headers=headers,</div><div class="line">            callback=self.parse)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></div><div class="line">        <span class="comment"># next_page = response.xpath('/html/body/div[7]/div[2]/')</span></div><div class="line">        <span class="comment"># if next_page is not None:</span></div><div class="line">        <span class="comment">#     next_page = response.urljoin(next_page)</span></div><div class="line">        <span class="comment">#     yield Request(next_page, callback=self.parse)</span></div><div class="line">        <span class="comment"># 每页的数量还不是固定的 有的是10个每页 有的是20个每页</span></div><div class="line">        content = response.xpath(<span class="string">'/html/body/div[6]/ul[2]/li'</span>)</div><div class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> content:</div><div class="line">            image = item.xpath(<span class="string">'./a/img/@src'</span>)[<span class="number">0</span>].extract()</div><div class="line">            name = item.xpath(<span class="string">'./div[1]/div[1]/a/@title'</span>)[<span class="number">0</span>].extract()</div><div class="line">            detail_url = item.xpath(<span class="string">'./div[1]/div[1]/a/@href'</span>)[<span class="number">0</span>].extract()</div><div class="line">            lp_type = item.xpath(<span class="string">'./div[1]/div[1]/span[2]/text()'</span>).extract_first()</div><div class="line">            address = item.xpath(<span class="string">'./div[1]/a[1]/text()'</span>)[<span class="number">1</span>].extract()</div><div class="line">            block = <span class="string">''</span></div><div class="line">            <span class="keyword">if</span> address:</div><div class="line">                block = address.split(<span class="string">'/'</span>)[<span class="number">0</span>]</div><div class="line">            room_type_texts = item.xpath(<span class="string">'./div[1]/a[2]/span/text()'</span>).extract()</div><div class="line">            room_types = []</div><div class="line">            room_spec = <span class="string">''</span></div><div class="line">            <span class="keyword">for</span> room_type_text <span class="keyword">in</span> room_type_texts:</div><div class="line">                <span class="keyword">if</span> re.match(p_room_type, room_type_text):</div><div class="line">                    room_types.append(room_type_text)</div><div class="line">                <span class="keyword">if</span> re.match(p_room_spec, room_type_text):</div><div class="line">                    room_spec = room_type_text.split(<span class="string">' '</span>)[<span class="number">1</span>]</div><div class="line"></div><div class="line">            room_type = <span class="string">'/'</span>.join(room_types)</div><div class="line">            t = item.xpath(<span class="string">'./div[1]/div[3]/span/text()'</span>).getall()</div><div class="line">            tags = <span class="string">','</span>.join(t)</div><div class="line"></div><div class="line">            ava_price = item.xpath(<span class="string">'./div[1]/div[4]/div[1]/span[1]/text()'</span>).extract_first()</div><div class="line">            total = item.xpath(<span class="string">'./div[1]/div[4]/div[2]/text()'</span>).extract_first()</div><div class="line">            <span class="keyword">if</span> <span class="keyword">not</span> total:</div><div class="line">                total = <span class="string">''</span></div><div class="line"></div><div class="line">            wuhan_item = BeikeWuhanItem()</div><div class="line">            wuhan_item[<span class="string">'name'</span>] = name</div><div class="line">            wuhan_item[<span class="string">'lp_type'</span>] = lp_type</div><div class="line">            wuhan_item[<span class="string">'image'</span>] = default_schema + image</div><div class="line">            wuhan_item[<span class="string">'block'</span>] = block</div><div class="line">            wuhan_item[<span class="string">'address'</span>] = address</div><div class="line">            wuhan_item[<span class="string">'room_type'</span>] = room_type</div><div class="line">            wuhan_item[<span class="string">'spec'</span>] = room_spec</div><div class="line">            wuhan_item[<span class="string">'ava_price'</span>] = ava_price</div><div class="line">            wuhan_item[<span class="string">'total_range'</span>] = total</div><div class="line">            wuhan_item[<span class="string">'tags'</span>] = tags</div><div class="line">            wuhan_item[<span class="string">'detail_url'</span>] = root_url + detail_url</div><div class="line">            wuhan_item[<span class="string">'create_time'</span>] = datetime.datetime.now()</div><div class="line">            <span class="keyword">yield</span> wuhan_item</div><div class="line"></div><div class="line">        <span class="comment"># 楼盘总数  如果为0了 那么说明没有下一页了</span></div><div class="line">        count = response.xpath(<span class="string">'/html/body/div[6]/div[2]/span[2]/text()'</span>).get()</div><div class="line">        print(<span class="string">'==================================================================='</span>, count)</div><div class="line">        <span class="keyword">if</span> int(count) &gt; <span class="number">0</span>:</div><div class="line">            self.curr_page += <span class="number">1</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            self.crawler.engine.close_spider(self, <span class="string">'任务完成'</span>)</div><div class="line">        next_page = self.url_template % self.curr_page</div><div class="line">        <span class="keyword">yield</span> Request(next_page, callback=self.parse)</div></pre></td></tr></table></figure>
+<p>贝壳对频繁请求做了限制，因此最好使用代理池，否则很容易被禁IP，得苦哈哈去点击“我不是人机”的识别码才能解除限制。<br>到这里，基本上整个采集的环节都描述完了。接下来就是对数据进行处理和展示。</p>
+<h2 id="pandas数据处理"><a href="#pandas数据处理" class="headerlink" title="pandas数据处理"></a>pandas数据处理</h2><p>pandas也能读取数据库中的记录，几行代码就搞定。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">from</span> pyecharts.charts <span class="keyword">import</span> Bar</div><div class="line"></div><div class="line">plt.rcParams[<span class="string">'font.sans-serif'</span>] = <span class="string">'SimHei'</span></div><div class="line">engine = create_engine(<span class="string">'mysql+pymysql://root:123456@localhost:3306/beike_spider'</span>)</div><div class="line">sql = <span class="string">''' select * from wh_loupan; '''</span></div><div class="line"><span class="comment"># 将查到的数据 load到pd</span></div><div class="line">df = pd.read_sql_query(sql, engine)</div></pre></td></tr></table></figure></p>
+<p>接着对数据进行过滤，因为我们采集的楼盘有很多类型，如写字楼，底商等等。目前我只关心住宅，因此通过这个操作实现过滤。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 过滤掉其他的类型 只拿住宅做分析 同时只保留了4个列</span></div><div class="line">houses = df.loc[df[<span class="string">"lp_type"</span>] == <span class="string">"住宅"</span>, [<span class="string">'id'</span>, <span class="string">'name'</span>, <span class="string">'ava_price'</span>, <span class="string">'block'</span>]]</div></pre></td></tr></table></figure></p>
+<p>不过话说回来，干嘛不用sql直接写过滤条件呢？当然可以，但这里是为了展示一下pandas的使用。</p>
+<p>接着对住宅的区域进行分组，看看这些区的住宅楼盘的分布情况。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># 通过区来做分组 这里返回的是一个series类型 索引为区，值为区下楼盘的数量 因此需要将对应的值取出来</span></div><div class="line">group_num = houses.groupby(<span class="string">"block"</span>).size()</div><div class="line">index = []</div><div class="line">val = []</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> group_num.items():</div><div class="line">    index.append(i[<span class="number">0</span>])</div><div class="line">    val.append(i[<span class="number">1</span>])</div><div class="line"></div><div class="line">bar = Bar()</div><div class="line">bar.add_xaxis(index)</div><div class="line">bar.add_yaxis(<span class="string">"楼盘数"</span>, val)</div><div class="line"><span class="comment"># render 会生成本地 HTML 文件，默认会在当前目录生成 render.html 文件</span></div><div class="line"><span class="comment"># 也可以传入路径参数，如 bar.render("mycharts.html")</span></div><div class="line">bar.render(<span class="string">"./figures/楼盘分布.html"</span>)</div></pre></td></tr></table></figure>
+<p>最后生成图表，直观的呈现出来。</p>
+<p>完整代码请参考 <a href="https://github.com/Mr-Vincent/Spider_Beike" target="_blank" rel="external">Spider_Beike</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在很早以前都是使用request库直接请求网页，需要处理连接，解析，重试之类的业务无关的脏活累活。代码写的又多又丑，目前使用了scrapy后发现瞬间清爽很多，效率提升了不少。<br>在习惯了Java这种强类型的语言后，再去写Python这种弱类型的有时候会很抓狂，比如做除法运算，虽然你知道你的除数是数字，但是解释器告诉你这是字符类型，不给你除，还得手动转一下类型，太气人了。还有在使用类方法的时候，根本不知道怎么去传参，各种花里胡哨的参数列表，对于强类型语言使用者来说，编程思维转变过来还是需要点时间。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://pandas.pydata.org/docs/reference/series.html" target="_blank" rel="external">pandas doc</a><br><a href="https://docs.scrapy.org/en/latest/intro/tutorial.html" target="_blank" rel="external">scrapy tutorial</a><br><a href="https://wh.fang.ke.com/loupan/nhs1pg2/" target="_blank" rel="external">贝壳新房</a><br><a href="https://github.com/Mr-Vincent/Spider_Beike" target="_blank" rel="external">代码地址</a></p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+    <hr />
+    <h3>留言:</h3>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/Mr-Vincent" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2021 Mr-Vincent<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+<script type="text/javascript">
+    var disqus_shortname = 'wei-dong';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+</body>
+
+</html>
