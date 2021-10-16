@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="以梦为马 不负韶华">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Mr-Vincent">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="从Timer到时间轮"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="以梦为马 不负韶华" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="DongWei&#39;s Blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+        <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>从Timer到时间轮 - DongWei&#39;s Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../../../css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+	
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">DongWei's Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="../../../../index.html">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="../../../../archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/Mr-Vincent">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('https://images.unsplash.com/photo-1504197832061-98356e3dcdcf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2550&q=80')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>从Timer到时间轮</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2021-10-16
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/源码/">#源码</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/源码/">源码</a>
+
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>太阳东升西落，海水潮涨潮落，四季交替，万事万物都有其周期。而衡量这些周期的重要维度就是时间。</p>
+<p>时间的存在对于现实中的事物显得十分重要。在程序的世界里依旧如此。如订单未付款30分钟后自动取消，每天凌晨1点执行数据抽取任务…</p>
+<p>在Java中Timer作为最易于使用的定时调度API，提供在未来某个时间执行任务的接口，也支持执行周期性任务的能力。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    Timer timer=<span class="keyword">new</span> Timer();</div><div class="line">    timer.schedule(<span class="keyword">new</span> TimerTask() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            System.out.println(<span class="string">"我执行了"</span>+<span class="string">"  "</span>+System.currentTimeMillis());</div><div class="line">        &#125;</div><div class="line">    &#125;,<span class="number">1000</span>,<span class="number">2000</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Timer的优势在于使用方便，实现也很简单。Timer的内部维持一个小顶堆的数据结构，每次添加任务都会根据任务延期的时间来构建小顶堆，任务最快到期的永远在根节点，这样定时器每次取任务直接取根节点就好了，这样时间复杂度在O(logn)级别。除此之外Timer内部还有一个线程，这个线程通过死循环一直取小顶堆的根节点，如果这个节点的执行时间比当前时间早，说明这个任务需要执行了，如果根节点任务的执行时间还没到，那就wait一下，直到下个循环。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">mainLoop</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                TimerTask task;</div><div class="line">                <span class="keyword">boolean</span> taskFired;</div><div class="line">                <span class="keyword">synchronized</span>(queue) &#123;</div><div class="line">                    <span class="comment">// Wait for queue to become non-empty</span></div><div class="line">                    <span class="keyword">while</span> (queue.isEmpty() &amp;&amp; newTasksMayBeScheduled)</div><div class="line">                        queue.wait();</div><div class="line">                    <span class="keyword">if</span> (queue.isEmpty())</div><div class="line">                        <span class="keyword">break</span>; <span class="comment">// Queue is empty and will forever remain; die</span></div><div class="line"></div><div class="line">                    <span class="comment">// Queue nonempty; look at first evt and do the right thing</span></div><div class="line">                    <span class="keyword">long</span> currentTime, executionTime;</div><div class="line">                    task = queue.getMin();</div><div class="line">                    <span class="keyword">synchronized</span>(task.lock) &#123;</div><div class="line">                        <span class="keyword">if</span> (task.state == TimerTask.CANCELLED) &#123;</div><div class="line">                            queue.removeMin();</div><div class="line">                            <span class="keyword">continue</span>;  <span class="comment">// No action required, poll queue again</span></div><div class="line">                        &#125;</div><div class="line">                        currentTime = System.currentTimeMillis();</div><div class="line">                        executionTime = task.nextExecutionTime;</div><div class="line">                        <span class="keyword">if</span> (taskFired = (executionTime&lt;=currentTime)) &#123;</div><div class="line">                            <span class="keyword">if</span> (task.period == <span class="number">0</span>) &#123; <span class="comment">// Non-repeating, remove</span></div><div class="line">                                queue.removeMin();</div><div class="line">                                task.state = TimerTask.EXECUTED;</div><div class="line">                            &#125; <span class="keyword">else</span> &#123; <span class="comment">// Repeating task, reschedule</span></div><div class="line">                                queue.rescheduleMin(</div><div class="line">                                  task.period&lt;<span class="number">0</span> ? currentTime   - task.period</div><div class="line">                                                : executionTime + task.period);</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">if</span> (!taskFired) <span class="comment">// Task hasn't yet fired; wait</span></div><div class="line">                        queue.wait(executionTime - currentTime);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (taskFired)  <span class="comment">// Task fired; run it, holding no locks</span></div><div class="line">                    task.run();</div><div class="line">            &#125; <span class="keyword">catch</span>(InterruptedException e) &#123;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>当然缺点也十分明显，由于是单线程执行任务，如果某个任务耗时很严重，例如去读取网络中的流，那么后续的任务的调度时间不会那么准确。</p>
+<p>从源码中可以发现，如果任务执行出现异常，那么后续的任务也不会执行了。这个代码片段可以说明问题：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Timer timer = <span class="keyword">new</span> Timer();</div><div class="line">        timer.schedule(<span class="keyword">new</span> TimerTask() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    <span class="keyword">int</span> i = <span class="number">1</span>/<span class="number">0</span>;</div><div class="line">                    Thread.sleep(<span class="number">1000</span>);</div><div class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;,<span class="number">2</span>);</div><div class="line">        timer.schedule(<span class="keyword">new</span> TimerTask() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                System.out.println(<span class="string">"================="</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;,<span class="number">20</span>);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>除此之外，还有一个问题：当任务数过多的时候，再向Timer中添加任务会导致小顶堆重建，在数据量大的情况下对性能也是有所损耗。</p>
+<p>综上来讲，Timer适合简单的调度任务。而复杂任务则需要考虑其他的实现。</p>
+<p>相比Timer，基于时间轮的定时器就显得高级很多。高级带来的代价就是复杂。时间轮算法基于一篇论文:<a href="https://cseweb.ucsd.edu/users/varghese/PAPERS/twheel.ps.Z" target="_blank" rel="external">https://cseweb.ucsd.edu/users/varghese/PAPERS/twheel.ps.Z</a></p>
+<p>在Netty中，<code>HashedWheelTimer</code>实现了时间轮算法。</p>
+<p>时间轮的核心在于其中的轮。这个轮如同时钟的表盘一样，每个刻度代表一个时间间隔，而任务放在这些刻度上，时间每走一个刻度，都会去检查对应的任务是不是要执行了。如此看来，对于执行任务的时间复杂度要比Timer要小，为O(N)。</p>
+<p><code>HashedWheelTimer</code>的核心数据结构为数组加链表。数组代表之前提到的‘表盘’，每个刻度放置一个链表，这种结构和<code>HashMap</code>很像。除此之外还有一个重要参数<code>duration</code>，这个参数表示每个刻度的间隔时间。如果给1秒，那么代表这个时间轮每次走一秒。而数组的长度代表着表盘的大小，如果给12那么这个表盘和我们现实中的时钟一样，如果不指定，默认为512。<br><img src="https://img-blog.csdnimg.cn/20200614184706180.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RpYW5zaGFuMjAxMA==,size_16,color_FFFFFF,t_70" alt="image"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashedWheelTimer</span><span class="params">(</span></span></div><div class="line">            ThreadFactory threadFactory,</div><div class="line">            <span class="keyword">long</span> tickDuration, TimeUnit unit, <span class="keyword">int</span> ticksPerWheel, <span class="keyword">boolean</span> leakDetection,</div><div class="line">            <span class="keyword">long</span> maxPendingTimeouts) &#123;</div><div class="line"></div><div class="line">        checkNotNull(threadFactory, <span class="string">"threadFactory"</span>);</div><div class="line">        checkNotNull(unit, <span class="string">"unit"</span>);</div><div class="line">        checkPositive(tickDuration, <span class="string">"tickDuration"</span>);</div><div class="line">        checkPositive(ticksPerWheel, <span class="string">"ticksPerWheel"</span>);</div><div class="line"></div><div class="line">        <span class="comment">// Normalize ticksPerWheel to power of two and initialize the wheel.</span></div><div class="line">        <span class="comment">// 数组长度搞成2的n次方，这样方便用位运算计算取模，基本操作了</span></div><div class="line">        wheel = createWheel(ticksPerWheel);</div><div class="line">        mask = wheel.length - <span class="number">1</span>;</div><div class="line"></div><div class="line">        <span class="comment">// Convert tickDuration to nanos.</span></div><div class="line">        <span class="keyword">long</span> duration = unit.toNanos(tickDuration);</div><div class="line"></div><div class="line">        <span class="comment">// Prevent overflow.</span></div><div class="line">        <span class="keyword">if</span> (duration &gt;= Long.MAX_VALUE / wheel.length) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(String.format(</div><div class="line">                    <span class="string">"tickDuration: %d (expected: 0 &lt; tickDuration in nanos &lt; %d"</span>,</div><div class="line">                    tickDuration, Long.MAX_VALUE / wheel.length));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (duration &lt; MILLISECOND_NANOS) &#123;</div><div class="line">            logger.warn(<span class="string">"Configured tickDuration &#123;&#125; smaller then &#123;&#125;, using 1ms."</span>,</div><div class="line">                        tickDuration, MILLISECOND_NANOS);</div><div class="line">            <span class="keyword">this</span>.tickDuration = MILLISECOND_NANOS;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">this</span>.tickDuration = duration;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        workerThread = threadFactory.newThread(worker);</div><div class="line"></div><div class="line">        leak = leakDetection || !workerThread.isDaemon() ? leakDetector.track(<span class="keyword">this</span>) : <span class="keyword">null</span>;</div><div class="line"></div><div class="line">        <span class="keyword">this</span>.maxPendingTimeouts = maxPendingTimeouts;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (INSTANCE_COUNTER.incrementAndGet() &gt; INSTANCE_COUNT_LIMIT &amp;&amp;</div><div class="line">            WARNED_TOO_MANY_INSTANCES.compareAndSet(<span class="keyword">false</span>, <span class="keyword">true</span>)) &#123;</div><div class="line">            reportTooManyInstances();</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>在<code>HashedWheelTimer</code>初始化的时候，同时也实例化了一个工作线程。这个线程用于做时钟的tick操作。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> Set&lt;Timeout&gt; unprocessedTimeouts = <span class="keyword">new</span> HashSet&lt;Timeout&gt;();</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="keyword">long</span> tick;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">// Initialize the startTime.</span></div><div class="line">    startTime = System.nanoTime();</div><div class="line">    <span class="keyword">if</span> (startTime == <span class="number">0</span>) &#123;</div><div class="line">        <span class="comment">// We use 0 as an indicator for the uninitialized value here, so make sure it's not 0 when initialized.</span></div><div class="line">        startTime = <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Notify the other threads waiting for the initialization at start().</span></div><div class="line">    startTimeInitialized.countDown();</div><div class="line"></div><div class="line">    <span class="keyword">do</span> &#123;</div><div class="line">        <span class="keyword">final</span> <span class="keyword">long</span> deadline = waitForNextTick();</div><div class="line">        <span class="keyword">if</span> (deadline &gt; <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">int</span> idx = (<span class="keyword">int</span>) (tick &amp; mask);</div><div class="line">            processCancelledTasks();</div><div class="line">            HashedWheelBucket bucket =</div><div class="line">                    wheel[idx];</div><div class="line">            transferTimeoutsToBuckets();</div><div class="line">            bucket.expireTimeouts(deadline);</div><div class="line">            tick++;</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">while</span> (WORKER_STATE_UPDATER.get(HashedWheelTimer.<span class="keyword">this</span>) == WORKER_STATE_STARTED);</div><div class="line"></div><div class="line">    <span class="comment">// Fill the unprocessedTimeouts so we can return them from stop() method.</span></div><div class="line">    <span class="keyword">for</span> (HashedWheelBucket bucket: wheel) &#123;</div><div class="line">        bucket.clearTimeouts(unprocessedTimeouts);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (;;) &#123;</div><div class="line">        HashedWheelTimeout timeout = timeouts.poll();</div><div class="line">        <span class="keyword">if</span> (timeout == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (!timeout.isCancelled()) &#123;</div><div class="line">            unprocessedTimeouts.add(timeout);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    processCancelledTasks();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>正如Timer的设计，一定会有一个死循环来不断轮询到期任务。<code>HashedWheelTimer</code>使用cas操作定时器状态，如果定时器关闭了，那么这个死循环就结束了。</p>
+<p><code>waitForNextTick</code>用来计算是否要进行下次tick，如果不出意外，返回的是这个定时器已经跑了多久了。本质上也是一个死循环，要么睡一下，要么返回：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">long</span> <span class="title">waitForNextTick</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">long</span> deadline = tickDuration * (tick + <span class="number">1</span>);</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (;;) &#123;</div><div class="line">        <span class="keyword">final</span> <span class="keyword">long</span> currentTime = System.nanoTime() - startTime;</div><div class="line">        <span class="keyword">long</span> sleepTimeMs = (deadline - currentTime + <span class="number">999999</span>) / <span class="number">1000000</span>;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (sleepTimeMs &lt;= <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (currentTime == Long.MIN_VALUE) &#123;</div><div class="line">                <span class="keyword">return</span> -Long.MAX_VALUE;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">return</span> currentTime;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// Check if we run on windows, as if thats the case we will need</span></div><div class="line">        <span class="comment">// to round the sleepTime as workaround for a bug that only affect</span></div><div class="line">        <span class="comment">// the JVM if it runs on windows.</span></div><div class="line">        <span class="comment">//</span></div><div class="line">        <span class="comment">// See https://github.com/netty/netty/issues/356</span></div><div class="line">        <span class="keyword">if</span> (PlatformDependent.isWindows()) &#123;</div><div class="line">            sleepTimeMs = sleepTimeMs / <span class="number">10</span> * <span class="number">10</span>;</div><div class="line">            <span class="keyword">if</span> (sleepTimeMs == <span class="number">0</span>) &#123;</div><div class="line">                sleepTimeMs = <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Thread.sleep(sleepTimeMs);</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException ignored) &#123;</div><div class="line">            <span class="keyword">if</span> (WORKER_STATE_UPDATER.get(HashedWheelTimer.<span class="keyword">this</span>) == WORKER_STATE_SHUTDOWN) &#123;</div><div class="line">                <span class="keyword">return</span> Long.MIN_VALUE;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>transferTimeoutsToBuckets</code>方法用于将任务重新放到轮子上。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">transferTimeoutsToBuckets</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">// transfer only max. 100000 timeouts per tick to prevent a thread to stale the workerThread when it just</span></div><div class="line">    <span class="comment">// adds new timeouts in a loop.</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100000</span>; i++) &#123;</div><div class="line">        HashedWheelTimeout timeout = timeouts.poll();</div><div class="line">        <span class="keyword">if</span> (timeout == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="comment">// all processed</span></div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (timeout.state() == HashedWheelTimeout.ST_CANCELLED) &#123;</div><div class="line">            <span class="comment">// Was cancelled in the meantime.</span></div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">long</span> calculated = timeout.deadline / tickDuration;</div><div class="line">        timeout.remainingRounds = (calculated - tick) / wheel.length;</div><div class="line"></div><div class="line">        <span class="keyword">final</span> <span class="keyword">long</span> ticks = Math.max(calculated, tick); <span class="comment">// Ensure we don't schedule for past.</span></div><div class="line">        <span class="keyword">int</span> stopIndex = (<span class="keyword">int</span>) (ticks &amp; mask);</div><div class="line"></div><div class="line">        HashedWheelBucket bucket = wheel[stopIndex];</div><div class="line">        bucket.addTimeout(timeout);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>很好奇一个问题，为什么不是在添加任务的时候就确定这些任务的位置，而是单独去做这样的操作。我想是因为链表的缘故，因为在一个格子中的任务不是每次tick到就一定执行的，需要确定这个任务的轮数，到了第0轮才会取出来执行，再说了，<code>timeouts</code>队列里没任务也不会有什么影响。<code>timeouts</code>是一个队列，每次添加任务的时候先入队，每次tick的时候才会去确定这个任务放在轮子的哪个刻度。</p>
+<p>这里循环了10w次，目的就是防止任务太多而影响了任务的执行。试想有上百万任务在队列里等待被分配到轮上，需要计算‘圈数’，需要去构建链表，这些操作如果时间过长，自然会影响到当前tick到的任务执行的准确度。</p>
+<p>任务的执行逻辑在<code>expireTimeouts</code>中：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">expireTimeouts</span><span class="params">(<span class="keyword">long</span> deadline)</span> </span>&#123;</div><div class="line">    HashedWheelTimeout timeout = head;</div><div class="line"></div><div class="line">    <span class="comment">// process all timeouts</span></div><div class="line">    <span class="keyword">while</span> (timeout != <span class="keyword">null</span>) &#123;</div><div class="line">        HashedWheelTimeout next = timeout.next;</div><div class="line">        <span class="keyword">if</span> (timeout.remainingRounds &lt;= <span class="number">0</span>) &#123;</div><div class="line">            next = remove(timeout);</div><div class="line">            <span class="keyword">if</span> (timeout.deadline &lt;= deadline) &#123;</div><div class="line">                timeout.expire();</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="comment">// The timeout was placed into a wrong slot. This should never happen.</span></div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(String.format(</div><div class="line">                        <span class="string">"timeout.deadline (%d) &gt; deadline (%d)"</span>, timeout.deadline, deadline));</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (timeout.isCancelled()) &#123;</div><div class="line">            next = remove(timeout);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            timeout.remainingRounds --;</div><div class="line">        &#125;</div><div class="line">        timeout = next;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>因为任务是放在链表中的，这里直接一个循环遍历链表，取出当前轮数为0的，且已经到期的任务，同时要将这个任务移出链表。如果当前轮数还没到，那么还得减一轮，这里代表语义为时间指针已经走了一圈了，下次再走到这里就要少一圈。</p>
+<p>整个时间的tick如此自然和简洁。这个算法设计简直惊艳！</p>
+<p>抛开剂量谈毒性就是耍流氓，正如抛开场景谈架构一样。在Netty中，时间轮定时器主要用于针对IO的超时检测。因为Netty作为高性能网络服务库，随随便便就支撑上十万的连接，每个连接都要对心跳，空闲做检测，如果使用Timer那么十分消耗资源而且低效。而对IO的一些定时操作，对精度要求也没那么高，晚一点执行也没什么关系。因此，在对任务的执行时间精度没那么高且不是耗时的前提下，使用<code>HashedWheelTimer</code>是比较合适的。有优点也会有缺点，比如时间间隔设置多少比较合适，短了会导致迟迟等不到任务频繁tick浪费cpu，长了会对准确度有影响，软件设计中没有银弹，根据实际场景做好tradeoff。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文针对<code>Timer</code>和<code>HashedWheelTimer</code>的描述大多都是泛泛而谈，并没有针对细节去深入剖析，比如APi怎么使用，比如核心接口定义，比如链表的操作…我以为这些东西都比较浅显和容易理解。而真正核心是其中的思想：怎么设计的，为什么这样设计，好处和缺点等等。我想带着问题去读源码才是最高效的学习方式。</p>
+<p>源码之下无秘密。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://blog.csdn.net/tianshan2010/article/details/106749830/" target="_blank" rel="external">HashedWheelTimer时间轮原理分析</a></p>
+<p><a href="https://www.cnblogs.com/boanxin/p/13059004.html" target="_blank" rel="external">kafka时间轮的原理（一）</a></p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+    <hr />
+    <h3>留言:</h3>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/Mr-Vincent" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2021 Mr-Vincent<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+<script type="text/javascript">
+    var disqus_shortname = 'wei-dong';
+
+    (function(){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+</body>
+
+</html>
