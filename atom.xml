@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wei-dong.top/"/>
-  <updated>2022-01-08T08:22:50.334Z</updated>
+  <updated>2022-01-09T10:16:13.576Z</updated>
   <id>http://www.wei-dong.top/</id>
   
   <author>
@@ -14,6 +14,179 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>什么？写了五年Java代码都没自己编译过虚拟机？</title>
+    <link href="http://www.wei-dong.top/2022/01/09/build_your_jvm/"/>
+    <id>http://www.wei-dong.top/2022/01/09/build_your_jvm/</id>
+    <published>2022-01-09T08:33:18.000Z</published>
+    <updated>2022-01-09T10:16:13.576Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近闲着无事，又翻开了周志明老师的《深入理解Java虚拟机》这本书。已经不知道是第多少次翻开这本书了，似乎每次读都有不一样的理解。不得不说，有些书是常读常新。</p>
+<p>回忆起从业两年刚拿到这本书的时候，大言不惭地放下大话：我一个月就能读完它。而事实上，也就勉强读完了讲虚拟机前世今生的历史故事第一章。当看到要动手编译一个JVM的时候，毫无悬念的被劝退。而如今好几年过去了，再看到这个部分的时候，也倒不觉得那么困难。</p>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><blockquote>
+<p>OS : MacOS Big Sur 11.2</p>
+<p>BOOT JDK : jdk-11.0.13+8</p>
+<p>开发工具: Clion ,Clang(mac自带)</p>
+<p>目标JDK源码：<a href="http://hg.openjdk.java.net/jdk-updates/jdk11u/file/ebc6c83bfa9e" target="_blank" rel="external">http://hg.openjdk.java.net/jdk-updates/jdk11u/file/ebc6c83bfa9e</a></p>
+</blockquote>
+<p>首先是操作系统，建议使用类Unix系统来编译。windows上操作起来会增加很多难度，没必要折腾。</p>
+<p>编译的目标jdk需要依赖现有的jdk，这里安装了一个openjdk的版本，作为用来编译目标jdk的环境。需要将环境变量设置为openjdk的，这里不作赘述。</p>
+<p>虚拟机是用C/C++写的，如果要去读一读虚拟机的代码，Clion是一个不错的选择。而编译C/C++代码一般用我们熟知的GCC编译，Clang是一个稍微轻量级的编译器，同样也能编译C/C++代码。在MacOs中Clang系统自带，无需额外安装。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>熟悉C/C++或者自己在unix上通过源码安装过软件的小伙伴都知道在使用make命令之前都需要执行一个config脚本。编译虚拟机也同样如此。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sh configure --with-boot-jdk=/Users/dongwei/openjdk/jdk-11.0.13+8/Contents/Home --with-target-bits=64 --enable-ccache --with-jvm-variants=server  --with-boot-jdk-jvmargs=&quot;-Xlint:deprecation -Xlint:unchecked&quot; --disable-warnings-as-errors --with-debug-level=slowdebug 2&gt;&amp;1 | tee configure_mac_x64.log</div></pre></td></tr></table></figure>
+<p>这个脚本用来做一些准备工作，比如检查环境是否ok等。</p>
+<p>我第一次执行的时候出现了一个错误。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/配置的时候出现错误.png" alt><br>提示说少了一个什么工具，没关系，少了就安装呗。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images安装sdk.png" alt></p>
+<p>再次config一下，出现下面的打印信息表示配置没问题。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/配置没问题.png" alt></p>
+<h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>编译其实十分简单，只需要一个命令就够了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make</div></pre></td></tr></table></figure>
+<p>这个过程实际上还是挺费时间的。敲完命令机器负载狂飙。<br><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/cpu跑满了.png" alt></p>
+<p>等待编译完成的空隙，冲杯咖啡逛一下小破站。<br><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/泡杯咖啡逛逛b站.png" alt></p>
+<p>等了大约20分钟，一切顺利。最终的输出是这样的。<br><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/编译完成.png" alt></p>
+<p>编译好的文件夹为<em>macosx-x86_64-normal-server-slowdebug</em></p>
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>千呼万唤始出来，看自己编译的jdk能不能跑，最简单的办法是看看编译出来的java二进制文件能不能跑。切换到bin路径下使用命令<em>java -version</em>来观察输出。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/查看jdk版本.png" alt></p>
+<p>和自己之前安装的java并不一个java版本，很棒，it works.</p>
+<h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2><p>调试一下JDK听起来有点大言不惭，但来都来了，留下点记号呗。</p>
+<p>先来点简单的，jvm启动的时候输出点自己的【私货】。</p>
+<p>首先需要配置一下Clion，前提是先导入openjdk源码文件夹下的src到Clion中，然后再配置一下刚才编译好的执行程序。<br>在源码中打断点，就能对jvm进行调试了。<br><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/配置编译脚本0.png" alt><br><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/配置编译脚本1.png" alt></p>
+<p>配置Clion只是编译的一个快捷方式，其实相当于使用make命令。改了源码需要重新编译一次，不必使用<em>make clean</em>，否则又得等上20分钟。</p>
+<p>在源码的启动入口加点自己的输出。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/调试截图.png" alt><br><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/自己改改jdk.png" alt></p>
+<p>至此，一个属于自己的jvm虚拟机就编译好了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>编译jvm一点都不麻烦，有手就行</li>
+<li>随着屏幕上的字符按照自己预期那样跳动，眼前的一切都变得索然无味</li>
+<li>如果一个java程序员没编译过jvm，那就不算一个真正的javer</li>
+</ul>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li>[1]<a href="https://zhuanlan.zhihu.com/p/101402297" target="_blank" rel="external">做Java这么久了，你编译过 JDK 源码吗</a></li>
+<li>[2]<a href="https://www.jianshu.com/p/1121cc4be0a0" target="_blank" rel="external">编译jdk和使用clion调试jdk</a></li>
+<li>[3]<a href="https://adoptopenjdk.net/installation.html?variant=openjdk11&amp;jvmVariant=hotspot#x64_mac-jdk" target="_blank" rel="external">安装openjdk</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近闲着无事，又翻开了周志明老师的《深入理解Java虚拟机》这本书。已经不知道是第多少次翻开这本书了，似乎每次读都有不一样的理解。不得不说，有些书是常读常新。&lt;/p&gt;
+&lt;p&gt;回忆起从业两年刚拿到这本书的时候，大言不惭地放下大话：我一个月就能读完它。而事实上，也就勉强读完了讲
+    
+    </summary>
+    
+      <category term="code" scheme="http://www.wei-dong.top/categories/code/"/>
+    
+    
+      <category term="虚拟机" scheme="http://www.wei-dong.top/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>《被讨厌的勇气》书摘</title>
+    <link href="http://www.wei-dong.top/2022/01/09/%E8%A2%AB%E8%AE%A8%E5%8E%8C%E7%9A%84%E5%8B%87%E6%B0%94_%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    <id>http://www.wei-dong.top/2022/01/09/被讨厌的勇气_读书笔记/</id>
+    <published>2022-01-09T06:33:18.000Z</published>
+    <updated>2022-01-09T11:03:15.543Z</updated>
+    
+    <content type="html"><![CDATA[<p>这本书的名字听起来有点鸡汤味，但是如果仔细阅读会发现其实一点都不鸡汤。</p>
+<p>很遗憾没能早点发现这本书。一直认为讲哲学心理学的书都是特别晦涩难懂，或者带着说教口吻。直到读完这本书后，原来那些看起来离我们普通人很遥远的主题，居然可以用如此通俗易懂的白话表达出来。</p>
+<p>以下是从中摘录十分认可的段落和句子，值得反复回味。</p>
+<h2 id="弗洛伊德说错了"><a href="#弗洛伊德说错了" class="headerlink" title="弗洛伊德说错了"></a>弗洛伊德说错了</h2><blockquote>
+<p>如果你成了原因论的信徒，那就会在过去的束缚之下永远无法获得幸福。</p>
+</blockquote>
+<p><em>作者以不同的视角推翻了‘我之所以是这样，是因为曾经经历了xxx’的想法。这就是典型的原因论，换个视角：‘我之所以这样，是因为我在给自己找成为这样的理由’，从而否定了原因论。因为过去的事情无法改变，一直纠结过去，就无法真正地活在当下。看到这个阐述，我眼前一亮，瞬间明白了这么些年自己不那么快乐的真正原因。</em></p>
+<h2 id="苏格拉底和阿德勒"><a href="#苏格拉底和阿德勒" class="headerlink" title="苏格拉底和阿德勒"></a>苏格拉底和阿德勒</h2><blockquote>
+<p>为什么那么急于得到答案呢？答案不应该是从别人那里得到，而应该是自己亲自找出来。从别人那里得到的答案只不过是对症疗法而已，没有什么价值。</p>
+</blockquote>
+<h2 id="为什么讨厌自己？"><a href="#为什么讨厌自己？" class="headerlink" title="为什么讨厌自己？"></a>为什么讨厌自己？</h2><blockquote>
+<p>哲人：承认就是很了不起的态度。但是，请你不要忘记，在人际关系中根本不可能不受伤。只要涉入人际关系就会或大或小地受伤，也会伤害别人。阿德勒曾说“要想消除烦恼，只有一个人在宇宙中生存”。但是，那种事情根本就无法做到。</p>
+</blockquote>
+<p><em>亚里士多德说过，离群索居的人不是神灵便是野兽。我在人群中待久了，必须得独自待一会儿。和自己相处，内心会更加宁静。</em></p>
+<h2 id="一切烦恼都是人际关系的烦恼"><a href="#一切烦恼都是人际关系的烦恼" class="headerlink" title="一切烦恼都是人际关系的烦恼"></a>一切烦恼都是人际关系的烦恼</h2><blockquote>
+<p>之所以感觉孤独并不是因为只有你自己一个人，感觉自己被周围的他人、社会和共同体所疏远才会孤独。我们要想体会孤独也需要有他人的存在。也就是说，人只有在社会关系中才会成为“个人”。</p>
+</blockquote>
+<p><em>所以说呀，在人群中会更容易感到孤独。如果宇宙中只有我一个人，那我肯定不会觉得孤独。当然这是不现实的。</em></p>
+<h2 id="人生不是与他人的比赛"><a href="#人生不是与他人的比赛" class="headerlink" title="人生不是与他人的比赛"></a>人生不是与他人的比赛</h2><blockquote>
+<p>健全的自卑感不是来自与别人的比较，而是来自与“理想的自己”的比较。</p>
+</blockquote>
+<p><em>人活在世俗里，即使自己能做到不和他人比较，但是世俗的眼光也会经常将自己和他人进行比较。最常见的例子，过年回家就有些长辈亲戚闲聊：xxx家的儿子生小孩了，xxx家的还没结婚…如果活在别人的眼光里，其实是特别辛苦的，也不一定能真正快乐</em></p>
+<h2 id="在意你长相的，只有你自己"><a href="#在意你长相的，只有你自己" class="headerlink" title="在意你长相的，只有你自己"></a>在意你长相的，只有你自己</h2><blockquote>
+<p>“无法真心祝福过得幸福的他人”，那就是因为站在竞争的角度来考虑人际关系，把他人的幸福看作“我的失败”，所以才无法给予祝福。</p>
+</blockquote>
+<p><em>人的痛苦在于比较。尤其是和他人的比较。从小到大，充斥着整个人生。小时候比成绩，长大了比收入，比成不成功。</em></p>
+<h2 id="人生的三大课题：交友课题、工作课题以及爱的课题"><a href="#人生的三大课题：交友课题、工作课题以及爱的课题" class="headerlink" title="人生的三大课题：交友课题、工作课题以及爱的课题"></a>人生的三大课题：交友课题、工作课题以及爱的课题</h2><blockquote>
+<p>人生的三大课题：交友课题、工作课题以及爱的课题</p>
+</blockquote>
+<p><em>这句话太戳心了，工作课题算是比较容易的课题。人际关系和爱对我来讲却是比较困难的。</em></p>
+<h2 id="浪漫的红线和坚固的锁链"><a href="#浪漫的红线和坚固的锁链" class="headerlink" title="浪漫的红线和坚固的锁链"></a>浪漫的红线和坚固的锁链</h2><blockquote>
+<p>当人能够感觉到“与这个人在一起可以无拘无束”的时候，才能够体会到爱。既没有自卑感也不必炫耀优越性，能够保持一种平静而自然的状态。真正的爱应该是这样的。</p>
+</blockquote>
+<p><em>这么说来，小孩子更容易获得满足和快乐。因为他们的人际关系十分纯粹，喜欢和你一起玩不需要任何理由。而成年人的人际关系会考虑利弊和得失。在和他人相处的过程中，也得时刻保持着不卑不亢的态度，你我人格平等，我不会仰视你，你也不必俯瞰我，如此关系才是对等的。</em></p>
+<h2 id="“人生谎言”教我们学会逃避"><a href="#“人生谎言”教我们学会逃避" class="headerlink" title="“人生谎言”教我们学会逃避"></a>“人生谎言”教我们学会逃避</h2><blockquote>
+<p>哲人：那就是，决定你的生活方式（人生状态）的不是其他任何人，而是你自己这一事实。</p>
+</blockquote>
+<h2 id="要不要活在别人的期待中？"><a href="#要不要活在别人的期待中？" class="headerlink" title="要不要活在别人的期待中？"></a>要不要活在别人的期待中？</h2><blockquote>
+<p>在犹太教教义中有这么一句话：“倘若自己都不为自己活出自己的人生，那还有谁会为自己而活呢？”</p>
+</blockquote>
+<p><em>狭义的理解为：自私点。</em></p>
+<h2 id="砍断“格尔迪奥斯绳结”"><a href="#砍断“格尔迪奥斯绳结”" class="headerlink" title="砍断“格尔迪奥斯绳结”"></a>砍断“格尔迪奥斯绳结”</h2><blockquote>
+<p>“没有学会直面困难的孩子最终会想要逃避一切困难。”</p>
+</blockquote>
+<h2 id="你不是世界的中心，只是世界地图的中心"><a href="#你不是世界的中心，只是世界地图的中心" class="headerlink" title="你不是世界的中心，只是世界地图的中心"></a>你不是世界的中心，只是世界地图的中心</h2><blockquote>
+<p>归属感不是生来就有的东西，要靠自己的手去获得。</p>
+</blockquote>
+<h2 id="批评不好……表扬也不行？"><a href="#批评不好……表扬也不行？" class="headerlink" title="批评不好……表扬也不行？"></a>批评不好……表扬也不行？</h2><blockquote>
+<p>公司职员和家庭主妇只是劳动场所和任务不同，完全是“虽不同但平等”。</p>
+<p>只要能够对所有人都建立起“虽不同但平等”的横向关系，那就根本不会产生自卑情结。</p>
+</blockquote>
+<p><em>君子求同存异,小人同而不和</em></p>
+<h2 id="有鼓励才有勇气"><a href="#有鼓励才有勇气" class="headerlink" title="有鼓励才有勇气"></a>有鼓励才有勇气</h2><blockquote>
+<p>阿德勒心理学认为这不是能力问题，纯粹是“缺乏直面课题的‘勇气’”。如果是这样的话，那就首先应该找回受挫的勇气。</p>
+<p>如果以获得表扬为目的，那最终就会选择迎合他人价值观的生活方式。你不就一直因为按照父母的期待生活而感到厌烦吗？</p>
+<p>首先应该进行课题分离，然后应该在接受双方差异的同时建立平等的横向关系。“鼓励”则是这种基础之上的一种方法。</p>
+</blockquote>
+<h2 id="不是肯定自我，而是接纳自我"><a href="#不是肯定自我，而是接纳自我" class="headerlink" title="不是肯定自我，而是接纳自我"></a>不是肯定自我，而是接纳自我</h2><blockquote>
+<p>自我肯定是明明做不到但还是暗示自己说“我能行”或者“我很强”，也可以说是一种容易导致优越情结的想法，是对自己撒谎的生活方式。</p>
+</blockquote>
+<p><em>既要肯定，也要接纳。多给自己正面的暗示，少用否定词如：我不能，我不行，我害怕之类的。</em></p>
+<h2 id="年轻人也有胜过长者之处"><a href="#年轻人也有胜过长者之处" class="headerlink" title="年轻人也有胜过长者之处"></a>年轻人也有胜过长者之处</h2><blockquote>
+<p>我们应该思考的不是他人为我做了什么，而是我能为他人做什么，并积极地加以实践。</p>
+</blockquote>
+<p><em>在人际关系中我也会经常思考：我能为你做什么？如果价值不能得到互换，那关系就显得十分脆弱。这是比较功利性的思考，很多关系并不会去在意所谓的“价值互换”，那些关系就显得十分珍贵。</em></p>
+<h2 id="人生是一连串的刹那"><a href="#人生是一连串的刹那" class="headerlink" title="人生是一连串的刹那"></a>人生是一连串的刹那</h2><blockquote>
+<p>人生是一连串的刹那</p>
+</blockquote>
+<p><em>仔细回想，真正留下深刻印象的并不是琐碎的日常，而是那些瞬间：遇到心动的ta或者深夜里的痛哭流泪…</em></p>
+<blockquote>
+<p>计划式的人生不是有没有必要，而是根本不可能。</p>
+</blockquote>
+<p><em>有一次魏老师想考公，又害怕失败，问我该如何。我说如果人生的很多选择都如自己想象的轨迹那样运行，那人生岂不是枯燥无味，毫无波澜。正是那些不确定性，才让人生变得有趣起来。如《阿甘正传》里经典台词：“Mum always said, Life is like a box of chocolates that you will never know what you gonna get.”</em></p>
+<h2 id="舞动人生"><a href="#舞动人生" class="headerlink" title="舞动人生"></a>舞动人生</h2><blockquote>
+<p>在跳着小提琴之舞的人中可能有人成了专业小提琴手，在跳着司法考试之舞的人中也许有人成为律师，或许还有人跳着写作之舞成了作家。当然，也有可能有着截然不同的结果。但是，所有的人生都不是终结“在路上”，只要跳着舞的“此时此刻”充实就已经足够。</p>
+</blockquote>
+<h2 id="对决“人生最大的谎言”"><a href="#对决“人生最大的谎言”" class="headerlink" title="对决“人生最大的谎言”"></a>对决“人生最大的谎言”</h2><blockquote>
+<p>因为过去和未来根本不存在，所以才要谈现在。起决定作用的既不是昨天也不是明天，而是“此时此刻”。</p>
+</blockquote>
+<p><em>冷冷也讲过类似的观点，live now，活在当下</em></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这本书的名字听起来有点鸡汤味，但是如果仔细阅读会发现其实一点都不鸡汤。&lt;/p&gt;
+&lt;p&gt;很遗憾没能早点发现这本书。一直认为讲哲学心理学的书都是特别晦涩难懂，或者带着说教口吻。直到读完这本书后，原来那些看起来离我们普通人很遥远的主题，居然可以用如此通俗易懂的白话表达出来。&lt;/p
+    
+    </summary>
+    
+      <category term="书摘" scheme="http://www.wei-dong.top/categories/%E4%B9%A6%E6%91%98/"/>
+    
+    
+      <category term="笔记" scheme="http://www.wei-dong.top/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="阅读" scheme="http://www.wei-dong.top/tags/%E9%98%85%E8%AF%BB/"/>
+    
+  </entry>
   
   <entry>
     <title>迪士尼的第六十部动画电影，稍微让人失望了</title>
@@ -857,103 +1030,6 @@
     
       &lt;p&gt;在上一篇文章中讲到jupiter的传输模块transport中的编解码器的实现。对server来言，编解码器扮演着一头一尾的门卫角色，保证进来的人是干净的，也得保证出去的人也是干净的。当然这么比喻很不恰当，但是也想不到别的比喻了。&lt;/p&gt;
 &lt;p&gt;编解码器固然重要，但是没有核
-    
-    </summary>
-    
-      <category term="一起读源码" scheme="http://www.wei-dong.top/categories/%E4%B8%80%E8%B5%B7%E8%AF%BB%E6%BA%90%E7%A0%81/"/>
-    
-    
-      <category term="源码解读" scheme="http://www.wei-dong.top/tags/%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB/"/>
-    
-      <category term="Jupiter" scheme="http://www.wei-dong.top/tags/Jupiter/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>小白探索大前端--使用vue实现简单轮播图</title>
-    <link href="http://www.wei-dong.top/2018/08/15/%E5%B0%8F%E7%99%BD%E6%8E%A2%E7%B4%A2%E5%A4%A7%E5%89%8D%E7%AB%AF--%E4%BD%BF%E7%94%A8vue%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E8%BD%AE%E6%92%AD%E5%9B%BE/"/>
-    <id>http://www.wei-dong.top/2018/08/15/小白探索大前端--使用vue实现简单轮播图/</id>
-    <published>2018-08-15T09:17:23.000Z</published>
-    <updated>2018-08-15T10:04:51.119Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近看完了《Vue实战》这本书，这也是我第一次完整的看完的一本关于前端的书籍（现在还在看的是《CSS世界》，有点想放弃了）。照着书中的demo都写了一遍，虽然很多栗子非常简单，但是值得学习的地方还是挺多的。当然也不得不吐槽很多用法都有点过时，尤其是关于webpack的配置。不过现在的前端发展很快，各种工具版本不断更新，代码过时也是能够理解的。对于学习者来说当然得学习最新的东西。</p>
-<p>这篇文章主要是用来记录在自己实现一个【知乎日报移动版】的过程中遇到的一个坑，说坑也算不上，只能叫做坎坷之路吧。因为书中给的实战demo是一个pc版的，自己跟着写了一遍，觉得没有什么难度。然后在github上找了一下，发现用知乎日报来练手的项目很多，原因也很简单–api是现成的。于是我也蠢蠢欲动，决定使用vue亲自撸一个【知乎daily】。</p>
-<p>虽然gayhub很多现成的项目，但是我并不打算去抄一遍。我在手机上下载了一个知乎日报的APP，按照不同功能截屏来一一实现。没办法，这就是工(zhuang)匠(bi)情(xin)怀(tai).</p>
-<p>开发过程中，整体的框架功能上基本没什么问题，该自己写组件就自己写，绝没有偷懒。也遇到很多问题，比如开发环境下的接口代理、知乎图片的同源策略等。这些问题肯定难不倒我，都不值一提。让我觉得难受的还是首页的轮播图实现。这个问题困扰了我2天（准确时间是一天半，还有半天在工作：逃）。</p>
-<p>遇到这个功能的时候第一反应是使用一个开源库，分分钟就搞定了。但是经过10s的思想斗争，工匠情怀终于战胜了理智，下定决心打算自己手动实现。然而，带来的结果就是卡顿了半天，没任何进展。网上也有很多教程，也是很简单的，可以说是基础操作了。可惜我被一篇文章带偏了，走了一点弯路。</p>
-<p>这篇文章的思路很常规，很有道理。首先将一个框框用来装你要显示的图片，仅仅只能显示这个框框，而图片呢就放后面排排坐，通过定时器去移动图片，就像一格格的胶卷一样，轮到谁谁就被看到了。</p>
-<p>我一开始就是按照这种思路去整，结果怎么整都实现不了（在移动端）。在一筹莫展之际，发现了一个更加屌的思路。这个思路和之前的不一样，区别在于后面的图片不是排排坐好，而是叠加到一块去。下面通过代码去一探究竟。</p>
-<p>首先得整一个窗口，简单来说就是用来显示一张图片的容器，它的宽度对移动端而言就是屏幕宽度。他得有一个非常重要的属性<code>overflow：hidden</code>，当子元素尺寸超过其父亲的大小多余内容就会被隐藏。这里用<code>ul</code>标签来装图片，其实使用<code>div</code>也是没问题的。元素<code>li</code>的<code>position</code>属性得设置为<code>absolute</code>.因为使用这个属性就能脱离文档流，也就不会“排排坐”了，而是叠加到一起了，当然，最后的肯定叠在最上面，前提是没有显示的设置<code>z-index</code>属性。还有很重要的一点，子元素定位设置为<code>absolute</code>父元素记得也设置一下定位属性，因为子元素的相对位置是按照第一个祖先元素不为<code>static</code>的元素来的，不然会粗大事。 html代码结构如下：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"window"</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"container"</span> <span class="attr">ref</span>=<span class="string">"imagesWrapper"</span>&gt;</span></div><div class="line">       </div><div class="line">       <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">"(e,i) in imgs"</span> <span class="attr">:key</span>=<span class="string">"i"</span>&gt;</span></div><div class="line">         <span class="tag">&lt;<span class="name">img</span> <span class="attr">:src</span>=<span class="string">"e.image"</span> <span class="attr">:alt</span>=<span class="string">"e.title"</span>&gt;</span></div><div class="line">         <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"desc"</span>&gt;</span>&#123;&#123;e.title&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">       <span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">       </div><div class="line">     <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line"></div><div class="line">     <span class="tag">&lt;<span class="name">ol</span> <span class="attr">class</span>=<span class="string">"point-wrap"</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">li</span> <span class="attr">:class</span>=<span class="string">"&#123;active:i==currentIndex&#125;"</span> <span class="attr">v-for</span>=<span class="string">"(e,i) in imgs"</span> <span class="attr">:key</span>=<span class="string">"i"</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">ol</span>&gt;</span></div><div class="line"></div><div class="line">   <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">* &#123;</div><div class="line">  <span class="attribute">padding</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">margin</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">list-style-type</span>: none;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">img</span> &#123;</div><div class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.container</span> &#123;</div><div class="line">  <span class="attribute">position</span>: relative;</div><div class="line">  <span class="attribute">min-height</span>: <span class="number">100%</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.container</span> <span class="selector-tag">li</span> &#123;</div><div class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">  <span class="attribute">height</span>: <span class="number">100%</span>;</div><div class="line">  <span class="attribute">position</span>: absolute;</div><div class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</div><div class="line">  <span class="attribute">transform</span>: <span class="built_in">translateX</span>(100%);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.window</span> &#123;</div><div class="line">  <span class="attribute">position</span>: relative;</div><div class="line">  <span class="attribute">height</span>: <span class="number">100%</span>;</div><div class="line">  <span class="attribute">margin</span>: <span class="number">0</span> auto;</div><div class="line">  <span class="attribute">overflow</span>: hidden;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这里有一个小技巧，在静态样式中并没有将图片直接展示出来，而是将所有图片向右偏移一个窗口宽度。这是有玄机的。</p>
-<p>说了这么多，还没谈到vue的部分。在<code>container</code>容器中有一个<code>ref</code>标签。这是在vue中用来获取dom元素的。也许在vue中操作dom是不被推荐的，但是对于这种动态生成的<code>li</code>元素我找不到怎么去动态绑定其样式。因此采用了这种比较low的办法。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">init() &#123;</div><div class="line">     <span class="keyword">let</span> wrappers = <span class="keyword">this</span>.$refs.imagesWrapper;</div><div class="line">     <span class="keyword">let</span> children = wrappers.children;</div><div class="line">     <span class="keyword">let</span> total = <span class="keyword">this</span>.imgs.length;</div><div class="line">     <span class="comment">// 纯js操作 只需要先将三张图片位置确定好</span></div><div class="line">     <span class="comment">// 最左边按道理说是没有图片的 但是为了无限滚动效果 这里将其置为最后一张</span></div><div class="line">     <span class="keyword">let</span> left = total - <span class="number">1</span>;</div><div class="line">     <span class="keyword">let</span> center = <span class="number">0</span>;</div><div class="line">     <span class="keyword">let</span> right = <span class="number">1</span>;</div><div class="line"></div><div class="line">     <span class="comment">// 初始化的时候将li左移动了一个屏幕宽度，就是为了防止叠加的元素挡住要显示的图</span></div><div class="line">     <span class="comment">// 现在第一张显示的图片实际是最后一张 3张轮播起来就行了 没必要对每个图片进行位置计算</span></div><div class="line">     <span class="comment">// left处于最左边的位置 不显示</span></div><div class="line">     children[left].style.transform = <span class="string">"translateX("</span> + -<span class="keyword">this</span>.distance + <span class="string">"px)"</span>;</div><div class="line">     <span class="comment">// center处于中间位置 显示</span></div><div class="line">     children[center].style.transform = <span class="string">"translateX("</span> + <span class="number">0</span> + <span class="string">"px)"</span>;</div><div class="line">     <span class="comment">// right处于右边 不显示</span></div><div class="line">     children[right].style.transform = <span class="string">"translateX("</span> + <span class="keyword">this</span>.distance + <span class="string">"px)"</span>;</div><div class="line">     <span class="keyword">this</span>.sliderItem = children;</div><div class="line">     <span class="comment">// this.play();</span></div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>首先就是初始化显示的内容，之前在静态css样式中将图片移动到右边看不到的地方去了，现在就得手动操作让其可见。刚开始我以为直接将这些图片全部“铺开”，然后滚动，后来发现这么做很笨。直接操作三张就行了！为了实现无限滚动的效果，第一张的逻辑上的前一张是最后一张，因此将第一张的“上一张”给放到屏幕左边，下一张放到屏幕右边，要显示的也就是第一张（下标为0）归位到窗口，这和之前设置的全局的样式<code>transform: translateX(100%)</code>对应起来了。</p>
-<p>如此以来，初始化的三张图片就定位好了，逻辑上也是没什么问题的。其余的改不显示还是显示不了，也不会参与移动。下面看看怎么“滚”。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">next() &#123;</div><div class="line">     this.currentIndex++;</div><div class="line">     // 边界判断</div><div class="line">     if (this.currentIndex &gt; this.imgs.length - 1) &#123;</div><div class="line">       this.currentIndex = 0;</div><div class="line">     &#125;</div><div class="line"></div><div class="line">     // center 为显示的图片</div><div class="line">     let center = this.currentIndex;</div><div class="line">     // 左边的 如果为负数 就取最后一张图片下标</div><div class="line">     let left = center - 1 &lt; 0 ? this.imgs.length - 1 : center - 1;</div><div class="line">     // 右边的 如果超过了最大图片数量 取第一张图片下标</div><div class="line">     let right = center + 1 == this.imgs.length ? 0 : center + 1;</div><div class="line"></div><div class="line">     let children = this.sliderItem;</div><div class="line">     // 给元素添加过渡</div><div class="line">     children[center].style.transition = "transform .5s";</div><div class="line">     children[left].style.transition = "transform .5s";</div><div class="line">     // 右边的图片是替补图片，不需要走过渡</div><div class="line">     children[right].style.transition = "none";</div><div class="line">     // 3张图片同时移动</div><div class="line">     children[left].style.transform = "translateX(" + -this.distance + "px)";</div><div class="line">     children[center].style.transform = "translateX(0px)";</div><div class="line">     children[right].style.transform = "translateX(" + this.distance + "px)";</div><div class="line">   &#125;,</div></pre></td></tr></table></figure>
-<p><code>currentIndex</code>为全局变量，指当前显示的图片下标，每次调用<code>next</code>会子增，到上限后会回归到0，这些都是很常规的操作。接下来就是计算上一张，下一张图片的下标，也是很容易理解，无非多了一点判断，在最后一张显示的时候下一张的下标得置为0，上一张也是同理，不然就回”空指针”了。接下来就是针对这三张图片改变样式，原则就是移动到哪个下标就显示哪个图片，上一张就移到左边，下一站移动到右边，顺便给加个动画效果。如此而已！</p>
-<p>最后就是自动播放的逻辑，也是非常简单，一个定时器就搞定：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">play() &#123;</div><div class="line">     <span class="keyword">if</span> (<span class="keyword">this</span>.timer) &#123;</div><div class="line">       <span class="built_in">window</span>.clearInterval(<span class="keyword">this</span>.timer);</div><div class="line">       <span class="keyword">this</span>.timer = <span class="literal">null</span>;</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">this</span>.timer = <span class="built_in">window</span>.setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">       <span class="keyword">this</span>.next();</div><div class="line">     &#125;, <span class="keyword">this</span>.interval);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>然后在钩子函数中将这方法加上去就完事了。一个自制的轮播组件就写完了。简陋但是简单。这里有一个不太重要的细节，针对窗口变化的时候得动态改变偏移量。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 窗口变化 重新初始化</span></div><div class="line">   windowChange() &#123;</div><div class="line">     <span class="keyword">const</span> that = <span class="keyword">this</span>;</div><div class="line">     <span class="built_in">window</span>.onresize = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">       <span class="keyword">return</span> <span class="function">(<span class="params">(</span>) =&gt;</span> &#123;</div><div class="line">         <span class="built_in">window</span>.screenWidth = <span class="built_in">document</span>.body.clientWidth;</div><div class="line">         that.distance = <span class="built_in">window</span>.screenWidth;</div><div class="line">         <span class="keyword">this</span>.init();</div><div class="line">       &#125;)();</div><div class="line">     &#125;;</div><div class="line">   &#125;,</div></pre></td></tr></table></figure>
-<p>这样在pc端下也能正常“滚”动了。</p>
-<p>最后，做一下小小的总结。这个组件虽然简单，但是也花了一定时间，毕竟踩坑的路是不能跳过的。其中花了很多时间纠结布局和样式，很是难受，都怪我没有把《CSS世界》看完。虽然简单，但是功能也很局限，比如没有实现手动去滑动。APP上是有这个功能的，那是因为我还没学会怎么在vue下使用touch事件（实际上是懒）。比如没有代码优化等等，总不能要求一个新手来造一个完美的轮子吧（给自己一点上升的空间咯）。造轮子不是目的，理解其中的所以然才是目的，现成的库有很多，完成功能也很容易，但是不能仅仅满足于此，我觉得作为手艺人得有一种格(xi)物(huan)致(zhuang)知(B)的精神。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3117395-0a23d3aadd128f5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/662" alt="image"></p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="http://web.jobbole.com/94701/" target="_blank" rel="external">CSS深入理解之relative定位</a></p>
-<p><a href="https://segmentfault.com/a/1190000011013572#articleHeader2" target="_blank" rel="external">几种原生js轮播图</a></p>
-<p><a href="https://github.com/Mr-Vincent/zhihu-daily-app" target="_blank" rel="external">源码地址</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;最近看完了《Vue实战》这本书，这也是我第一次完整的看完的一本关于前端的书籍（现在还在看的是《CSS世界》，有点想放弃了）。照着书中的demo都写了一遍，虽然很多栗子非常简单，但是值得学习的地方还是挺多的。当然也不得不吐槽很多用法都有点过时，尤其是关于webpack的配置。
-    
-    </summary>
-    
-      <category term="前端" scheme="http://www.wei-dong.top/categories/%E5%89%8D%E7%AB%AF/"/>
-    
-    
-      <category term="VUE" scheme="http://www.wei-dong.top/tags/VUE/"/>
-    
-      <category term="Javascript" scheme="http://www.wei-dong.top/tags/Javascript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>一起学RPC(二)</title>
-    <link href="http://www.wei-dong.top/2018/08/09/%E4%B8%80%E8%B5%B7%E5%AD%A6RPC(%E4%BA%8C)/"/>
-    <id>http://www.wei-dong.top/2018/08/09/一起学RPC(二)/</id>
-    <published>2018-08-09T10:17:23.000Z</published>
-    <updated>2018-08-09T10:02:11.780Z</updated>
-    
-    <content type="html"><![CDATA[<p>在上一篇中介绍到关于jupiter的底层通信模块transport的部分实现。仅仅只是讨论了整个server的初始化以及启动流程。很多细枝末节其实还没有涉及到，例如tcp参数设置，超时机制，编解码器等等实现细节。这些东西将会逐步被消化分解。而本文的主题是jupiter的业务编解码器的实现。</p>
-<p>在jupiter中有一张图，这张图清晰地描述了整个server的数据流向：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">* *********************************************************************</div><div class="line"> *            I/O Request                       I/O Response</div><div class="line"> *                 │                                 △</div><div class="line"> *                                                   │</div><div class="line"> *                 │</div><div class="line"> * ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┼ ─ ─ ─ ─ ─ ─ ─ ─</div><div class="line"> * │               │                                                  │</div><div class="line"> *                                                   │</div><div class="line"> * │  ┌ ─ ─ ─ ─ ─ ─▽─ ─ ─ ─ ─ ─ ┐       ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐   │</div><div class="line"> *     IdleStateChecker#inBound          IdleStateChecker#outBound</div><div class="line"> * │  └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘       └ ─ ─ ─ ─ ─ ─△─ ─ ─ ─ ─ ─ ┘   │</div><div class="line"> *                 │                                 │</div><div class="line"> * │                                                                  │</div><div class="line"> *                 │                                 │</div><div class="line"> * │  ┌ ─ ─ ─ ─ ─ ─▽─ ─ ─ ─ ─ ─ ┐                                     │</div><div class="line"> *     AcceptorIdleStateTrigger                      │</div><div class="line"> * │  └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘                                     │</div><div class="line"> *                 │                                 │</div><div class="line"> * │                                                                  │</div><div class="line"> *                 │                                 │</div><div class="line"> * │  ┌ ─ ─ ─ ─ ─ ─▽─ ─ ─ ─ ─ ─ ┐       ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐   │</div><div class="line"> *          ProtocolDecoder                   ProtocolEncoder</div><div class="line"> * │  └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘       └ ─ ─ ─ ─ ─ ─△─ ─ ─ ─ ─ ─ ┘   │</div><div class="line"> *                 │                                 │</div><div class="line"> * │                                                                  │</div><div class="line"> *                 │                                 │</div><div class="line"> * │  ┌ ─ ─ ─ ─ ─ ─▽─ ─ ─ ─ ─ ─ ┐                                     │</div><div class="line"> *          AcceptorHandler                          │</div><div class="line"> * │  └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘                                     │</div><div class="line"> *                 │                                 │</div><div class="line"> * │                    ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐                     │</div><div class="line"> *                 ▽                                 │</div><div class="line"> * │               ─ ─ ▷│       Processor       ├ ─ ─▷                │</div><div class="line"> *</div><div class="line"> * │                    └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘                     │</div><div class="line"> * ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─</div><div class="line"> *</div></pre></td></tr></table></figure>
-<p>实际上这个图仅仅是针对Netty api的描述，和rpc没有太多直接的关系。如果换做别的通信框架这个图就没有什么意义了。鉴于Netty依旧是目前Java网络开发中最流行的框架，拿出来讨论也是很有意义的。</p>
-<p>这个图中有几个核心的概念：decode、encode、IdleStateChecker和handler。在编写一个网络应用的时候首先必须定义的是通信协议。比如上传下载文件使用ftp，即时聊天使用xmpp，浏览网页使用http…当然自己写一个rpc框架也得定义自己的通信协议。为什么要定义协议这个问题对于开发的老手来说没有必要去解释，不过我还是得啰嗦一下。在网络应用程序中，所有的数据在网络上的传输都是二进制格式，也就是0101010这样的机器码。当然也有人会反驳：不是有基于字符的数据吗？我的理解是在宏观上来说确实存在，那是因为上层的协议已经将代表字符串的01010解码成了可读的字符串。但是在底层的传输，也就是在物理层比如网线、电磁波中的传输依旧还是0101。当然用0101来比喻也是不恰当，更准确的说法应该是电平信号。而协议的作用是将通信双方的内容进行规范。就像以前写书信的时候，开头得有称谓，然后写正文，最后是落款这样一种格式。别人收到后就知道，嗯，这是一封信而不是一篇散文或者自传。当然这个比喻不是很恰当，但是就这样吧，不想废话了。</p>
-<p>既然定义了协议，那么就得去处理协议。Netty中提供了很多内置的协议解析的类。通常被称作编解码器。顾名思义也就是将二进制转化为我们想要的数据结构，这样方便统一处理。这张图中的具体体现就是先解码，然后再处理，最后将处理结果编码后发送出去。编解码器将是本文讨论的重点。然而还有别的几个组件如空闲链路检查<code>IdleStateChecker</code>和业务处理<code>AcceptorHandler</code>组件，这些放在后面讨论。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">boot.childHandler(<span class="keyword">new</span> ChannelInitializer&lt;Channel&gt;() &#123;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(Channel ch)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">                ch.pipeline().addLast(</div><div class="line">                        <span class="keyword">new</span> IdleStateChecker(timer, JConstants.READER_IDLE_TIME_SECONDS, <span class="number">0</span>, <span class="number">0</span>),</div><div class="line">                        idleStateTrigger,</div><div class="line">                        CodecConfig.isCodecLowCopy() ? <span class="keyword">new</span> LowCopyProtocolDecoder() : <span class="keyword">new</span> ProtocolDecoder(),</div><div class="line">                        encoder,</div><div class="line">                        handler);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div></pre></td></tr></table></figure>
-<p>这段代码就是初始化编解码器等组件。可以看到handler作为业务核心处理器放在了最后。这是Netty的机制所决定的。关于Netty的一些设计可以看看<a href="http://ifeve.com/netty-in-action-1/" target="_blank" rel="external">这本书</a>作为基础入门。</p>
-<p>看到解码器和编码器还有点不一样。解码器是直接new的方式添加到pipeline中的，而编码器是new好了再添加到pipeline中。其实具体差别就在于解码器不能共享。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProtocolDecoder</span> <span class="keyword">extends</span> <span class="title">ReplayingDecoder</span>&lt;<span class="title">ProtocolDecoder</span>.<span class="title">State</span>&gt; </span>&#123;</div><div class="line">	<span class="comment">// ...</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@ChannelHandler</span>.Sharable</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProtocolEncoder</span> <span class="keyword">extends</span> <span class="title">MessageToByteEncoder</span>&lt;<span class="title">PayloadHolder</span>&gt; </span>&#123;</div><div class="line">	<span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>所谓的能共享，就是意味着每次都能使用这个编码器而不需要每次用就得实例化出来。而解码器不能被共享也是有原因的。因为解码器解码的数据全部来自于网络请求，网络通常而言是不可靠的，不能保证每次都能发送完整的数据包也有可能需要的数据还没收到。那么如何保证接受到的数据是完整的呢？实际上是没法保证，只能够“假装”是完整的。所以decoder是继承自<code>ReplayingDecoder</code>。这个类的作用简单通俗来理解就是如果网络上的数据还没发完，我就继续接收，直到收完为止。具体的工作原理可以参考api文档或者源码，这里不再过多探讨。为什么继承这个类后就不能共享呢？这个类是个泛型，参数是一个state的字眼。看到这里大概可以联想到这个类肯定和状态有关系。这样就很容易理解了，有状态的对象通常不能被共享。想象一下，在多线程环境下，线程A将这个状态改为1线程B这时候拿到执行权又把这个状态改为2，然后线程A又要使用这个状态变量了，这时候就不是他刚开始改变的状态了。如此一来，全部乱套了。这些都是并发基础相关的内容，有兴趣可以去谷歌。这里不再过多描述。而encode则没有状态变量，需要编码的数据一定是确定的，不存在解码器中数据不完整的情况。因此使用共享实例没什么问题。具体可以看看其中的代码实现：<a href="https://github.com/Mr-Vincent/Jupiter/blob/master/jupiter-transport/jupiter-transport-netty/src/main/java/org/jupiter/transport/netty/handler/ProtocolDecoder.java" target="_blank" rel="external">ProtocolDecoder</a>  <a href="https://github.com/Mr-Vincent/Jupiter/blob/master/jupiter-transport/jupiter-transport-netty/src/main/java/org/jupiter/transport/netty/handler/ProtocolEncoder.java" target="_blank" rel="external">ProtocolEncoder</a></p>
-<p>解释完这些鸡毛蒜皮的细节，接下来开始分析一下这个协议的定义以及解析。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">* **************************************************************************************************</div><div class="line">*                                          Protocol</div><div class="line">*  ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐</div><div class="line">*       2   │   1   │    1   │     8     │      4      │</div><div class="line">*  ├ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┤</div><div class="line">*           │       │        │           │             │</div><div class="line">*  │  MAGIC   Sign    Status   Invoke Id    Body Size                    Body Content              │</div><div class="line">*           │       │        │           │             │</div><div class="line">*  └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘</div><div class="line">*</div><div class="line">* 消息头16个字节定长</div><div class="line">* = 2 // magic = (short) 0xbabe</div><div class="line">* + 1 // 消息标志位, 低地址4位用来表示消息类型request/response/heartbeat等, 高地址4位用来表示序列化类型</div><div class="line">* + 1 // 状态位, 设置请求响应状态</div><div class="line">* + 8 // 消息 id, long 类型, 未来jupiter可能将id限制在48位, 留出高地址的16位作为扩展字段</div><div class="line">* + 4 // 消息体 body 长度, int 类型</div><div class="line">*</div></pre></td></tr></table></figure>
-<p>作者在代码中将协议格式完全标注出来了:16字节的消息头+消息体。消息头中的MAGIC字段仅仅是为了标识这个数据包是属于jupiter。就像java class文件以<code>0xCAFEBABE</code>开头一样。没有实际的意义，仅仅做个标识而已。其他的字段也就没什么可说的了。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> USE_COMPOSITE_BUF = SystemPropertyUtil.getBoolean(<span class="string">"jupiter.io.decoder.composite.buf"</span>, <span class="keyword">false</span>);</div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="title">ProtocolDecoder</span><span class="params">()</span> </span>&#123;</div><div class="line">       <span class="keyword">super</span>(State.MAGIC);</div><div class="line">       <span class="keyword">if</span> (USE_COMPOSITE_BUF) &#123;</div><div class="line">           setCumulator(COMPOSITE_CUMULATOR);</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">enum</span> State &#123;</div><div class="line">       MAGIC,</div><div class="line">       SIGN,</div><div class="line">       STATUS,</div><div class="line">       ID,</div><div class="line">       BODY_SIZE,</div><div class="line">       BODY</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>解码器的构造函数中直接调用了父类的构造函数，将枚举类型<code>State</code>传入。这个枚举类型所代表的就是要解析协议数据中的位置（下标）。因此构造器中传入的当然是协议的第一个字段，也就表示从第一个位置开始解析。然后有一个布尔标识，这个变量从系统变量中获取，用来决定是否使用<code>COMPOSITE_CUMULATOR</code>。默认的CUMULATOR是<code>MERGE_CUMULATOR</code>.区别可能在性能上有点差距吧。具体差异得去研究源码。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> JProtocolHeader header = <span class="keyword">new</span> JProtocolHeader();</div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">decode</span><span class="params">(ChannelHandlerContext ctx, ByteBuf in, List&lt;Object&gt; out)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="keyword">switch</span> (state()) &#123;</div><div class="line">            <span class="keyword">case</span> MAGIC:</div><div class="line">                checkMagic(in.readShort());         <span class="comment">// MAGIC</span></div><div class="line">                checkpoint(State.SIGN);</div><div class="line">            <span class="keyword">case</span> SIGN:</div><div class="line">                header.sign(in.readByte());         <span class="comment">// 消息标志位</span></div><div class="line">                checkpoint(State.STATUS);</div><div class="line">            <span class="keyword">case</span> STATUS:</div><div class="line">                header.status(in.readByte());       <span class="comment">// 状态位</span></div><div class="line">                checkpoint(State.ID);</div><div class="line">            <span class="keyword">case</span> ID:</div><div class="line">                header.id(in.readLong());           <span class="comment">// 消息id</span></div><div class="line">                checkpoint(State.BODY_SIZE);</div><div class="line">            <span class="keyword">case</span> BODY_SIZE:</div><div class="line">                header.bodySize(in.readInt());      <span class="comment">// 消息体长度</span></div><div class="line">                checkpoint(State.BODY);</div><div class="line">            <span class="keyword">case</span> BODY:</div><div class="line">                <span class="keyword">switch</span> (header.messageCode()) &#123;</div><div class="line">                    <span class="keyword">case</span> JProtocolHeader.HEARTBEAT:</div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    <span class="keyword">case</span> JProtocolHeader.REQUEST: &#123;</div><div class="line">                        <span class="keyword">int</span> length = checkBodySize(header.bodySize());</div><div class="line">                        <span class="keyword">byte</span>[] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[length];</div><div class="line">                        in.readBytes(bytes);</div><div class="line"></div><div class="line">                        JRequestPayload request = <span class="keyword">new</span> JRequestPayload(header.id());</div><div class="line">                        request.timestamp(SystemClock.millisClock().now());</div><div class="line">                        request.bytes(header.serializerCode(), bytes);</div><div class="line"></div><div class="line">                        out.add(request);</div><div class="line"></div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">case</span> JProtocolHeader.RESPONSE: &#123;</div><div class="line">                        <span class="keyword">int</span> length = checkBodySize(header.bodySize());</div><div class="line">                        <span class="keyword">byte</span>[] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[length];</div><div class="line">                        in.readBytes(bytes);</div><div class="line"></div><div class="line">                        JResponsePayload response = <span class="keyword">new</span> JResponsePayload(header.id());</div><div class="line">                        response.status(header.status());</div><div class="line">                        response.bytes(header.serializerCode(), bytes);</div><div class="line"></div><div class="line">                        out.add(response);</div><div class="line"></div><div class="line">                        <span class="keyword">break</span>;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">default</span>:</div><div class="line">                        <span class="keyword">throw</span> IoSignals.ILLEGAL_SIGN;</div><div class="line">                &#125;</div><div class="line">                checkpoint(State.MAGIC);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>正真的解析逻辑全部在<code>decode</code>方法中。这里的每个case并没有break，道理很简单，每解析一段数据后得接着继续往下解析，如果break掉了后面的数据不全都放弃解析了吗？每当解析到一个位置，都将这个位置上读取的数据放到<code>header</code>变量中，同时将接下来需要解析的位置记录下来（通过<code>checkpoint(...)</code>方法）。之所以要记录下来，万一某个位置解析出错，下次就不用从头再来了，直接上次出错的位置接着来就行了，也是为了提高性能。然而解析到body部分的时候，header里面内容都已经全部填充好了。接下来就是根据消息类型来处理body里的内容。如果是心跳包，那么什么都不做直接返回，因为body里肯定是没有数据的。如果是请求包(<code>REQUEST</code>类型)，先从header里读取这个body到底有多长，然后再去读这么长的数据，最后通过<code>JRequestPayload</code>对象将这个body数据封装起来，同时将消息id和序列化类型code也封装进去了。响应包类型逻辑与之类似。整个解码器解析逻辑就完成了。</p>
-<p>与之对应的就是编码器了，编码器逻辑更简单。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">encode</span><span class="params">(ChannelHandlerContext ctx, PayloadHolder msg, ByteBuf out)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="keyword">if</span> (msg <span class="keyword">instanceof</span> JRequestPayload) &#123;</div><div class="line">            doEncodeRequest((JRequestPayload) msg, out);</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (msg <span class="keyword">instanceof</span> JResponsePayload) &#123;</div><div class="line">            doEncodeResponse((JResponsePayload) msg, out);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(Reflects.simpleClassName(msg));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">doEncodeRequest</span><span class="params">(JRequestPayload request, ByteBuf out)</span> </span>&#123;</div><div class="line">        <span class="keyword">byte</span> sign = JProtocolHeader.toSign(request.serializerCode(), JProtocolHeader.REQUEST);</div><div class="line">        <span class="keyword">long</span> invokeId = request.invokeId();</div><div class="line">        <span class="keyword">byte</span>[] bytes = request.bytes();</div><div class="line">        <span class="keyword">int</span> length = bytes.length;</div><div class="line"></div><div class="line">        out.writeShort(JProtocolHeader.MAGIC)</div><div class="line">                .writeByte(sign)</div><div class="line">                .writeByte(<span class="number">0x00</span>)</div><div class="line">                .writeLong(invokeId)</div><div class="line">                .writeInt(length)</div><div class="line">                .writeBytes(bytes);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">doEncodeResponse</span><span class="params">(JResponsePayload response, ByteBuf out)</span> </span>&#123;</div><div class="line">        <span class="keyword">byte</span> sign = JProtocolHeader.toSign(response.serializerCode(), JProtocolHeader.RESPONSE);</div><div class="line">        <span class="keyword">byte</span> status = response.status();</div><div class="line">        <span class="keyword">long</span> invokeId = response.id();</div><div class="line">        <span class="keyword">byte</span>[] bytes = response.bytes();</div><div class="line">        <span class="keyword">int</span> length = bytes.length;</div><div class="line"></div><div class="line">        out.writeShort(JProtocolHeader.MAGIC)</div><div class="line">                .writeByte(sign)</div><div class="line">                .writeByte(status)</div><div class="line">                .writeLong(invokeId)</div><div class="line">                .writeInt(length)</div><div class="line">                .writeBytes(bytes);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>和解码器相反，编码器就是将对象中的数据按协议中的定义挨个写到buf中。</p>
-<p>以上，jupiter中的消息编解码器的实现就全部整理完了。当然还有空闲链路检测部分，因此我决定暂时放弃这部分，太复杂了，等所有逻辑整理完毕后再接着填坑。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在上一篇中介绍到关于jupiter的底层通信模块transport的部分实现。仅仅只是讨论了整个server的初始化以及启动流程。很多细枝末节其实还没有涉及到，例如tcp参数设置，超时机制，编解码器等等实现细节。这些东西将会逐步被消化分解。而本文的主题是jupiter的业务
     
     </summary>
     

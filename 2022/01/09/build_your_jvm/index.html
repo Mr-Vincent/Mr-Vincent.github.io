@@ -20,7 +20,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="JUC之CyclicBarrier"/>
+        <meta property="og:title" content="什么？写了五年Java代码都没自己编译过虚拟机？"/>
     
 
     <!--Open Graph Description-->
@@ -44,7 +44,7 @@
 
     <!-- Title -->
     
-    <title>JUC之CyclicBarrier - DongWei&#39;s Blog</title>
+    <title>什么？写了五年Java代码都没自己编译过虚拟机？ - DongWei&#39;s Blog</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
@@ -133,18 +133,18 @@
     <!-- Page Header -->
 <!-- Set your background image for this header in your post front-matter: cover -->
 
-<header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
+<header class="intro-header" style="background-image: url('https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/java_coffee.jpeg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>JUC之CyclicBarrier</h1>
+                    <h1>什么？写了五年Java代码都没自己编译过虚拟机？</h1>
                     
                     <span class="meta">
                         <!-- Date and Author -->
                         
                         
-                            2017-07-01
+                            2022-01-09
                         
                     </span>
                 </div>
@@ -165,7 +165,7 @@
                         
 
 
-<a href="/tags/JDK/">#JDK</a> <a href="/tags/源码解读/">#源码解读</a>
+<a href="/tags/虚拟机/">#虚拟机</a>
 
 
                     
@@ -174,7 +174,7 @@
                     
                         
 
-<a href="/categories/JDK-SOURCE/">JDK SOURCE</a>
+<a href="/categories/code/">code</a>
 
                     
                 </div>
@@ -185,20 +185,51 @@
 
             <!-- Post Main Content -->
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <p>从这个名字来理解这个东西叫做循环栅栏。也许这样翻译很生硬，但是具体什么意思大概可以很清楚地明白了。</p>
-<blockquote>
-<p>A synchronization aid that allows a set of threads to all wait for each other to reach a common barrier point. CyclicBarriers are useful in programs involving a fixed sized party of threads that must occasionally wait for each other. The barrier is called cyclic because it can be re-used after the waiting threads are released.<br><a id="more"></a><br>JDK文档的解释是这样的：CyclicBarrier是一个同步辅助类，允许一组线程互相等待，直到到达某个公共屏障点 (common barrier point)。因为该 barrier 在释放等待线程后可以重用，所以称它为循环 的 barrier。<br>看个DEMO先：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">public class CyclicBarrierTest1 &#123;</div><div class="line"></div><div class="line">    private static int SIZE = 5;</div><div class="line">    private static CyclicBarrier cb;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line"></div><div class="line">        cb = new CyclicBarrier(SIZE);</div><div class="line"></div><div class="line">        // 新建5个任务</div><div class="line">        for(int i=0; i&lt;SIZE; i++)</div><div class="line">            new InnerThread().start();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    static class InnerThread extends Thread&#123;</div><div class="line">        public void run() &#123;</div><div class="line">            try &#123;</div><div class="line">                System.out.println(Thread.currentThread().getName() + &quot; wait for CyclicBarrier.&quot;);</div><div class="line"></div><div class="line">                // 将cb的参与者数量加1</div><div class="line">                cb.await();</div><div class="line"></div><div class="line">                // cb的参与者数量等于5时，才继续往后执行</div><div class="line">                System.out.println(Thread.currentThread().getName() + &quot; continued.&quot;);</div><div class="line">            &#125; catch (BrokenBarrierException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125; catch (InterruptedException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+                <p>最近闲着无事，又翻开了周志明老师的《深入理解Java虚拟机》这本书。已经不知道是第多少次翻开这本书了，似乎每次读都有不一样的理解。不得不说，有些书是常读常新。</p>
+<p>回忆起从业两年刚拿到这本书的时候，大言不惭地放下大话：我一个月就能读完它。而事实上，也就勉强读完了讲虚拟机前世今生的历史故事第一章。当看到要动手编译一个JVM的时候，毫无悬念的被劝退。而如今好几年过去了，再看到这个部分的时候，也倒不觉得那么困难。</p>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><blockquote>
+<p>OS : MacOS Big Sur 11.2</p>
+<p>BOOT JDK : jdk-11.0.13+8</p>
+<p>开发工具: Clion ,Clang(mac自带)</p>
+<p>目标JDK源码：<a href="http://hg.openjdk.java.net/jdk-updates/jdk11u/file/ebc6c83bfa9e" target="_blank" rel="external">http://hg.openjdk.java.net/jdk-updates/jdk11u/file/ebc6c83bfa9e</a></p>
 </blockquote>
-<p>执行结果：<br><code>Thread-1 wait for CyclicBarrier.
-Thread-2 wait for CyclicBarrier.
-Thread-3 wait for CyclicBarrier.
-Thread-4 wait for CyclicBarrier.
-Thread-0 wait for CyclicBarrier.
-Thread-0 continued.
-Thread-4 continued.
-Thread-2 continued.
-Thread-3 continued.
-Thread-1 continued.</code></p>
+<p>首先是操作系统，建议使用类Unix系统来编译。windows上操作起来会增加很多难度，没必要折腾。</p>
+<p>编译的目标jdk需要依赖现有的jdk，这里安装了一个openjdk的版本，作为用来编译目标jdk的环境。需要将环境变量设置为openjdk的，这里不作赘述。</p>
+<p>虚拟机是用C/C++写的，如果要去读一读虚拟机的代码，Clion是一个不错的选择。而编译C/C++代码一般用我们熟知的GCC编译，Clang是一个稍微轻量级的编译器，同样也能编译C/C++代码。在MacOs中Clang系统自带，无需额外安装。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>熟悉C/C++或者自己在unix上通过源码安装过软件的小伙伴都知道在使用make命令之前都需要执行一个config脚本。编译虚拟机也同样如此。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sh configure --with-boot-jdk=/Users/dongwei/openjdk/jdk-11.0.13+8/Contents/Home --with-target-bits=64 --enable-ccache --with-jvm-variants=server  --with-boot-jdk-jvmargs=&quot;-Xlint:deprecation -Xlint:unchecked&quot; --disable-warnings-as-errors --with-debug-level=slowdebug 2&gt;&amp;1 | tee configure_mac_x64.log</div></pre></td></tr></table></figure>
+<p>这个脚本用来做一些准备工作，比如检查环境是否ok等。</p>
+<p>我第一次执行的时候出现了一个错误。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/配置的时候出现错误.png" alt><br>提示说少了一个什么工具，没关系，少了就安装呗。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images安装sdk.png" alt></p>
+<p>再次config一下，出现下面的打印信息表示配置没问题。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/配置没问题.png" alt></p>
+<h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>编译其实十分简单，只需要一个命令就够了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make</div></pre></td></tr></table></figure>
+<p>这个过程实际上还是挺费时间的。敲完命令机器负载狂飙。<br><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/cpu跑满了.png" alt></p>
+<p>等待编译完成的空隙，冲杯咖啡逛一下小破站。<br><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/泡杯咖啡逛逛b站.png" alt></p>
+<p>等了大约20分钟，一切顺利。最终的输出是这样的。<br><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/编译完成.png" alt></p>
+<p>编译好的文件夹为<em>macosx-x86_64-normal-server-slowdebug</em></p>
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>千呼万唤始出来，看自己编译的jdk能不能跑，最简单的办法是看看编译出来的java二进制文件能不能跑。切换到bin路径下使用命令<em>java -version</em>来观察输出。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/查看jdk版本.png" alt></p>
+<p>和自己之前安装的java并不一个java版本，很棒，it works.</p>
+<h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2><p>调试一下JDK听起来有点大言不惭，但来都来了，留下点记号呗。</p>
+<p>先来点简单的，jvm启动的时候输出点自己的【私货】。</p>
+<p>首先需要配置一下Clion，前提是先导入openjdk源码文件夹下的src到Clion中，然后再配置一下刚才编译好的执行程序。<br>在源码中打断点，就能对jvm进行调试了。<br><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/配置编译脚本0.png" alt><br><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/配置编译脚本1.png" alt></p>
+<p>配置Clion只是编译的一个快捷方式，其实相当于使用make命令。改了源码需要重新编译一次，不必使用<em>make clean</em>，否则又得等上20分钟。</p>
+<p>在源码的启动入口加点自己的输出。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/调试截图.png" alt><br><img src="https://cdn.jsdelivr.net/gh/Mr-Vincent/pic-bed@master/images/自己改改jdk.png" alt></p>
+<p>至此，一个属于自己的jvm虚拟机就编译好了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>编译jvm一点都不麻烦，有手就行</li>
+<li>随着屏幕上的字符按照自己预期那样跳动，眼前的一切都变得索然无味</li>
+<li>如果一个java程序员没编译过jvm，那就不算一个真正的javer</li>
+</ul>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li>[1]<a href="https://zhuanlan.zhihu.com/p/101402297" target="_blank" rel="external">做Java这么久了，你编译过 JDK 源码吗</a></li>
+<li>[2]<a href="https://www.jianshu.com/p/1121cc4be0a0" target="_blank" rel="external">编译jdk和使用clion调试jdk</a></li>
+<li>[3]<a href="https://adoptopenjdk.net/installation.html?variant=openjdk11&amp;jvmVariant=hotspot#x64_mac-jdk" target="_blank" rel="external">安装openjdk</a></li>
+</ul>
 
 
                 

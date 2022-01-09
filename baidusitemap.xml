@@ -4,6 +4,48 @@
 
     
   <url>
+    <loc>http://www.wei-dong.top/2022/01/09/%E8%A2%AB%E8%AE%A8%E5%8E%8C%E7%9A%84%E5%8B%87%E6%B0%94_%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2022-01-09T11:03:15.543Z</lastmod>
+    <data>
+        <display>
+        <title>《被讨厌的勇气》书摘</title>
+        <pubTime>2022-01-09T06:33:18.000Z</pubTime>
+        
+        <tag>笔记</tag>
+         
+        <tag>阅读</tag>
+         
+         
+           
+             
+              <breadCrumb title="书摘" url="http://www.wei-dong.top/categories/%E4%B9%A6%E6%91%98/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wei-dong.top/2022/01/09/build_your_jvm/</loc>
+    <lastmod>2022-01-09T10:16:13.576Z</lastmod>
+    <data>
+        <display>
+        <title>什么？写了五年Java代码都没自己编译过虚拟机？</title>
+        <pubTime>2022-01-09T08:33:18.000Z</pubTime>
+        
+        <tag>虚拟机</tag>
+         
+         
+           
+             
+              <breadCrumb title="code" url="http://www.wei-dong.top/categories/code/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wei-dong.top/2022/01/08/Encanto/</loc>
     <lastmod>2022-01-08T08:22:50.334Z</lastmod>
     <data>
@@ -471,9 +513,9 @@
         <title>浅析JDK中的定时器Timer实现</title>
         <pubTime>2018-04-21T08:17:23.000Z</pubTime>
         
-        <tag>源码解读</tag>
-         
         <tag>JDK</tag>
+         
+        <tag>源码解读</tag>
          
          
            
@@ -666,9 +708,9 @@
         <title>动态代理之JDK实现</title>
         <pubTime>2017-07-09T02:29:23.000Z</pubTime>
         
-        <tag>源码解读</tag>
-         
         <tag>JDK</tag>
+         
+        <tag>源码解读</tag>
          
          
            
@@ -710,9 +752,9 @@
         <title>JUC之CyclicBarrier</title>
         <pubTime>2017-07-01T14:14:41.000Z</pubTime>
         
-        <tag>源码解读</tag>
-         
         <tag>JDK</tag>
+         
+        <tag>源码解读</tag>
          
          
            
@@ -732,9 +774,9 @@
         <title>JUC系列之BlockingQueue</title>
         <pubTime>2017-07-01T14:16:23.000Z</pubTime>
         
-        <tag>源码解读</tag>
-         
         <tag>JDK</tag>
+         
+        <tag>源码解读</tag>
          
          
            
