@@ -20,7 +20,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="JUC之CyclicBarrier"/>
+        <meta property="og:title" content="阿胖相亲记（二）"/>
     
 
     <!--Open Graph Description-->
@@ -44,7 +44,7 @@
 
     <!-- Title -->
     
-    <title>JUC之CyclicBarrier - DongWei&#39;s Blog</title>
+    <title>阿胖相亲记（二） - DongWei&#39;s Blog</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
@@ -133,18 +133,18 @@
     <!-- Page Header -->
 <!-- Set your background image for this header in your post front-matter: cover -->
 
-<header class="intro-header" style="background-image: url('http://www.codeblocq.com/assets/projects/hexo-theme-clean-blog/img/home-bg.jpg')">
+<header class="intro-header" style="background-image: url('https://images.unsplash.com/photo-1561928297-8ddd5d1eb54b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2600&q=80')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>JUC之CyclicBarrier</h1>
+                    <h1>阿胖相亲记（二）</h1>
                     
                     <span class="meta">
                         <!-- Date and Author -->
                         
                         
-                            2017-07-01
+                            2022-01-30
                         
                     </span>
                 </div>
@@ -165,7 +165,7 @@
                         
 
 
-<a href="/tags/JDK/">#JDK</a> <a href="/tags/源码解读/">#源码解读</a>
+<a href="/tags/生活/">#生活</a>
 
 
                     
@@ -174,7 +174,7 @@
                     
                         
 
-<a href="/categories/JDK-SOURCE/">JDK SOURCE</a>
+<a href="/categories/BEYOND-CODING/">BEYOND CODING</a>
 
                     
                 </div>
@@ -185,20 +185,31 @@
 
             <!-- Post Main Content -->
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <p>从这个名字来理解这个东西叫做循环栅栏。也许这样翻译很生硬，但是具体什么意思大概可以很清楚地明白了。</p>
+                <p>窗外断断续续传来烟花爆竹的声音，阿胖慢慢回忆起第二次相亲故事。</p>
+<p>故事发生在一个饭后散步。阿胖在楼道里踱步，耳机里播放着梦龙的《Beleiver》，一个陌生电话打了进来：阿胖，你要对象不？</p>
+<p>打电话的是大伯，电话里他说有个亲戚的女儿96年的有点胖，家里很着急她结婚找对象的事情，问阿胖有没得意愿。阿胖想可算能扩大一点异性交际圈了就回复道可以先加个微信试着了解一下。结果电话那头的大伯说人家不想聊微信，想见面再决定。阿胖心想既然这样咱也不勉强，总不能请假回去专门让人瞅一眼吧，就当没接过这个电话，继续踱步听音乐了。</p>
+<p>阿胖并不是一个现实主义者，当他听到他大伯介绍女嘉宾家庭情况比较优越的时候似乎就产生了一些抵触情绪。尤其听不得诸如此类的话：只要你和ta结婚了，你后半辈子就xxx。活了差不多三十来年，阿胖不论从现实经历还是影视文艺作品中也听过或者见过因为利益而驱使自己完成一些事情的事例。不过话又说回来，像婚姻这种十分现实的事情，去谈论理想主义确实显得十分荒谬。阿胖在两者之间似乎没有找到平衡，也没办法去评判他人对婚姻的态度和抉择，他至少能给自己一条能够自洽的准则：我想和你在一起的主要理由是因为我爱你，是因为你可爱，有吸引力，值得被爱。如果因为你父亲是什么局长，爷爷是什么退休干部，把这些只能作为锦上添花的装饰附加条件而本末倒置，那阿胖会更加看不起自己，阿胖会觉得自己像只要饭的狗，甚至狗都不如。</p>
+<p>但是据阿胖的了解和观察，世俗就是按阿胖所鄙夷的这套逻辑在运作。何以见得呢？最近阿胖放假回家偶尔能听到街坊邻居七嘴八舌地讨论：xx家的女儿嫁的婆家的xx是什么二把手…却很少听到如xx的女儿和她丈夫感情很好，家庭很和睦，让人羡艳之类的话。</p>
+<p>阿胖的第二位女嘉宾并没有如他大伯说的那样拒绝加微信，在后来的几个星期他大伯将女嘉宾的微信联系方式发给了阿胖。阿胖毫无波澜地发起了好友申请，似乎在一个晚上女嘉宾通过好友请求，但太晚了也没开始聊点什么。</p>
+<p>第二天早上，阿胖想着如何组织开场白才能显着不尴尬。再反复打了一堆文字又删除了之后，最后敲出了两个字：你好。</p>
+<p>和女嘉宾的相处细节并不值得单独去写文，倒是其中的心路历程却值得反复回味的。</p>
+<p>这个女嘉宾倒并不和上个女嘉宾那样傲娇，她平和且接地气。从和她的交流中阿胖得知她是一个交际圈比较简单，心思也比较简单的女孩，很多事情自己其实没多少主动权，她母亲比较强势，许多大事小事都她母亲说了算。阿胖和她也有差不多的话题可聊，聊美食，聊动漫，聊八卦。后来女嘉宾对阿胖说了一句让他诧异的话：你是我遇到的男嘉宾中算正常的一个。阿胖很不理解：我居然是个正常人！</p>
+<p>这个女嘉宾倒也没去吐槽她遇到的那些奇葩们，她说背后谈论别人不太合适。阿胖挺可怜她年纪轻轻就遭遇这么多离谱的事情。</p>
+<p>后来阿胖回武汉看房顺路去见了一下女嘉宾，她落落大方又斯斯文文的，甚至有点社牛，阿胖和她第一次见面并没有觉得丝毫尴尬。但仅仅第一次见面，作为正常人大概率不会出现一见钟情的情况。他们短暂的见了面，又短暂的告别了。</p>
+<p>随即发生的事情，让阿胖陷入了和第一次相亲的窘境。阿胖大伯电话打了进来：你们进展的怎么样了；只要你同意，她那边没问题；我跟你讲，你第二次到人家家里，买点菜动手做给她吃…</p>
+<p>阿胖听到这里血压已经升起来了，也没想着去反驳什么，人家毕竟长辈，只能假装对方说的很有道理似的回复好的没问题听你的你说的太对了，不论怎么反驳最后被一句话秒杀：你以为我折腾为了啥，还不是为你好！</p>
+<p>阿胖当然不会按照他大伯教的做，毕竟认识一个异性朋友不太容易，如果真那样做了那女嘉宾肯定分分钟拉黑阿胖，说不定还会打个标签：奇葩。</p>
+<p>阿胖一直认为，了解一个人是一件成本很高的事情。因此在人生伴侣的选择上更不能随意，阿胖一直是一个很孤独的人，他觉得另一个人参与到自己的生活中是为了一起对抗孤独，而不是让两个人越来越孤独。</p>
+<p>世俗认为，你到了年纪就该结婚，不论你多么成功，不结婚就是犯罪。这句话是阿胖二叔说的，是张罗第一个女嘉宾的那个二叔。阿胖甚至觉得这些人意见如此一致是不是有什么阴谋论。阿胖无法理解那些看起来自己的婚姻也不怎么样的人，还各种劝他人早点结婚。阿胖认为这种心态是赌徒心态，把婚姻当作一场豪赌。</p>
+<p>接着就是接连不断的电话了：你和女嘉宾聊的怎样了？有什么进展吗，如果觉得没什么问题咱就把这件事确定下来…</p>
+<p>阿胖内心很矛盾：女嘉宾似乎没太多吸引自己的地方，也仅仅见了几次面也并不那么了解，隔着屏幕许多情绪都无从感知，许多时候都只是为了聊天而聊天。但是阿胖不敢对任何人讲，因为没人能理解，最负责任的做法是继续接触，继续了解。</p>
+<p>再后来的后来，女嘉宾的一条消息让阿胖印象深刻：我觉得你对我没太大意思，我对你也仅仅是不讨厌…</p>
+<p>女嘉宾说的没错，阿胖也承认了，大大方方的承认了。</p>
+<p>故事到这里，也该收场了。后来阿胖礼貌地做了一些告别，很可惜连朋友都没得当。回想起来倒也是没什么遗憾，毕竟付出一份真诚，也回应了一份真诚，即使是没有结果的真诚，那也十分可贵。</p>
 <blockquote>
-<p>A synchronization aid that allows a set of threads to all wait for each other to reach a common barrier point. CyclicBarriers are useful in programs involving a fixed sized party of threads that must occasionally wait for each other. The barrier is called cyclic because it can be re-used after the waiting threads are released.<br><a id="more"></a><br>JDK文档的解释是这样的：CyclicBarrier是一个同步辅助类，允许一组线程互相等待，直到到达某个公共屏障点 (common barrier point)。因为该 barrier 在释放等待线程后可以重用，所以称它为循环 的 barrier。<br>看个DEMO先：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">public class CyclicBarrierTest1 &#123;</div><div class="line"></div><div class="line">    private static int SIZE = 5;</div><div class="line">    private static CyclicBarrier cb;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line"></div><div class="line">        cb = new CyclicBarrier(SIZE);</div><div class="line"></div><div class="line">        // 新建5个任务</div><div class="line">        for(int i=0; i&lt;SIZE; i++)</div><div class="line">            new InnerThread().start();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    static class InnerThread extends Thread&#123;</div><div class="line">        public void run() &#123;</div><div class="line">            try &#123;</div><div class="line">                System.out.println(Thread.currentThread().getName() + &quot; wait for CyclicBarrier.&quot;);</div><div class="line"></div><div class="line">                // 将cb的参与者数量加1</div><div class="line">                cb.await();</div><div class="line"></div><div class="line">                // cb的参与者数量等于5时，才继续往后执行</div><div class="line">                System.out.println(Thread.currentThread().getName() + &quot; continued.&quot;);</div><div class="line">            &#125; catch (BrokenBarrierException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125; catch (InterruptedException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>阿胖相亲记能更到第二集出乎我意料之外。世俗对相亲的理解是快速匹配，不行拉倒，不是用来交朋友的，甚至不需要了解，条件匹配是唯一准则，就是奔着结婚目的去的。而我对相亲的理解过于肤浅，试图想着去发现对方的吸引力。父辈们的掺合也让我感到反感，动不动就拿<strong>我是为你好</strong>来说事。动不动以爹味口吻教人做事，反感至极！</p>
+<p>我希望不会更到第三集，吃够生活的苦的我也想尝尝爱情的苦。</p>
 </blockquote>
-<p>执行结果：<br><code>Thread-1 wait for CyclicBarrier.
-Thread-2 wait for CyclicBarrier.
-Thread-3 wait for CyclicBarrier.
-Thread-4 wait for CyclicBarrier.
-Thread-0 wait for CyclicBarrier.
-Thread-0 continued.
-Thread-4 continued.
-Thread-2 continued.
-Thread-3 continued.
-Thread-1 continued.</code></p>
 
 
                 
